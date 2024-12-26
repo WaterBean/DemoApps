@@ -77,33 +77,51 @@ class ViewController: UIViewController {
     }
 
     @IBAction func button1Tapped(_ sender: UIButton) {
-        label1.text = "행복해 " + String(Int.random(in: 1...100))
+//        label1.text = "행복해 " + String(Int.random(in: 1...100))
+        values[0] += 1
+        label1.text = "행복해 " + String(values[0])
     }
     @IBAction func button2Tapped(_ sender: UIButton) {
-        label2.text = "사랑해 " + String(Int.random(in: 1...100))
+//        label2.text = "사랑해 " + String(Int.random(in: 1...100))
+        values[1] += 1
+        label2.text = "사랑해 " + String(values[1])
     }
     @IBAction func button3Tapped(_ sender: UIButton) {
-        label3.text = "좋아해 " + String(Int.random(in: 1...100))
+//        label3.text = "좋아해 " + String(Int.random(in: 1...100))
+        values[2] += 1
+        label3.text = "좋아해 " + String(values[2])
     }
     @IBAction func button4Tapped(_ sender: UIButton) {
-        label4.text = "당황해 " + String(Int.random(in: 1...100))
+//        label4.text = "당황해 " + String(Int.random(in: 1...100))
+        values[3] += 1
+        label4.text = "당황해 " + String(values[3])
     }
     @IBAction func button5Tapped(_ sender: UIButton) {
-        label5.text = "속상해 " + String(Int.random(in: 1...100))
+//        label5.text = "속상해 " + String(Int.random(in: 1...100))
+        values[4] += 1
+        label5.text = "속상해 " + String(values[4])
     }
     @IBAction func button6Tapped(_ sender: UIButton) {
-        label6.text = "우울해 " + String(Int.random(in: 1...100))
+//        label6.text = "우울해 " + String(Int.random(in: 1...100))
+        values[5] += 1
+        label6.text = "우울해 " + String(values[5])
+
     }
     @IBAction func button7Tapped(_ sender: UIButton) {
-        label7.text = "심심해 " + String(Int.random(in: 1...100))
-
+//        label7.text = "심심해 " + String(Int.random(in: 1...100))
+        values[6] += 1
+        label7.text = "심심해 " + String(values[6])
     }
     @IBAction func button8Tapped(_ sender: UIButton) {
-        label8.text = "행복해 " + String(Int.random(in: 1...100))
-
+//        label8.text = "행복해 " + String(Int.random(in: 1...100))
+        values[7] += 1
+        label8.text = "행복해 " + String(values[7])
     }
     @IBAction func button9Tapped(_ sender: UIButton) {
-        label9.text = "행복해 " + String(Int.random(in: 1...100))
+//        label9.text = "행복해 " + String(Int.random(in: 1...100))
+        values[8] += 1
+        label9.text = "행복해 " + String(values[8])
+
     }
 }
 

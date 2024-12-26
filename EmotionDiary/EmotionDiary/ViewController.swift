@@ -77,22 +77,33 @@ class ViewController: UIViewController {
     }
 
     @IBAction func button1Tapped(_ sender: UIButton) {
+        label1.text = "행복해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button2Tapped(_ sender: UIButton) {
+        label2.text = "사랑해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button3Tapped(_ sender: UIButton) {
+        label3.text = "좋아해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button4Tapped(_ sender: UIButton) {
+        label4.text = "당황해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button5Tapped(_ sender: UIButton) {
+        label5.text = "속상해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button6Tapped(_ sender: UIButton) {
+        label6.text = "우울해 " + String(Int.random(in: 1...100))
     }
     @IBAction func button7Tapped(_ sender: UIButton) {
+        label7.text = "심심해 " + String(Int.random(in: 1...100))
+
     }
     @IBAction func button8Tapped(_ sender: UIButton) {
+        label8.text = "행복해 " + String(Int.random(in: 1...100))
+
     }
     @IBAction func button9Tapped(_ sender: UIButton) {
+        label9.text = "행복해 " + String(Int.random(in: 1...100))
     }
 }
 

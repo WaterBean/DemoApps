@@ -7,8 +7,8 @@
 
 import UIKit
 
+// TODO: - Refactor IBOutlet to IBOutlet Collection
 class ViewController: UIViewController {
-
     
     @IBOutlet var button1: UIButton!
     @IBOutlet var button2: UIButton!
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     @IBOutlet var label7: UILabel!
     @IBOutlet var label8: UILabel!
     @IBOutlet var label9: UILabel!
-    
+            
     @IBOutlet var navBarButtonItem: UIBarButtonItem!
     
     var values = [2, 20, 3, 1, 3, 6, 0, 1, 0]

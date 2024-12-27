@@ -54,7 +54,7 @@ class SignUpViewController: UIViewController {
 
         referralcodeTextField.attributedPlaceholder = NSAttributedString(string: "추천 코드 입력", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         referralcodeTextField.textColor = .white
-        referralcodeTextField.keyboardType = .default
+        referralcodeTextField.keyboardType = .numberPad
         referralcodeTextField.textAlignment = .center
         referralcodeTextField.borderStyle = .roundedRect
         referralcodeTextField.backgroundColor = .gray
@@ -74,6 +74,32 @@ class SignUpViewController: UIViewController {
     
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
+        //Mission 1
+        if let _ = emailOrTelephoneTextField.text {
+            if !emailOrTelephoneTextField.hasText {
+                emailOrTelephoneTextField.textColor = .red
+            } else {
+                emailOrTelephoneTextField.textColor = .white
+            }
+        }
+        
+        if let passwordText = passwordTextField.text {
+            if !passwordTextField.hasText || passwordText.count < 6 {
+                passwordTextField.textColor = .red
+            } else {
+                passwordTextField.textColor = .white
+                
+            }
+        }
+        
+        if let referralcodeText = referralcodeTextField.text {
+            if !referralcodeText.allSatisfy({ $0.isNumber }) {
+                referralcodeTextField.textColor = UIColor.red
+            } else {
+                referralcodeTextField.textColor = .white
+            }
+        }
     }
+    
     
 }

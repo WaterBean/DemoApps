@@ -50,13 +50,23 @@ final class HomeViewController: UIViewController {
         ContentModel(image: #imageLiteral(resourceName: "밀수"), isTopTen: true, isNewEpisode: true, isNewSeriesWatchingNow: true),
     ]
     
+    private func configureImageViewStyles(imageViews: [UIImageView]) {
+        imageViews.forEach {
+            $0.layer.cornerRadius = 12
+            $0.layer.borderWidth = 3
+            $0.layer.borderColor = UIColor.systemRed.cgColor
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let imageViews: [UIImageView] = [firstRisingContentsImageView, secondRisingContentsImageView, thirdRisingContentsImageView, mainRecommendContentsImageView]
+        
+        configureImageViewStyles(imageViews: imageViews)
         playButtonTapped(UIButton())
     }
     
-    private func updateRandomContents() {
-        let imageViews: [UIImageView] = [firstRisingContentsImageView, secondRisingContentsImageView, thirdRisingContentsImageView, mainRecommendContentsImageView]
+    private func updateRandomContents(imageViews: [UIImageView]) {
         
         contentsList.shuffle()
         for (index, imageView) in imageViews.enumerated() {
@@ -73,7 +83,9 @@ final class HomeViewController: UIViewController {
     }
     
     @IBAction private func playButtonTapped(_ sender: UIButton) {
-        updateRandomContents()
+        let imageViews: [UIImageView] = [firstRisingContentsImageView, secondRisingContentsImageView, thirdRisingContentsImageView, mainRecommendContentsImageView]
+
+        updateRandomContents(imageViews: imageViews)
         updateContentBadges()
     }
 }

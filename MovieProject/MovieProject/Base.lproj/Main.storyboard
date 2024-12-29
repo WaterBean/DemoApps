@@ -158,7 +158,7 @@
         <!--저장한 콘텐츠 목록-->
         <scene sceneID="oEZ-9R-GfK">
             <objects>
-                <viewController id="5Ga-8C-UwI" sceneMemberID="viewController">
+                <viewController id="5Ga-8C-UwI" customClass="SavedContentsViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xEV-3U-nyG">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

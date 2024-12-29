@@ -21,8 +21,10 @@ final class NewAndHotViewController: UIViewController {
             $0?.layer.backgroundColor = UIColor.black.cgColor
             $0?.setTitleColor(.white, for: .normal)
             $0?.layer.cornerRadius = 20
-
         }
+        
+        noResultLabel.numberOfLines = 2
+        
     }
     
     @IBAction func toBeReleasedButtonTapped(_ sender: UIButton) {
@@ -31,11 +33,10 @@ final class NewAndHotViewController: UIViewController {
         buttons.forEach {
             $0?.layer.backgroundColor = UIColor.black.cgColor
             $0?.setTitleColor(.white, for: .normal)
-
         }
         sender.backgroundColor = .white
         sender.setTitleColor(.black, for: .normal)
-        noResultLabel.text = "이런! 찾으시는 작품이 없습니다."
+        noResultLabel.text = "이런! 찾으시는 \(sender.currentTitle!) 작품이 없습니다."
     }
     
 }

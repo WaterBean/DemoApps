@@ -8,10 +8,10 @@
 import UIKit
 
 final class NewAndHotViewController: UIViewController {
-    @IBOutlet var toBeReleasedButton: UIButton!
-    @IBOutlet var popularContentButton: UIButton!
-    @IBOutlet var topTenSeriesButton: UIButton!
-    @IBOutlet var noResultLabel: UILabel!
+    @IBOutlet private var toBeReleasedButton: UIButton!
+    @IBOutlet private var popularContentButton: UIButton!
+    @IBOutlet private var topTenSeriesButton: UIButton!
+    @IBOutlet private var noResultLabel: UILabel!
     
     private func configureButtons(_ buttons: [UIButton?]) {
         buttons.forEach {
@@ -31,7 +31,7 @@ final class NewAndHotViewController: UIViewController {
         
     }
     
-    @IBAction func toBeReleasedButtonTapped(_ sender: UIButton) {
+    @IBAction private func updateCategoryStateAndContent(_ sender: UIButton) {
         let buttons = [toBeReleasedButton, popularContentButton, topTenSeriesButton]
         
         configureButtons(buttons)

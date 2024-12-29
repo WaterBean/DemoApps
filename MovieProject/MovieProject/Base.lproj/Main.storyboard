@@ -278,7 +278,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="toBeReleasedButtonTapped:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="CRj-5y-L8c"/>
+                                    <action selector="updateCategoryStateAndContent:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="CRj-5y-L8c"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이런! 찾으시는 작품이 없습니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SY6-UE-bpF">
@@ -307,7 +307,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="toBeReleasedButtonTapped:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="hrE-dP-JKb"/>
+                                    <action selector="updateCategoryStateAndContent:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="hrE-dP-JKb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghS-Zb-1eb">
@@ -322,7 +322,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="toBeReleasedButtonTapped:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="nLU-HV-5dY"/>
+                                    <action selector="updateCategoryStateAndContent:" destination="iCU-Q0-eyx" eventType="touchUpInside" id="nLU-HV-5dY"/>
                                 </connections>
                             </button>
                         </subviews>

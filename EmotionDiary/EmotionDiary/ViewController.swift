@@ -45,7 +45,9 @@ final class ViewController: UIViewController {
     }
     
     private func updateEmotionLabels() {
-        emotionLabels.forEach { updateEmotionLabel(at: $0.tag)
+        emotionLabels.forEach {
+            updateEmotionLabel(at: $0.tag)
+            $0.textAlignment = .center
         }
     }
 

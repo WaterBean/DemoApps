@@ -34,6 +34,7 @@ final class ViewController: UIViewController {
         searchTextField.layer.borderColor = UIColor.black.cgColor
         searchTextField.frame.size.height = 44
         searchTextField.autocorrectionType = .no
+        searchTextField.returnKeyType = .search
     }
     
     private func configureSearchSuggestions() {

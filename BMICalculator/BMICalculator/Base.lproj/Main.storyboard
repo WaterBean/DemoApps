@@ -28,7 +28,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peu-H4-3dD">
-                                <rect key="frame" x="31" y="293" width="209" height="21"/>
+                                <rect key="frame" x="31" y="298" width="209" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -41,7 +41,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GW2-q3-Lbz">
-                                <rect key="frame" x="31" y="423" width="209" height="21"/>
+                                <rect key="frame" x="31" y="428" width="209" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -91,6 +91,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crx-CI-9KQ">
+                                <rect key="frame" x="16" y="571" width="125" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DpF-1U-qn2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWs-Aa-28z">
+                                <rect key="frame" x="11" y="519" width="134" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="resetButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DTS-6D-I4C"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -101,7 +119,9 @@
                         <outlet property="nicknameLabel" destination="RVl-Lb-MJ0" id="zAZ-cC-bYJ"/>
                         <outlet property="nicknameTextField" destination="hpZ-qW-NnA" id="2LR-Pt-pcZ"/>
                         <outlet property="randomInputButton" destination="gYX-CA-z2b" id="CIP-oO-r5y"/>
+                        <outlet property="resetButton" destination="WWs-Aa-28z" id="hqX-8Y-5Pd"/>
                         <outlet property="resultButton" destination="jpj-jM-UYx" id="cRB-9p-pdQ"/>
+                        <outlet property="saveButton" destination="Crx-CI-9KQ" id="S7b-IK-UPe"/>
                         <outlet property="tallTextField" destination="9q3-cg-i0Q" id="eDE-ya-k5c"/>
                         <outlet property="tallTextFieldDescriptionLabel" destination="peu-H4-3dD" id="uyN-G2-kXM"/>
                         <outlet property="titleLabel" destination="tcq-5L-0bX" id="Q2t-mn-L8d"/>

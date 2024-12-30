@@ -13,7 +13,8 @@ final class HomeViewController: UIViewController {
     @IBOutlet private var firstRisingContentsImageView: UIImageView!
     @IBOutlet private var secondRisingContentsImageView: UIImageView!
     @IBOutlet private var thirdRisingContentsImageView: UIImageView!
-    
+
+    @IBOutlet var backgroundGradientImageView: UIImageView!
     
     @IBOutlet private var isTopTen: [UIImageView]!
     @IBOutlet private var isNewEpisode: [UIImageView]!
@@ -60,9 +61,10 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let imageViews: [UIImageView] = [firstRisingContentsImageView, secondRisingContentsImageView, thirdRisingContentsImageView, mainRecommendContentsImageView]
+        let imageViews: [UIImageView] = [firstRisingContentsImageView, secondRisingContentsImageView, thirdRisingContentsImageView, mainRecommendContentsImageView,backgroundGradientImageView]
         
         configureImageViewStyles(imageViews: imageViews)
+        
         playButtonTapped(UIButton())
     }
     

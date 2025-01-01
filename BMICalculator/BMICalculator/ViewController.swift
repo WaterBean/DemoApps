@@ -80,10 +80,6 @@ final class ViewController: UIViewController {
         nicknameTextField.text = UserDefaults.standard.string(forKey: "nickname")
         tallTextField.text = String(UserDefaults.standard.double(forKey: "tall"))
         weightTextField.text = String(UserDefaults.standard.double(forKey: "weight"))
-        
-        
-        
-        
     }
 
     func calculateBMI(tall: Double, weight: Double)-> Double {

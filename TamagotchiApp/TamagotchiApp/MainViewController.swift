@@ -19,6 +19,7 @@ final class MainViewController: UIViewController {
     @IBOutlet var tamagotchiWaterNumberTextField: UITextField!
     @IBOutlet var tamagotchiFeedButton: UIButton!
     @IBOutlet var tamagotchiWaterButton: UIButton!
+    @IBOutlet var tamagotchiNameLabel: MyLabel!
     
     let user = User.shared
     let tamagotchi = Tamagotchi()
@@ -38,20 +39,29 @@ final class MainViewController: UIViewController {
         
         tamagotchiImageView.image = UIImage(named: "2-1")
         tamagotchiImageView.contentMode = .scaleAspectFit
-        tamagotchiStatusLabel.text = "LV\(tamagotchi.level) 밥알 \(tamagotchi.foodCount)개 물방울 \(tamagotchi.waterCount)개"
+        tamagotchiStatusLabel.text = "LV\(tamagotchi.level) · 밥알 \(tamagotchi.foodCount)개 · 물방울 \(tamagotchi.waterCount)개"
+        tamagotchiStatusLabel.font = .systemFont(ofSize: 12)
         
         tamagotchiStatusLabel.textAlignment  = .center
         tamagotchiStatusLabel.numberOfLines = 5
         
         tamagotchiFeedNumberTextField.addBottomLine()
         tamagotchiFeedNumberTextField.placeholder = "밥주세용"
-        
+        tamagotchiFeedNumberTextField.textAlignment = .center
         tamagotchiWaterNumberTextField.addBottomLine()
         tamagotchiWaterNumberTextField.placeholder = "물주세용"
+        tamagotchiWaterNumberTextField.textAlignment = .center
+        
+        tamagotchiNameLabel.text = "방실방실 다마고치"
+        tamagotchiNameLabel.textAlignment = .center
+        tamagotchiNameLabel.layer.borderWidth = 1
+        tamagotchiNameLabel.layer.borderColor = UIColor.black.cgColor
+        tamagotchiNameLabel.layer.cornerRadius = 6
 
         // TODO: - button configuration, updatehandler로 스타일, 로직 짜보기
     
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -68,10 +78,11 @@ final class MainViewController: UIViewController {
         bubbleLabel.text = "밥과 물을 잘먹었더니 레벨업 했어요 고마워요 \(user.name)님."
     }
     
-    
 
 }
 
+
+// MARK: - Custom Class
 final class User {
     @MainActor static let shared = User()
     private init() { }
@@ -120,7 +131,7 @@ final class Tamagotchi {
     }
 }
 
-
+// MARK: - Custom UI
 extension UITextField {
     func addBottomLine() {
         let bottomLine = CALayer()
@@ -129,4 +140,31 @@ extension UITextField {
         self.borderStyle = .none
         self.layer.addSublayer(bottomLine)
     }
+}
+
+final class MyLabel: UILabel {
+    
+    var topInset: CGFloat = 4.0
+    var bottomInset: CGFloat = 4.0
+    var leftInset: CGFloat = 8.0
+    var rightInset: CGFloat = 8.0
+    
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
+    }
+
+    override var bounds: CGRect {
+        didSet {
+            preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
+        }
+    }
+
 }

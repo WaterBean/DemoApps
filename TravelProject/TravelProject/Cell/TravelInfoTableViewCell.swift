@@ -9,6 +9,15 @@ import UIKit
 
 class TravelInfoTableViewCell: UITableViewCell {
 
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    
+    @IBOutlet var infoLabel: UILabel!
+    
+    @IBOutlet var travelInfoImageView: UIImageView!
+    
+    @IBOutlet var likeButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

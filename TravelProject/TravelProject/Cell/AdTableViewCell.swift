@@ -9,6 +9,9 @@ import UIKit
 
 class AdTableViewCell: UITableViewCell {
 
+    @IBOutlet var adLabel: UILabel!
+    @IBOutlet var contentLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

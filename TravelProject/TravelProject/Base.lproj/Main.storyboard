@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="153" id="0Fy-rb-fEF" customClass="TravelInfoTableViewCell" customModule="TravelProject" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TravelInfoTableViewCell" rowHeight="153" id="0Fy-rb-fEF" customClass="TravelInfoTableViewCell" customModule="TravelProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="153"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Fy-rb-fEF" id="qbY-cl-Y3D">
@@ -155,9 +155,13 @@
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uu9-KJ-i4P">
-                                            <rect key="frame" x="302" y="16.000000000000004" width="75" height="34.333333333333343"/>
+                                            <rect key="frame" x="333" y="16" width="44" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="uu9-KJ-i4P" secondAttribute="height" multiplier="1:1" id="DZ3-gC-gDw"/>
+                                                <constraint firstAttribute="width" constant="44" id="IIA-vc-xDK"/>
+                                            </constraints>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -171,8 +175,15 @@
                                         <constraint firstAttribute="trailing" secondItem="qTW-jd-bbg" secondAttribute="trailing" constant="16" id="vPm-8N-XdN"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="infoLabel" destination="eqr-Dn-9Oa" id="agf-h0-kG3"/>
+                                    <outlet property="likeButton" destination="uu9-KJ-i4P" id="ZIj-oC-cYp"/>
+                                    <outlet property="subTitleLabel" destination="cX0-ez-4mi" id="Kja-tP-xYX"/>
+                                    <outlet property="titleLabel" destination="9co-Ep-UTq" id="EOS-Gx-7bk"/>
+                                    <outlet property="travelInfoImageView" destination="qTW-jd-bbg" id="ihl-qs-3wp"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="153" id="I1x-3U-GeB" customClass="AdTableViewCell" customModule="TravelProject" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdTableViewCell" rowHeight="153" id="I1x-3U-GeB" customClass="AdTableViewCell" customModule="TravelProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="203" width="393" height="153"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I1x-3U-GeB" id="cac-ff-80A">
@@ -199,6 +210,10 @@
                                         <constraint firstItem="X7c-HB-ReM" firstAttribute="centerY" secondItem="cac-ff-80A" secondAttribute="centerY" id="jbd-b0-ffa"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="adLabel" destination="sFO-91-4J9" id="vF3-rX-M9Z"/>
+                                    <outlet property="contentLabel" destination="X7c-HB-ReM" id="dlZ-Zh-7uf"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -384,6 +399,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="cAN-e9-776" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uSa-uf-lUX">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -401,6 +417,7 @@
     <resources>
         <image name="2.circle" catalog="system" width="128" height="123"/>
         <image name="3.circle" catalog="system" width="128" height="123"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <image name="magazine" catalog="system" width="110" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

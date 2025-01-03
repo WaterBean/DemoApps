@@ -21,6 +21,10 @@ final class SetUserNameViewController: UIViewController {
         userNameNavigationItem.title = "대장님 이름 정하기"
         userNameNavigationItem.backButtonTitle = "설정"
         userNameNavigationItem.rightBarButtonItem?.title = "저장"
+        userNameNavigationItem.rightBarButtonItem?.tintColor = .black
+        userNameNavigationItem.backButtonTitle = "설정"
+        userNameNavigationItem.leftBarButtonItem?.tintColor = .black
+        
         
         
         userNameTextField.addBottomLine()

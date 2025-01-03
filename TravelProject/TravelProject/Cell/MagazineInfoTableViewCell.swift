@@ -9,6 +9,13 @@ import UIKit
 
 class MagazineInfoTableViewCell: UITableViewCell {
     
+    @IBOutlet var magazineImageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

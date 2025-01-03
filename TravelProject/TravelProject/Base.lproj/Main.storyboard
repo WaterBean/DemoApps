@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="457" id="kR0-G2-ABb" customClass="MagazineInfoTableViewCell" customModule="TravelProject" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MagazineInfoTableViewCell" rowHeight="457" id="kR0-G2-ABb" customClass="MagazineInfoTableViewCell" customModule="TravelProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="457"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kR0-G2-ABb" id="bbb-Ks-LaS">
@@ -61,6 +61,12 @@
                                         <constraint firstItem="Shu-1o-oTF" firstAttribute="top" secondItem="bbb-Ks-LaS" secondAttribute="topMargin" constant="16" id="zQF-GE-jCp"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="F9o-KJ-zpr" id="AVs-dp-fWA"/>
+                                    <outlet property="magazineImageView" destination="Shu-1o-oTF" id="smq-WL-Gcw"/>
+                                    <outlet property="subTitleLabel" destination="Lu6-aN-K4p" id="iCb-Sh-txh"/>
+                                    <outlet property="titleLabel" destination="Meg-Ml-BPw" id="726-nI-IBt"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

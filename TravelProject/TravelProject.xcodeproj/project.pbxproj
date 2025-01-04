@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		556007D02D2801A9008B18EA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 556007CF2D2801A9008B18EA /* Kingfisher */; };
+		556007D32D291383008B18EA /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 556007D22D291383008B18EA /* Cosmos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556007D32D291383008B18EA /* Cosmos in Frameworks */,
 				556007D02D2801A9008B18EA /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +86,7 @@
 			name = TravelProject;
 			packageProductDependencies = (
 				556007CF2D2801A9008B18EA /* Kingfisher */,
+				556007D22D291383008B18EA /* Cosmos */,
 			);
 			productName = TravelProject;
 			productReference = 5560077A2D27F119008B18EA /* TravelProject.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				556007CE2D2801A9008B18EA /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				556007D12D291383008B18EA /* XCRemoteSwiftPackageReference "Cosmos" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5560077B2D27F119008B18EA /* Products */;
@@ -366,6 +370,14 @@
 				minimumVersion = 8.1.3;
 			};
 		};
+		556007D12D291383008B18EA /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 25.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -373,6 +385,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 556007CE2D2801A9008B18EA /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		556007D22D291383008B18EA /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 556007D12D291383008B18EA /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

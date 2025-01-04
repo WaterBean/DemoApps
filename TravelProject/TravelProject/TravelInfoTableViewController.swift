@@ -15,6 +15,8 @@ class TravelInfoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 150
+        
+        navigationItem.title = "도시 상세 정보"
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,7 +33,7 @@ class TravelInfoTableViewController: UITableViewController {
         else {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "AdTableViewCell") as! AdTableViewCell
                 
-            cell
+            
             return cell
         }
         
@@ -42,22 +44,18 @@ class TravelInfoTableViewController: UITableViewController {
         cell.titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         
         
-        cell.subTitleLabel.text = row.description
+        cell.subTitleLabel.text = description
         cell.subTitleLabel.textColor = .systemGray
         cell.subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
         cell.subTitleLabel.numberOfLines = 2
         
-        cell.infoLabel.text = "저장 \(row.save)"
+                
+        cell.infoLabel.text = " · 저장 \(save.formatted(.number))"
         cell.infoLabel.textColor = .systemGray3
         cell.infoLabel.font = .systemFont(ofSize: 14, weight: .medium)
         
-        
-        if let image = row.travel_image {
-            let url = URL(string: image)
-            cell.travelInfoImageView.kf.setImage(with: url)
-        } else {
-            cell.travelInfoImageView.image = UIImage(systemName: "person")
-        }
+        let url = URL(string: image)
+        cell.travelInfoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "person"))
         cell.travelInfoImageView.contentMode = .scaleAspectFill
         cell.travelInfoImageView.clipsToBounds = true
         cell.travelInfoImageView.layer.cornerRadius = 12

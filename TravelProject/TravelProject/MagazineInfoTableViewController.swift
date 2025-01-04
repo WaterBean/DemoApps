@@ -38,7 +38,8 @@ final class MagazineInfoTableViewController: UITableViewController {
             cell.magazineImageView.image = UIImage(systemName: "image")
         }
         cell.magazineImageView.contentMode = .scaleAspectFill
-
+        cell.magazineImageView.clipsToBounds = true
+        cell.magazineImageView.layer.cornerRadius = 16
         
         cell.titleLabel.text = row.title
         cell.titleLabel.numberOfLines = 2
@@ -46,21 +47,19 @@ final class MagazineInfoTableViewController: UITableViewController {
         cell.subTitleLabel.text = row.subtitle
         cell.subTitleLabel.textColor = .systemGray2
         cell.subTitleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
-        // TODO: - DateFormatter timezone setting, formatting, optional unwrapping
+        
         formatter.dateFormat = "yyMMdd"
-        formatter.locale = .current
-        formatter.timeZone = .autoupdatingCurrent
-    
-        let date = "\(formatter.date(from: row.date))"
-
+        let date = formatter.date(from: row.date)
+        formatter.dateFormat = "yy년 MM월 dd일"
+        let dateString = formatter.string(for: date)
+        
+        cell.dateLabel.text = dateString
         cell.dateLabel.textAlignment = .right
-        cell.dateLabel.text = date
         cell.dateLabel.textColor = .systemGray2
         cell.dateLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         return cell
     }
+    
+    
 }
-
-
-

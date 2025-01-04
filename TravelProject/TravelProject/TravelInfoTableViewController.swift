@@ -10,18 +10,31 @@ import Kingfisher
 
 class TravelInfoTableViewController: UITableViewController {
     
-    var travelInfo = TravelInfo().travel
+    var travelInfo = TravelInfo().travel {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 150
         
         navigationItem.title = "도시 상세 정보"
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if travelInfo[indexPath.row].ad == true {
+            return 100
+        } else {
+            return 150
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return travelInfo.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = travelInfo[indexPath.row]
@@ -29,10 +42,24 @@ class TravelInfoTableViewController: UITableViewController {
         guard let description = row.description,
               let save = row.save,
               let image = row.travel_image,
-              let grade = row.grade
+              let grade = row.grade,
+              row.ad == false
         else {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "AdTableViewCell") as! AdTableViewCell
-                
+            
+            cell.contentLabel.text =  row.title
+            cell.contentLabel.font =  .boldSystemFont(ofSize: 18)
+            cell.contentLabel.numberOfLines = 0
+            cell.contentLabel.textAlignment = .center
+            
+            cell.adLabel.backgroundColor = .white
+            cell.adLabel.clipsToBounds = true
+            cell.adLabel.layer.cornerRadius = 4
+            
+            // TODO: - reloaddata시 색이 바뀌는데 안바뀌게 하려면?
+            cell.backgroundColor = [.cyan,.magenta,.yellow].randomElement()!
+            cell.layer.cornerRadius = 12
+            cell.clipsToBounds = true
             
             return cell
         }
@@ -43,28 +70,37 @@ class TravelInfoTableViewController: UITableViewController {
         cell.titleLabel.text = row.title
         cell.titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         
-        
         cell.subTitleLabel.text = description
         cell.subTitleLabel.textColor = .systemGray
         cell.subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
         cell.subTitleLabel.numberOfLines = 2
         
-                
+        cell.starView.rating = grade
+        cell.starView.settings.updateOnTouch = false
+        
         cell.infoLabel.text = " · 저장 \(save.formatted(.number))"
         cell.infoLabel.textColor = .systemGray3
         cell.infoLabel.font = .systemFont(ofSize: 14, weight: .medium)
         
         let url = URL(string: image)
-        cell.travelInfoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "person"))
+        cell.travelInfoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "photo.on.rectangle"))
         cell.travelInfoImageView.contentMode = .scaleAspectFill
         cell.travelInfoImageView.clipsToBounds = true
         cell.travelInfoImageView.layer.cornerRadius = 12
         
         
-        let likeimage = row.like ?? false ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-        cell.likeButton.setImage(likeimage, for: .normal)
+        let (likeImage, color) = row.like ?? false ? (UIImage(systemName: "heart.fill"), UIColor.systemPink) : (UIImage(systemName: "heart"), UIColor.white)
+        cell.likeButton.setImage(likeImage, for: .normal)
+        cell.likeButton.tintColor = color
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
+        cell.likeButton.tag = indexPath.row
         
         return cell
+    }
+    
+    @objc func likeButtonTapped (_ sender: UIButton){
+        travelInfo[sender.tag].like?.toggle()
+        
     }
     
 }

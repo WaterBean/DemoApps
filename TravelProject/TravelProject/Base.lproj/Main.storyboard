@@ -191,6 +191,7 @@
                                 <connections>
                                     <outlet property="infoLabel" destination="eqr-Dn-9Oa" id="agf-h0-kG3"/>
                                     <outlet property="likeButton" destination="uu9-KJ-i4P" id="ZIj-oC-cYp"/>
+                                    <outlet property="starView" destination="YiF-Tj-45I" id="G6b-9G-004"/>
                                     <outlet property="subTitleLabel" destination="cX0-ez-4mi" id="Kja-tP-xYX"/>
                                     <outlet property="titleLabel" destination="9co-Ep-UTq" id="EOS-Gx-7bk"/>
                                     <outlet property="travelInfoImageView" destination="qTW-jd-bbg" id="ihl-qs-3wp"/>
@@ -203,8 +204,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="153"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFO-91-4J9">
-                                            <rect key="frame" x="358" y="5.9999999999999982" width="23" height="20.333333333333329"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" AD " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFO-91-4J9">
+                                            <rect key="frame" x="349.33333333333331" y="5.9999999999999982" width="31.666666666666686" height="20.333333333333329"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

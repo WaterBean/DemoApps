@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class TravelInfoTableViewCell: UITableViewCell {
 
@@ -14,6 +15,7 @@ class TravelInfoTableViewCell: UITableViewCell {
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var travelInfoImageView: UIImageView!
     @IBOutlet var likeButton: UIButton!
+    @IBOutlet var starView: CosmosView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

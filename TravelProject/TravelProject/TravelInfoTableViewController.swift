@@ -23,6 +23,13 @@ class TravelInfoTableViewController: UITableViewController {
         
     }
     
+    @objc func likeButtonTapped (_ sender: UIButton){
+        travelInfo[sender.tag].like?.toggle()
+    }
+}
+
+
+extension TravelInfoTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if travelInfo[indexPath.row].ad == true {
             return 100
@@ -47,6 +54,8 @@ class TravelInfoTableViewController: UITableViewController {
         else {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "AdTableViewCell") as! AdTableViewCell
             
+            cell.selectionStyle = .none
+            
             cell.contentLabel.text =  row.title
             cell.contentLabel.font =  .boldSystemFont(ofSize: 18)
             cell.contentLabel.numberOfLines = 0
@@ -57,7 +66,11 @@ class TravelInfoTableViewController: UITableViewController {
             cell.adLabel.layer.cornerRadius = 4
             
             // TODO: - reloaddata시 색이 바뀌는데 안바뀌게 하려면?
-            cell.backgroundColor = [.cyan,.magenta,.yellow].randomElement()!
+            let color: [UIColor] = [.cyan,.magenta,.yellow]
+            cell.tag = indexPath.row
+            
+            cell.backgroundColor = color[indexPath.row % color.count]
+            
             cell.layer.cornerRadius = 12
             cell.clipsToBounds = true
             
@@ -66,6 +79,7 @@ class TravelInfoTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelInfoTableViewCell") as! TravelInfoTableViewCell
         
+        cell.selectionStyle = .none
         
         cell.titleLabel.text = row.title
         cell.titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -97,10 +111,4 @@ class TravelInfoTableViewController: UITableViewController {
         
         return cell
     }
-    
-    @objc func likeButtonTapped (_ sender: UIButton){
-        travelInfo[sender.tag].like?.toggle()
-        
-    }
-    
 }

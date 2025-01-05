@@ -19,7 +19,7 @@ class ShoppingTableViewController: UITableViewController {
         ShoppingItem("양말", isChecked: false, isStarred: true)
     ] {
         didSet {
-            tableView.reloadData()
+            print(self.list)
         }
     }
     override func viewDidLoad() {
@@ -29,13 +29,35 @@ class ShoppingTableViewController: UITableViewController {
         
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray6
+        
         addButton.tintColor = .black
     }
  
     @IBAction func addButtonTapped(_ sender: UIButton) {
-        list.append(ShoppingItem(textField.text!))
+        let text = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if text == "" {
+            
+        } else {
+            list.append(ShoppingItem(text))
+            tableView.reloadData()
+        }
     }
     
+    @objc func checkboxTapped(_ sender: UITapGestureRecognizer) {
+        if let cell = sender.view?.superview?.superview?.superview as? UITableViewCell,
+           let indexPath = tableView.indexPath(for: cell) {
+            list[indexPath.row].isChecked.toggle()
+            tableView.reloadData()
+        }
+    }
+
+    @objc func starTapped(_ sender: UITapGestureRecognizer) {
+        if let cell = sender.view?.superview?.superview?.superview as? UITableViewCell,
+           let indexPath = tableView.indexPath(for: cell) {
+            list[indexPath.row].isStarred.toggle()
+            tableView.reloadData()
+        }
+    }
     
 }
 
@@ -83,20 +105,18 @@ extension ShoppingTableViewController {
         return cell
     }
     
-    @objc func checkboxTapped(_ sender: UITapGestureRecognizer) {
-        if let cell = sender.view?.superview?.superview?.superview as? UITableViewCell,
-           let indexPath = tableView.indexPath(for: cell) {
-            list[indexPath.row].isChecked.toggle()
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            list.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade) // tableView.reloadData() 기능을 내장하고있음
+        } else if editingStyle == .insert {
+            
+            tableView.insertRows(at: [indexPath], with: .fade)
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
-    @objc func starTapped(_ sender: UITapGestureRecognizer) {
-        if let cell = sender.view?.superview?.superview?.superview as? UITableViewCell,
-           let indexPath = tableView.indexPath(for: cell) {
-            list[indexPath.row].isStarred.toggle()
-        }
-    }
-
+    
+    
 }
 
 // MARK: - Model

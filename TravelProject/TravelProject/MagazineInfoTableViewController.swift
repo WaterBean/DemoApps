@@ -13,7 +13,6 @@ final class MagazineInfoTableViewController: UITableViewController {
     var magazine = MagazineInfo().magazine
     let formatter = DateFormatter()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,8 +20,12 @@ final class MagazineInfoTableViewController: UITableViewController {
         tableView.rowHeight = 500
         
     }
+    
+    
+}
 
 
+extension MagazineInfoTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return magazine.count
     }
@@ -60,6 +63,4 @@ final class MagazineInfoTableViewController: UITableViewController {
         
         return cell
     }
-    
-    
 }

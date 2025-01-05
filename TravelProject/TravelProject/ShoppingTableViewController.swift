@@ -26,7 +26,7 @@ class ShoppingTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.rowHeight = 50
-        
+
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray6
         
@@ -81,8 +81,6 @@ extension ShoppingTableViewController {
         let star = cell.contentView.viewWithTag(3) as? UIImageView
         let cellBackgroundView = cell.contentView.viewWithTag(4)
 
-        // ???: - viewWithTag + 타입 변환을 사용하지 않으면서 테이블 뷰의 요소를 가져올 방법은 없을까?
-        // 조금 더 시멘틱하게, 타입 safety하게 작성하고 싶음
         checkbox?.isUserInteractionEnabled = true
         star?.isUserInteractionEnabled = true
                 
@@ -108,7 +106,7 @@ extension ShoppingTableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             list.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade) // tableView.reloadData() 기능을 내장하고있음
+            tableView.deleteRows(at: [indexPath], with: .fade) // tableView.reloadData() 기능을 내장
         } else if editingStyle == .insert {
             
             tableView.insertRows(at: [indexPath], with: .fade)
@@ -116,6 +114,21 @@ extension ShoppingTableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let likeAction = UIContextualAction(style: .normal, title: "즐겨찾기", handler: {(action, view, completionHandler) in
+            completionHandler(true)
+        })
+        let checkAction = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
+            completionHandler(true)
+        })
+        
+        likeAction.backgroundColor = .orange
+        
+        checkAction.image = UIImage(systemName: "checkmark")
+        checkAction.backgroundColor = .systemGreen
+        
+        return UISwipeActionsConfiguration(actions: [likeAction,checkAction])
+    }
     
 }
 

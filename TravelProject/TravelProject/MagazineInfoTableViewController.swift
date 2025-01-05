@@ -17,7 +17,9 @@ final class MagazineInfoTableViewController: UITableViewController {
         super.viewDidLoad()
 
         navigationItem.title = "SeSAC TRAVEL"
+        
         tableView.rowHeight = 500
+        tableView.separatorStyle = .none
         
     }
     

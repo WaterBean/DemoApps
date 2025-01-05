@@ -68,11 +68,15 @@ extension TravelInfoTableViewController {
             // TODO: - reloaddata시 색이 바뀌는데 안바뀌게 하려면?
             let color: [UIColor] = [.cyan,.magenta,.yellow]
             cell.tag = indexPath.row
+            if let prevCell = tableView.cellForRow(at: [indexPath.section, indexPath.row - 1]) as? TravelInfoTableViewCell {
+                prevCell.separatorInset = UIEdgeInsets(top: 0, left: view.frame.width, bottom: 0, right: 0)
+            }
             
             cell.backgroundColor = color[indexPath.row % color.count]
-            
+            cell.separatorInset = UIEdgeInsets(top: 0, left: view.frame.width, bottom: 0, right: 0)
             cell.layer.cornerRadius = 12
             cell.clipsToBounds = true
+            
             
             return cell
         }
@@ -80,6 +84,7 @@ extension TravelInfoTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelInfoTableViewCell") as! TravelInfoTableViewCell
         
         cell.selectionStyle = .none
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         cell.titleLabel.text = row.title
         cell.titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)

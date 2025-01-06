@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class MagazineInfoTableViewController: UITableViewController {
-
     private var magazine = MagazineInfo().magazine
     let formatter = DateFormatter()
 
@@ -34,7 +32,7 @@ extension MagazineInfoTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MagazineInfoTableViewCell") as! MagazineInfoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MagazineInfoTableViewCell.identifier) as! MagazineInfoTableViewCell
         let row = magazine[indexPath.row]
         
         if let url = URL(string: row.photo_image) {

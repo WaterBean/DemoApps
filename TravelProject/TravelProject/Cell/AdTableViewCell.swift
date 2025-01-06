@@ -7,8 +7,9 @@
 
 import UIKit
 
-class AdTableViewCell: UITableViewCell {
+final class AdTableViewCell: UITableViewCell {
 
+    static let identifier = "TravelInfoTableViewCell"
     @IBOutlet var adLabel: UILabel!
     @IBOutlet var contentLabel: UILabel!
     

@@ -53,7 +53,7 @@ extension TravelInfoTableViewController {
               let grade = row.grade,
               row.ad == false
         else {
-            let cell  = tableView.dequeueReusableCell(withIdentifier: "AdTableViewCell") as! AdTableViewCell
+            let cell  = tableView.dequeueReusableCell(withIdentifier: AdTableViewCell.identifier) as! AdTableViewCell
             
             cell.contentLabel.text =  row.title
             cell.contentLabel.font =  .boldSystemFont(ofSize: 18)
@@ -73,7 +73,7 @@ extension TravelInfoTableViewController {
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TravelInfoTableViewCell") as! TravelInfoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TravelInfoTableViewCell.identifier) as! TravelInfoTableViewCell
         
         cell.selectionStyle = .none
         

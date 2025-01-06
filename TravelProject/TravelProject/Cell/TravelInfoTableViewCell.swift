@@ -8,8 +8,9 @@
 import UIKit
 import Cosmos
 
-class TravelInfoTableViewCell: UITableViewCell {
+final class TravelInfoTableViewCell: UITableViewCell {
 
+    static let identifier = "TravelInfoTableViewCell"
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!

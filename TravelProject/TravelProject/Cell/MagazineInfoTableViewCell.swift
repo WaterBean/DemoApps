@@ -7,8 +7,9 @@
 
 import UIKit
 
-class MagazineInfoTableViewCell: UITableViewCell {
+final class MagazineInfoTableViewCell: UITableViewCell {
     
+    static let identifier = "MagazineInfoTableViewCell"
     @IBOutlet var magazineImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!

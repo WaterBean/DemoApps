@@ -123,5 +123,5 @@ struct Travel {
     let grade: Double?
     let save: Int?
     var like: Bool?
-    let ad: Bool?
+    let ad: Bool
 }

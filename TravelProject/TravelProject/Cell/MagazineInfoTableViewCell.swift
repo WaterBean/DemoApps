@@ -11,10 +11,10 @@ import Kingfisher
 final class MagazineInfoTableViewCell: UITableViewCell {
     
     static let identifier = "MagazineInfoTableViewCell"
-    @IBOutlet var magazineImageView: UIImageView!
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet private var magazineImageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subTitleLabel: UILabel!
+    @IBOutlet private var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

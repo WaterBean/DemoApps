@@ -49,11 +49,10 @@ extension TravelInfoTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: AdTableViewCell.identifier) as! AdTableViewCell
             cell.tag = indexPath.row
             cell.configureCell(row: row)
-            
+
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TravelInfoTableViewCell.identifier) as! TravelInfoTableViewCell
-            
             cell.tag = indexPath.row
             cell.configureCell(row)
             configPreviousAdCellSeparatorInset(indexPath, cell)

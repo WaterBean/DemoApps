@@ -18,9 +18,7 @@ final class MagazineInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        DispatchQueue.main.async {
-            self.setupUI()
-        }
+        self.setupUI()
     }
 
     private func setupUI() {

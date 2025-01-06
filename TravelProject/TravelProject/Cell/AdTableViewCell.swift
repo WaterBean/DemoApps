@@ -10,18 +10,25 @@ import UIKit
 final class AdTableViewCell: UITableViewCell {
     
     static let identifier = "AdTableViewCell"
-    private let adCellColor: [UIColor] = [.cyan,.magenta,.yellow]
     @IBOutlet private var adLabel: UILabel!
     @IBOutlet private var contentLabel: UILabel!
     
+    private var adCellColor: UIColor {
+        let color: [UIColor] = [.cyan, .magenta, .yellow]
+        return color[tag % color.count]
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        DispatchQueue.main.async {
-            self.setupUI()
-        }
+        setupUI()
     }
     
     private func setupUI() {
+        selectionStyle = .none
+        separatorInset = UIEdgeInsets(top: 0, left: frame.width, bottom: 0, right: 0)
+        layer.cornerRadius = 12
+        clipsToBounds = true
+        
         contentLabel.font =  .boldSystemFont(ofSize: 18)
         contentLabel.numberOfLines = 0
         contentLabel.textAlignment = .center
@@ -29,17 +36,11 @@ final class AdTableViewCell: UITableViewCell {
         adLabel.backgroundColor = .white
         adLabel.clipsToBounds = true
         adLabel.layer.cornerRadius = 4
-        
-        selectionStyle = .none
-        separatorInset = UIEdgeInsets(top: 0, left: frame.width, bottom: 0, right: 0)
-        layer.cornerRadius = 12
-        clipsToBounds = true
     }
     
     func configureCell(row: Travel) {
         contentLabel.text = row.title
-        backgroundColor = adCellColor[tag % adCellColor.count]
-        
+        backgroundColor = adCellColor
     }
     
 }

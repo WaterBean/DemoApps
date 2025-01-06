@@ -22,9 +22,7 @@ final class TravelInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        DispatchQueue.main.async {
-            self.setupUI()
-        }
+        setupUI()
     }
     
     private func setupUI() {
@@ -50,7 +48,8 @@ final class TravelInfoTableViewCell: UITableViewCell {
         guard let description = row.description,
               let save = row.save,
               let image = row.travel_image,
-              let grade = row.grade
+              let grade = row.grade,
+              let isLike = row.like
         else { return } // 하나라도 바인딩이 안된다면 전부 값을 안바꿔주는게 맞나?
         
         titleLabel.text = row.title
@@ -58,7 +57,7 @@ final class TravelInfoTableViewCell: UITableViewCell {
         starView.rating = grade
         infoLabel.text = " · 저장 \(save.formatted(.number))"
         
-        let (likeImage, color) = row.like ?? false ? (UIImage(systemName: "heart.fill"), UIColor.systemPink) : (UIImage(systemName: "heart"), UIColor.white)
+        let (likeImage, color) = getlikeButtonAttribute(isLike: isLike)
         likeButton.setImage(likeImage, for: .normal)
         likeButton.tintColor = color
         
@@ -67,5 +66,10 @@ final class TravelInfoTableViewCell: UITableViewCell {
 
     }
 
+    private func getlikeButtonAttribute(isLike: Bool) -> (UIImage?, UIColor) {
+        let (likeImage, color) = isLike ? (UIImage(systemName: "heart.fill"), UIColor.systemPink) : (UIImage(systemName: "heart"), UIColor.white)
+
+        return (likeImage, color)
+    }
 
 }

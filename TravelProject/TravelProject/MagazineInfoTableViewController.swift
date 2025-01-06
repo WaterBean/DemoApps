@@ -10,7 +10,7 @@ import Kingfisher
 
 final class MagazineInfoTableViewController: UITableViewController {
 
-    var magazine = MagazineInfo().magazine
+    private var magazine = MagazineInfo().magazine
     let formatter = DateFormatter()
 
     override func viewDidLoad() {

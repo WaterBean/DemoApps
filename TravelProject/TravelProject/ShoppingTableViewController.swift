@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ShoppingTableViewController: UITableViewController {
+final class ShoppingTableViewController: UITableViewController {
 
     @IBOutlet var textField: UITextField!
     @IBOutlet var addButton: UIButton!
     
-    var list: [ShoppingItem] = [
+    private var list: [ShoppingItem] = [
         ShoppingItem("그립톡 구매하기", isChecked: true, isStarred: false),
         ShoppingItem("사이다 구매", isChecked: false, isStarred: false),
         ShoppingItem("아이패드 케이스 최저가 알아보기", isChecked: false, isStarred: true),
@@ -107,18 +107,26 @@ extension ShoppingTableViewController {
         if editingStyle == .delete {
             list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade) // tableView.reloadData() 기능을 내장
-        } else if editingStyle == .insert {
-            
-            tableView.insertRows(at: [indexPath], with: .fade)
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let likeAction = UIContextualAction(style: .normal, title: "즐겨찾기", handler: {(action, view, completionHandler) in
+        let likeAction = UIContextualAction(style: .normal, title: "즐겨찾기", handler: { [unowned self] (action, view, completionHandler) in
+            self.list[indexPath.row].isStarred.toggle()
+            if let cell = tableView.cellForRow(at: indexPath) {
+                let star = cell.contentView.viewWithTag(3) as? UIImageView
+                let isStarred = self.list[indexPath.row].isStarred
+                star?.image = UIImage(systemName: isStarred ? "star.fill" : "star")
+            }
             completionHandler(true)
         })
-        let checkAction = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
+        let checkAction = UIContextualAction(style: .normal, title: "완료", handler: { [unowned self] (action, view, completionHandler) in
+            self.list[indexPath.row].isChecked.toggle()
+            if let cell = tableView.cellForRow(at: indexPath) {
+                let check = cell.contentView.viewWithTag(1) as? UIImageView
+                let isChecked = self.list[indexPath.row].isChecked
+                check?.image = UIImage(systemName: isChecked ? "checkmark.square.fill" : "checkmark.square")
+            }
             completionHandler(true)
         })
         

@@ -8,9 +8,11 @@
 import UIKit
 import Kingfisher
 
-class TravelInfoTableViewController: UITableViewController {
+final class TravelInfoTableViewController: UITableViewController {
     
-    var travelInfo = TravelInfo().travel {
+    let adCellColor: [UIColor] = [.cyan,.magenta,.yellow]
+
+    private var travelInfo = TravelInfo().travel {
         didSet {
             tableView.reloadData()
         }
@@ -20,7 +22,6 @@ class TravelInfoTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.title = "도시 상세 정보"
-        
     }
     
     @objc func likeButtonTapped (_ sender: UIButton){
@@ -54,8 +55,6 @@ extension TravelInfoTableViewController {
         else {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "AdTableViewCell") as! AdTableViewCell
             
-            cell.selectionStyle = .none
-            
             cell.contentLabel.text =  row.title
             cell.contentLabel.font =  .boldSystemFont(ofSize: 18)
             cell.contentLabel.numberOfLines = 0
@@ -65,18 +64,11 @@ extension TravelInfoTableViewController {
             cell.adLabel.clipsToBounds = true
             cell.adLabel.layer.cornerRadius = 4
             
-            // TODO: - reloaddata시 색이 바뀌는데 안바뀌게 하려면?
-            let color: [UIColor] = [.cyan,.magenta,.yellow]
-            cell.tag = indexPath.row
-            if let prevCell = tableView.cellForRow(at: [indexPath.section, indexPath.row - 1]) as? TravelInfoTableViewCell {
-                prevCell.separatorInset = UIEdgeInsets(top: 0, left: view.frame.width, bottom: 0, right: 0)
-            }
-            
-            cell.backgroundColor = color[indexPath.row % color.count]
+            cell.selectionStyle = .none
+            cell.backgroundColor = adCellColor[indexPath.row % adCellColor.count]
             cell.separatorInset = UIEdgeInsets(top: 0, left: view.frame.width, bottom: 0, right: 0)
             cell.layer.cornerRadius = 12
             cell.clipsToBounds = true
-            
             
             return cell
         }
@@ -84,7 +76,12 @@ extension TravelInfoTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelInfoTableViewCell") as! TravelInfoTableViewCell
         
         cell.selectionStyle = .none
-        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        if indexPath.row < travelInfo.count - 1 && travelInfo[indexPath.row + 1].ad == true {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: view.frame.width, bottom: 0, right: 0)
+        } else {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
         
         cell.titleLabel.text = row.title
         cell.titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -113,7 +110,7 @@ extension TravelInfoTableViewController {
         cell.likeButton.tintColor = color
         cell.likeButton.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
         cell.likeButton.tag = indexPath.row
-        
         return cell
     }
+
 }

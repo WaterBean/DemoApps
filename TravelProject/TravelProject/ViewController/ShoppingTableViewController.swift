@@ -1,6 +1,6 @@
 //
 //  ShoppingTableViewController.swift
-//  TamagotchiApp
+//  TravelProject
 //
 //  Created by 한수빈 on 1/2/25.
 //

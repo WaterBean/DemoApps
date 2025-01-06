@@ -373,6 +373,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
+                                        <action selector="textFieldDidEndOnExit:" destination="5ke-7e-dRI" eventType="editingDidEndOnExit" id="DPH-r9-hLP"/>
                                         <action selector="textFieldEditing:" destination="5ke-7e-dRI" eventType="editingChanged" id="ybX-1S-AkD"/>
                                     </connections>
                                 </textField>

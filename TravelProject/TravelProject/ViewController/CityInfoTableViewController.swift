@@ -9,16 +9,16 @@ import UIKit
 
 final class CityInfoTableViewController: UITableViewController {
     
-    @IBOutlet var textField: UITextField!
-    @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet private var textField: UITextField!
+    @IBOutlet private var segmentedControl: UISegmentedControl!
     
-    let list = CityInfo().city
-    lazy var selectedList = list {
+    private let list = CityInfo().city
+    private lazy var selectedList = list {
         didSet {
             filteredList = selectedList
         }
     }
-    lazy var filteredList = list {
+    private lazy var filteredList = list {
         didSet {
             self.tableView.reloadData()
         }
@@ -35,25 +35,36 @@ final class CityInfoTableViewController: UITableViewController {
         navigationItem.title = "인기 도시"
         
         textField.placeholder = "도시를 검색하세요"
+        textField.returnKeyType = .search
+        
         segmentedControl.setTitle("모두", forSegmentAt: 0)
         segmentedControl.setTitle("국내", forSegmentAt: 1)
         segmentedControl.setTitle("해외", forSegmentAt: 2)
         
     }
     
-    @IBAction func textFieldEditing(_ sender: UITextField) {
+    @IBAction private func textFieldEditing(_ sender: UITextField) {
         if let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
             searchCity(text)
         }
     }
     
-    @IBAction func segmentedControlSelected(_ sender: UISegmentedControl) {
+    @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
+        if let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            searchCity(text)
+        }
+        view.endEditing(true)
+    }
+    
+    
+    @IBAction private func segmentedControlSelected(_ sender: UISegmentedControl) {
+        
         selectedList = switch sender.selectedSegmentIndex {
         case 1: list.filter { $0.domestic_travel }
         case 2: list.filter { !$0.domestic_travel }
         default: CityInfo().city
         }
-         
+        view.endEditing(true)
     }
     
     private func searchCity(_ keyword: String) {
@@ -93,6 +104,9 @@ final class CityInfoTableViewController: UITableViewController {
         let attributeString = NSMutableAttributedString(string: text)
         attributeString.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: (text as NSString).range(of: textField.text!))
         return attributeString
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        view.endEditing(true)
     }
     
 }

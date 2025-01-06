@@ -8,7 +8,7 @@
 import UIKit
 
 final class ShoppingTableViewController: UITableViewController {
-
+    
     @IBOutlet var textField: UITextField!
     @IBOutlet var addButton: UIButton!
     
@@ -26,13 +26,13 @@ final class ShoppingTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.rowHeight = 50
-
+        
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray6
         
         addButton.tintColor = .black
     }
- 
+    
     @IBAction func addButtonTapped(_ sender: UIButton) {
         let text = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if text == "" {
@@ -50,7 +50,7 @@ final class ShoppingTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-
+    
     @objc func starTapped(_ sender: UITapGestureRecognizer) {
         if let cell = sender.view?.superview?.superview?.superview as? UITableViewCell,
            let indexPath = tableView.indexPath(for: cell) {
@@ -67,38 +67,28 @@ extension ShoppingTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.getDefaultIdentifier())!
         let data = list[indexPath.row]
         
-        cell.backgroundColor = .white
+        guard let checkbox = cell.contentView.viewWithTag(1) as? UIImageView,
+              let contents = cell.contentView.viewWithTag(2) as? UILabel,
+              let star = cell.contentView.viewWithTag(3) as? UIImageView,
+              let cellBackgroundView = cell.contentView.viewWithTag(4)
+        else {
+            return UITableViewCell()
+        }
         
-        let checkbox = cell.contentView.viewWithTag(1) as? UIImageView
-        let contents = cell.contentView.viewWithTag(2) as? UILabel
-        let star = cell.contentView.viewWithTag(3) as? UIImageView
-        let cellBackgroundView = cell.contentView.viewWithTag(4)
-
-        checkbox?.isUserInteractionEnabled = true
-        star?.isUserInteractionEnabled = true
-                
+        cell.configureUIForShoppingTableViewCell(data: data)
+        
         let checkboxTap = UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:)))
-        checkbox?.addGestureRecognizer(checkboxTap)
-        checkbox?.image = UIImage(systemName: data.isChecked ? "checkmark.square.fill" : "checkmark.square")
-        checkbox?.tintColor = .black
-
         let starTap = UITapGestureRecognizer(target: self, action: #selector(starTapped(_:)))
-        star?.addGestureRecognizer(starTap)
-        star?.image = UIImage(systemName: data.isStarred ? "star.fill" : "star")
-        star?.tintColor = .black
         
-        contents?.text = data.contents
-        
-        cellBackgroundView?.backgroundColor = .systemGray6
-        cellBackgroundView?.clipsToBounds = true
-        cellBackgroundView?.layer.cornerRadius = 4
+        checkbox.addGestureRecognizer(checkboxTap)
+        star.addGestureRecognizer(starTap)
         
         return cell
     }

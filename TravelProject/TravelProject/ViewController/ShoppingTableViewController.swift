@@ -74,21 +74,16 @@ extension ShoppingTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.getDefaultIdentifier())!
         let data = list[indexPath.row]
         
-        guard let checkbox = cell.contentView.viewWithTag(1) as? UIImageView,
-              let contents = cell.contentView.viewWithTag(2) as? UILabel,
-              let star = cell.contentView.viewWithTag(3) as? UIImageView,
-              let cellBackgroundView = cell.contentView.viewWithTag(4)
-        else {
-            return UITableViewCell()
-        }
+        let checkbox = cell.contentView.viewWithTag(1) as? UIImageView
+        let star = cell.contentView.viewWithTag(3) as? UIImageView
         
         cell.configureUIForShoppingTableViewCell(data: data)
         
         let checkboxTap = UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:)))
         let starTap = UITapGestureRecognizer(target: self, action: #selector(starTapped(_:)))
         
-        checkbox.addGestureRecognizer(checkboxTap)
-        star.addGestureRecognizer(starTap)
+        checkbox?.addGestureRecognizer(checkboxTap)
+        star?.addGestureRecognizer(starTap)
         
         return cell
     }

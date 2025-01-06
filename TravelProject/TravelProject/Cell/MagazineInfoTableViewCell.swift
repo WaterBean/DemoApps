@@ -26,11 +26,11 @@ final class MagazineInfoTableViewCell: UITableViewCell {
         magazineImageView.clipsToBounds = true
         magazineImageView.layer.cornerRadius = 16
 
-        titleLabel.numberOfLines = 2
         titleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
         
         subTitleLabel.textColor = .systemGray2
         subTitleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
+        subTitleLabel.numberOfLines = 0
 
         dateLabel.textAlignment = .right
         dateLabel.textColor = .systemGray2

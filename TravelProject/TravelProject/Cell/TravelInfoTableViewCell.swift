@@ -32,7 +32,7 @@ final class TravelInfoTableViewCell: UITableViewCell {
 
         subTitleLabel.textColor = .systemGray
         subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        subTitleLabel.numberOfLines = 2
+        subTitleLabel.numberOfLines = 0
 
         infoLabel.textColor = .systemGray3
         infoLabel.font = .systemFont(ofSize: 14, weight: .medium)

@@ -20,7 +20,7 @@ final class MagazineInfoTableViewController: UITableViewController {
     private func setupUI() {
         navigationItem.title = "SeSAC TRAVEL"
         
-        tableView.rowHeight = 500
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
     }
     

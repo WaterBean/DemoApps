@@ -33,7 +33,7 @@ extension TravelInfoTableViewController {
         if travelInfo[indexPath.row].ad == true {
             return 100
         } else {
-            return 150
+            return UITableView.automaticDimension
         }
     }
     

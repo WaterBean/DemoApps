@@ -11,7 +11,7 @@ final class CityInfoViewController: UIViewController {
     
     @IBOutlet private var textField: UITextField!
     @IBOutlet private var segmentedControl: UISegmentedControl!
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
     
     
     private let list = CityInfo().city
@@ -30,9 +30,24 @@ final class CityInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.register(UINib(nibName: CityInfoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: CityInfoCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
+        textField.delegate = self
+        
+        setupCollectionView()
+        
+        navigationItem.title = "인기 도시"
+        
+        textField.placeholder = "도시를 검색하세요"
+        textField.returnKeyType = .search
+
+        segmentedControl.setTitle("모두", forSegmentAt: 0)
+        segmentedControl.setTitle("국내", forSegmentAt: 1)
+        segmentedControl.setTitle("해외", forSegmentAt: 2)
+    }
+    
+    private func setupCollectionView() {
+        collectionView.register(UINib(nibName: CityInfoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: CityInfoCollectionViewCell.identifier)
         
         let layout = UICollectionViewFlowLayout()
         
@@ -41,54 +56,28 @@ final class CityInfoViewController: UIViewController {
         
         // (전체 화면 - 아이템 간격 - 양쪽 섹션 여백) / 2
         let width: CGFloat = (view.frame.width - itemSpacing - (sectionSpacing * 2.0)) / 2.0
-
+        
         // xib 비율에 맞게 조정
-        let itemWidth: CGFloat = width
-        let itemHeight = width * 3.0 / 2.0
+        let (itemWidth, itemHeight): (CGFloat, CGFloat) = (width, width * 3.0 / 2.0)
         
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: sectionSpacing)
-
+        
         // item간 간격 설정
-//        layout.minimumLineSpacing = 0
-//        layout.minimumInteritemSpacing = 0
-
+        //        layout.minimumLineSpacing = 0
+        //        layout.minimumInteritemSpacing = 0
+        
         collectionView.collectionViewLayout = layout
-        
-        navigationItem.title = "인기 도시"
-        
-        textField.placeholder = "도시를 검색하세요"
-        textField.returnKeyType = .search
-        
-
-        segmentedControl.setTitle("모두", forSegmentAt: 0)
-        segmentedControl.setTitle("국내", forSegmentAt: 1)
-        segmentedControl.setTitle("해외", forSegmentAt: 2)
-        
     }
-    
-    @IBAction private func textFieldEditing(_ sender: UITextField) {
-        if let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            searchCity(text)
-        }
-    }
-    
-    @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
-        if let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            searchCity(text)
-        }
-        view.endEditing(true)
-    }
-    
     
     @IBAction private func segmentedControlSelected(_ sender: UISegmentedControl) {
-        
         selectedList = switch sender.selectedSegmentIndex {
         case 1: list.filter { $0.domestic_travel }
         case 2: list.filter { !$0.domestic_travel }
-        default: CityInfo().city
+        default: list
         }
+        
         view.endEditing(true)
     }
     
@@ -111,6 +100,7 @@ final class CityInfoViewController: UIViewController {
 
 // MARK: - CollectionView Delegate, DataSource
 extension CityInfoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         filteredList.count
     }
@@ -118,11 +108,10 @@ extension CityInfoViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let row = filteredList[indexPath.row]
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityInfoCollectionViewCell.identifier, for: indexPath) as! CityInfoCollectionViewCell
+        guard let keyword = textField.text else { return CityInfoCollectionViewCell() }
         
-        cell.configureCell(row: row)
-
+        cell.configureCell(row: row, keyword: keyword)
         
         return cell
     }
@@ -131,4 +120,22 @@ extension CityInfoViewController: UICollectionViewDelegate, UICollectionViewData
         view.endEditing(true)
     }
     
+}
+
+
+// MARK: - TableView Delegate
+extension CityInfoViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            searchCity(text)
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            searchCity(text)
+        }
+        view.endEditing(true)
+        return true
+    }
 }

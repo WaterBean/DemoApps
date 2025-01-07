@@ -9,10 +9,10 @@ import UIKit
 import Kingfisher
 
 final class CityInfoCollectionViewCell: UICollectionViewCell {
-
+    
     static let identifier = "CityInfoCollectionViewCell"
     
-    @IBOutlet var cityImageView: UIImageView!
+    @IBOutlet private var cityImageView: UIImageView!
     @IBOutlet var cityNameLabel: UILabel!
     @IBOutlet var explainLabel: UILabel!
     
@@ -32,19 +32,26 @@ final class CityInfoCollectionViewCell: UICollectionViewCell {
         cityImageView.contentMode = .scaleAspectFill
         cityImageView.clipsToBounds = true
     }
-
-    func configureCell(row: City) {
+    
+    func configureCell(row: City, keyword: String) {
         cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
         explainLabel.text = "  " + row.city_explain
+        
+        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword)
+        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
+        explainLabel.attributedText = explainLabel.text?.toAttribute(keyword)
+        explainLabel.attributedText = explainLabel.text?.toAttribute(keyword.capitalized)
+        
+        
+        
         let placeholderImage = UIImage(systemName: "photo.artframe.circle")?
             .withRenderingMode(.alwaysTemplate)
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: self.frame.width))
         
-
         let url = URL(string: row.city_image)
         cityImageView.kf.setImage(with: url, placeholder: placeholderImage)
         cityImageView.layer.cornerRadius = self.frame.width / 2
-
+        
     }
     
 }

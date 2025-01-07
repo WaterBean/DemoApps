@@ -12,7 +12,7 @@ final class AdDetailViewController: UIViewController {
     static let identifier = "AdDetailViewController"
 
 
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
     
     var travelInfo: Travel?
 
@@ -33,7 +33,7 @@ final class AdDetailViewController: UIViewController {
         titleLabel.text = travelInfo?.title
     }
     
-    @objc func dismissAction() {
+    @objc private func dismissAction() {
         dismiss(animated: true)
     }
 

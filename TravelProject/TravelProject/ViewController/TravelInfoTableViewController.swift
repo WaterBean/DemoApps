@@ -91,6 +91,7 @@ extension TravelInfoTableViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: TravelInfoDetailViewController.identifier) as! TravelInfoDetailViewController
             
             vc.travelInfo = data
+            vc.hidesBottomBarWhenPushed = true
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
             backBarButtonItem.tintColor = .black
             navigationItem.backBarButtonItem = backBarButtonItem

@@ -49,7 +49,7 @@ final class CityInfoTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
+    @IBAction private func textFieldDidEndOnExit(_ sender: UITextField) {
         if let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
             searchCity(text)
         }
@@ -92,19 +92,11 @@ final class CityInfoTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityInfoTableViewCell.identifier) as! CityInfoTableViewCell
         let row = filteredList[indexPath.row]
         
-        cell.configureCell(row: row)
-        
-        cell.cityNameLabel.attributedText = highlightingLabel(text: cell.cityNameLabel.text!)
-        cell.explainLabel.attributedText = highlightingLabel(text: cell.explainLabel.text!)
+        cell.configureCell(row: row, keyword: textField.text!)
         
         return cell
     }
     
-    private func highlightingLabel(text: String)-> NSMutableAttributedString{
-        let attributeString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: (text as NSString).range(of: textField.text!))
-        return attributeString
-    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view.endEditing(true)
     }

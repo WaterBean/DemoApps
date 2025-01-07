@@ -7,20 +7,40 @@
 
 import UIKit
 
-class AdTableViewCell: UITableViewCell {
-
-    @IBOutlet var adLabel: UILabel!
-    @IBOutlet var contentLabel: UILabel!
+final class AdTableViewCell: UITableViewCell {
+    
+    static let identifier = "AdTableViewCell"
+    @IBOutlet private var adLabel: UILabel!
+    @IBOutlet private var contentLabel: UILabel!
+    
+    private var adCellColor: UIColor {
+        let color: [UIColor] = [.cyan, .magenta, .yellow]
+        return color[tag % color.count]
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setupUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    private func setupUI() {
+        selectionStyle = .none
+        separatorInset = UIEdgeInsets(top: 0, left: frame.width, bottom: 0, right: 0)
+        layer.cornerRadius = 12
+        clipsToBounds = true
+        
+        contentLabel.font =  .boldSystemFont(ofSize: 18)
+        contentLabel.numberOfLines = 0
+        contentLabel.textAlignment = .center
+        
+        adLabel.backgroundColor = .white
+        adLabel.clipsToBounds = true
+        adLabel.layer.cornerRadius = 4
     }
-
+    
+    func configureCell(row: Travel) {
+        contentLabel.text = row.title
+        backgroundColor = adCellColor
+    }
+    
 }

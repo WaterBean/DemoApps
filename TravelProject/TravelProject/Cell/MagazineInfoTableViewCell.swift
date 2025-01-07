@@ -6,25 +6,51 @@
 //
 
 import UIKit
+import Kingfisher
 
-class MagazineInfoTableViewCell: UITableViewCell {
+final class MagazineInfoTableViewCell: UITableViewCell {
     
-    @IBOutlet var magazineImageView: UIImageView!
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
-    
-    
+    static let identifier = "MagazineInfoTableViewCell"
+    @IBOutlet private var magazineImageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subTitleLabel: UILabel!
+    @IBOutlet private var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.setupUI()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    private func setupUI() {
+        magazineImageView.contentMode = .scaleAspectFill
+        magazineImageView.clipsToBounds = true
+        magazineImageView.layer.cornerRadius = 16
 
-        // Configure the view for the selected state
+        titleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
+        
+        subTitleLabel.textColor = .systemGray2
+        subTitleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
+        subTitleLabel.numberOfLines = 0
+
+        dateLabel.textAlignment = .right
+        dateLabel.textColor = .systemGray2
+        dateLabel.font = .systemFont(ofSize: 12, weight: .medium)
+
     }
+    
+    func configureCell(_ row: Magazine) {
+        
+        if let url = URL(string: row.photo_image) {
+            magazineImageView.kf.setImage(with: url ,placeholder: UIImage(systemName: "sun"))
+        } else {
+            magazineImageView.image = UIImage(systemName: "image")
+        }
+        
+        titleLabel.text = row.title
+        subTitleLabel.text = row.subtitle
 
+        let dateString = DateFormatterManager.formatMagazineDate(row.date)
+        dateLabel.text = dateString
+
+    }
 }

@@ -94,7 +94,7 @@ struct TravelInfo {
                like: false,
                ad: false),
         Travel(title: "성산일출봉",
-               description: "유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소",
+               description: "유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소유네스코 세계 자연 유산에 등재된, 제주 최고의 일출 명소",
                travel_image: "https://images.unsplash.com/photo-1622209018972-097984086b0b?q=80&w=3279&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                grade: 4.9,
                save: 44507,
@@ -123,5 +123,5 @@ struct Travel {
     let grade: Double?
     let save: Int?
     var like: Bool?
-    let ad: Bool?
+    let ad: Bool
 }

@@ -72,4 +72,36 @@ extension TravelInfoTableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = travelInfo[indexPath.row]
+        
+        if data.ad == true {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: AdDetailViewController.identifier) as! AdDetailViewController
+            
+            vc.travelInfo = data
+
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+    
+            
+            present(nav, animated: true)
+            
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: TravelInfoDetailViewController.identifier) as! TravelInfoDetailViewController
+            
+            vc.travelInfo = data
+            vc.hidesBottomBarWhenPushed = true
+            let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+            backBarButtonItem.tintColor = .black
+            navigationItem.backBarButtonItem = backBarButtonItem
+            
+            
+            
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
 }

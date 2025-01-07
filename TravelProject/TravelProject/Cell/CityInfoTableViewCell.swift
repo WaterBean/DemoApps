@@ -42,11 +42,16 @@ final class CityInfoTableViewCell: UITableViewCell {
     }
 
     
-    func configureCell(row: City) {
+    func configureCell(row: City, keyword: String) {
         cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
         explainLabel.text = "  " + row.city_explain
         let url = URL(string: row.city_image)
         backgroundImageView.kf.setImage(with: url, placeholder: UIImage(named: "photo"))
+        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword)
+        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
+        explainLabel.attributedText = explainLabel.text?.toAttribute(keyword)
+        explainLabel.attributedText = explainLabel.text?.toAttribute(keyword.capitalized)
+
     }
     
     

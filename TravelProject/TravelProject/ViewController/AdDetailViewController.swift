@@ -19,7 +19,6 @@ final class AdDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         navigationItem.title = "광고 화면"
         let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissAction))
         leftBarButtonItem.tintColor = .black

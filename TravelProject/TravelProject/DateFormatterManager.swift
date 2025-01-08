@@ -7,7 +7,10 @@
 
 import Foundation
 
-public struct DateFormatterManager {
+struct DateFormatterManager {
+    
+    private init() { }
+    
     private static let magazineInputFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyMMdd"

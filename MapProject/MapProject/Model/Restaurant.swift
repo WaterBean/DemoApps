@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Restaurant {
     let image: String
@@ -17,6 +18,14 @@ struct Restaurant {
     let category: String
     let price: Int
     let type: Int
+    var coordinate: CLLocationCoordinate2D {
+        get {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+    }
+    var urlImage: URL? {
+        return URL(string: image)
+    }
 }
 
 struct RestaurantList {
@@ -46,7 +55,7 @@ struct RestaurantList {
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
             latitude: 37.6535259,
-            longitude: 127.0476973,
+            longitude: 127.0486973,
             name: "꽈백최선생 본점",
             address: "서울 도봉구 마들로11길 65 1층",
             phoneNumber: "0507-1333-5445",
@@ -56,7 +65,7 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6551649,
+            latitude: 37.6561740,
             longitude: 127.0480795,
             name: "스타벅스 창동역점",
             address: "서울 도봉구 마들로13길 61",
@@ -68,7 +77,7 @@ struct RestaurantList {
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
             latitude: 37.6551649,
-            longitude: 127.0480795,
+            longitude: 127.0489795,
             name: "애슐리퀸즈 창동씨드큐브점",
             address: "서울 도봉구 마들로13길 61 씨드큐브 창동 3층",
             phoneNumber: "02-994-0472",
@@ -79,7 +88,7 @@ struct RestaurantList {
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
             latitude: 37.6551649,
-            longitude: 127.0480795,
+            longitude: 127.0461795,
             name: "청담동샤브 씨드큐브창동점",
             address: "서울 도봉구 마들로13길 61 2층 201-4호",
             phoneNumber: "02-991-5559",
@@ -89,7 +98,7 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6551649,
+            latitude: 37.6541649,
             longitude: 127.0480795,
             name: "송추가마골 인어반 창동점",
             address: "서울 도봉구 마들로13길 61 2층 201-7, 8호",
@@ -100,8 +109,8 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6543873,
-            longitude: 127.0474787,
+            latitude: 37.6523873,
+            longitude: 127.0474987,
             name: "샐러디 창동역점",
             address: "서울 도봉구 노해로69길 26",
             phoneNumber: "02-999-2123",
@@ -111,8 +120,8 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6543873,
-            longitude: 127.0474787,
+            latitude: 37.6540873,
+            longitude: 127.0498787,
             name: "본죽&비빔밥cafe 창4동점",
             address: "서울 도봉구 노해로69길 26",
             phoneNumber: "02-993-6233",
@@ -122,8 +131,8 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6543095,
-            longitude: 127.0473553,
+            latitude: 37.6503095,
+            longitude: 127.0483553,
             name: "큰집한식뷔페",
             address: "서울 도봉구 노해로69길 21 지하1층",
             phoneNumber: "02-990-1100",
@@ -133,8 +142,8 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6539443,
-            longitude: 127.0474457,
+            latitude: 37.6520443,
+            longitude: 127.0470457,
             name: "마쯔무라돈까스 본점",
             address: "서울 도봉구 노해로63길 84 지하1층",
             phoneNumber: "02-995-3575",
@@ -144,8 +153,8 @@ struct RestaurantList {
         ),
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
-            latitude: 37.6539443,
-            longitude: 127.0474457,
+            latitude: 37.6527443,
+            longitude: 127.0475497,
             name: "창동짬뽕",
             address: "서울 도봉구 노해로63길 84",
             phoneNumber: "02-994-8892",
@@ -156,7 +165,7 @@ struct RestaurantList {
         Restaurant(
             image: "https://search.pstatic.net/common/placeholder.jpg",
             latitude: 37.6532157,
-            longitude: 127.0477265,
+            longitude: 127.0487265,
             name: "빽다방 창동역점",
             address: "서울 도봉구 마들로11길 57",
             phoneNumber: "02-991-8778",

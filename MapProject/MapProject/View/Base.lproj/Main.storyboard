@@ -40,11 +40,11 @@
             </objects>
             <point key="canvasLocation" x="1993.1297709923663" y="-2.1126760563380285"/>
         </scene>
-        <!--Item-->
+        <!--지도-->
         <scene sceneID="sG5-Xa-Lne">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EEp-1O-dTf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="fae-ZW-Cku"/>
+                    <tabBarItem key="tabBarItem" title="지도" image="map" catalog="system" id="fae-ZW-Cku"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6zV-R6-A3B">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -59,17 +59,35 @@
             </objects>
             <point key="canvasLocation" x="1066.4122137404579" y="-2.1126760563380285"/>
         </scene>
+        <!--369게임-->
+        <scene sceneID="1b6-vh-UW5">
+            <objects>
+                <viewController id="MAb-0J-2dn" customClass="Game369ViewController" customModule="MapProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0PY-82-ZGA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="7tO-xh-Mu5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="369게임" image="arcade.stick" catalog="system" id="xp2-1I-a3d"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VDf-fj-THw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1066" y="749"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4Ki-GH-gPw">
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vXW-mx-2Qz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dX8-NR-MH0">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="EEp-1O-dTf" kind="relationship" relationship="viewControllers" id="Dnv-Mn-koj"/>
+                        <segue destination="MAb-0J-2dn" kind="relationship" relationship="viewControllers" id="nfP-oY-uW4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="abt-Sc-bTp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -78,6 +96,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arcade.stick" catalog="system" width="88" height="128"/>
+        <image name="map" catalog="system" width="128" height="112"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

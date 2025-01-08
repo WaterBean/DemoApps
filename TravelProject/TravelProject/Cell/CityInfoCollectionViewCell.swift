@@ -34,15 +34,15 @@ final class CityInfoCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(row: City, keyword: String) {
+        print(#function)
         cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
         explainLabel.text = "  " + row.city_explain
         
+        // TODO: - 텍스트 중간부터 입력시 하이라이팅 안되는 버그 해결해야함
         cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword)
-        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
         explainLabel.attributedText = explainLabel.text?.toAttribute(keyword)
+        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
         explainLabel.attributedText = explainLabel.text?.toAttribute(keyword.capitalized)
-        
-        
         
         let placeholderImage = UIImage(systemName: "photo.artframe.circle")?
             .withRenderingMode(.alwaysTemplate)

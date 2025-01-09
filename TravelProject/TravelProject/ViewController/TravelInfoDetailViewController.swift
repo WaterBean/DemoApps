@@ -23,13 +23,14 @@ final class TravelInfoDetailViewController: UIViewController {
         super.viewDidLoad()
 
         configureView()
-        
-        guard let strUrl = travelInfo?.travel_image else { return }
-        
-        let url = URL(string: strUrl)
-        detailImageView.kf.setImage(with: url)
+
         titleLabel.text = travelInfo?.title
         subTitleLabel.text = travelInfo?.description
+        
+        // url string이 nil이면 종료되기 때문에 아래 코드가 실행이 안됨
+        guard let strUrl = travelInfo?.travel_image else { return }
+        let url = URL(string: strUrl)
+        detailImageView.kf.setImage(with: url)
     }
     
     func configureView() {

@@ -48,9 +48,11 @@ final class CityInfoTableViewCell: UITableViewCell {
         let url = URL(string: row.city_image)
         backgroundImageView.kf.setImage(with: url, placeholder: UIImage(named: "photo"))
         cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword)
-        cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
         explainLabel.attributedText = explainLabel.text?.toAttribute(keyword)
-        explainLabel.attributedText = explainLabel.text?.toAttribute(keyword.capitalized)
+        if keyword.contains(where: { $0.isUppercase }) {
+            cityNameLabel.attributedText = cityNameLabel.text?.toAttribute(keyword.capitalized)
+            explainLabel.attributedText = explainLabel.text?.toAttribute(keyword.capitalized)
+        }
 
     }
     

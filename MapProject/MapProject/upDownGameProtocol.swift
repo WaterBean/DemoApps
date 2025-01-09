@@ -8,10 +8,10 @@
 import UIKit
 
 /// 게임을 플레이할 때 필요한 프로토콜
-protocol upDownGameProtocol {
+protocol UpDownGameProtocol {
     
     /// 첫 화면에서 입력한 숫자
-    var userInputMaxNumber: Int { get set }
+    var userInputMaxNumber: Int? { get set }
     
     /// 한 게임에서 시도한 횟수
     var tryCount: Int { get set }
@@ -63,12 +63,6 @@ extension ViewControllerRequirement {
         setupDelegateAndDatasource()
     }
     
-    func configureView() {
-        print("configureView를 구현해야함")
-    }
-    func setupDelegateAndDatasource() {
-        print(#function + "를 구현해야함")
-    }
 }
 
 /// 재사용 뷰 요구사항

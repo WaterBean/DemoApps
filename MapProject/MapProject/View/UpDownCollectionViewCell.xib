@@ -47,7 +47,7 @@
             </constraints>
             <size key="customSize" width="177" height="152"/>
             <connections>
-                <outlet property="NumberBackgroundView" destination="hKd-2J-2Cw" id="7RC-JY-ZcO"/>
+                <outlet property="numberBackgroundView" destination="hKd-2J-2Cw" id="7RC-JY-ZcO"/>
                 <outlet property="numberLabel" destination="dhl-Wi-WG4" id="ZuY-xe-UVb"/>
             </connections>
             <point key="canvasLocation" x="235.87786259541983" y="56.338028169014088"/>

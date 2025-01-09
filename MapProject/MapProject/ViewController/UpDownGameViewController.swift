@@ -20,7 +20,15 @@ final class UpDownGameViewController: UIViewController, ViewControllerRequiremen
     
     var userInputMaxNumber: Int?
     var tryCount = 0
-    var selectNumber = 0
+    var selectNumber = 0 {
+        didSet {
+            if selectNumber == 0 {
+                resultButtonConfigure(text: "결과 확인하기", backgroundColor: .darkGray, action: #selector(resultButtonTapped))
+            }
+        }
+    }
+    
+    
     lazy var correctAnswer: Int = 0
     
     var list: [Int] = [] {
@@ -31,7 +39,7 @@ final class UpDownGameViewController: UIViewController, ViewControllerRequiremen
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUIWhenViewDidload()
+        configureUIWhenViewDidLoad()
         list = generateGameList(in: userInputMaxNumber ?? 100)
         
         let nib = UINib(nibName: UpDownCollectionViewCell.identifier, bundle: nil)
@@ -48,33 +56,6 @@ final class UpDownGameViewController: UIViewController, ViewControllerRequiremen
         return list
     }
     
-    func selectNumberIsCorrect(select number: Int) -> ResultCase {
-        switch number {
-        case 1..<correctAnswer: ResultCase.up
-        case correctAnswer: ResultCase.correct
-        default: ResultCase.down
-        }
-    }
-    
-    func whenUserSelectUp() {
-        print(#function)
-        list = Array(list.filter({ $0 < selectNumber}))
-    }
-    
-    func whenUserSelectDown() {
-        print(#function)
-        list = Array(list.filter { $0 > selectNumber })
-    }
-    
-    func whenUserSelectCorrectAnswer() {
-        print(#function)
-        titleLabel.text = "GOOD!"
-        let attributedString = NSAttributedString(string: "다시 하기", attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.white] )
-        resultButton.setAttributedTitle(attributedString, for: .normal)
-        resultButton.backgroundColor = .black
-        resultButton.addTarget(self, action: #selector(gameEnd), for: .touchUpInside)
-    }
-
     func configureView() {
         titleLabel.text = "UP DOWN"
         titleLabel.font = .monospacedSystemFont(ofSize: 48, weight: .bold)
@@ -84,14 +65,11 @@ final class UpDownGameViewController: UIViewController, ViewControllerRequiremen
         tryCountLabel.font = .systemFont(ofSize: 16)
         tryCountLabel.textAlignment = .center
         
-        let attributedString = NSAttributedString(string: "결과 확인하기", attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.white] )
-        resultButton.setAttributedTitle(attributedString, for: .normal)
-        resultButton.backgroundColor = .black
-        resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
+        resultButtonConfigure(text: "결과 확인하기", backgroundColor: .darkGray, action: #selector(resultButtonTapped))
         
         let backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 1.0, alpha: 1)
         view.backgroundColor = backgroundColor
-
+        
         let layout = UICollectionViewFlowLayout()
         let inset: CGFloat = 16
         let itemSpacing: CGFloat = 16
@@ -103,19 +81,55 @@ final class UpDownGameViewController: UIViewController, ViewControllerRequiremen
         collectionView.backgroundColor = backgroundColor
     }
     
+    func selectNumberIsCorrect(select number: Int) -> ResultCase {
+        switch number {
+        case 1..<correctAnswer: ResultCase.up
+        case correctAnswer: ResultCase.correct
+        default: ResultCase.down
+        }
+    }
+    
+    func whenUserSelectDown() {
+        print(#function)
+        list = Array(list.filter({ $0 < selectNumber}))
+        titleLabel.text = "DOWN"
+        selectNumber = 0
+    }
+    
+    func whenUserSelectUp() {
+        print(#function)
+        list = Array(list.filter { $0 > selectNumber })
+        titleLabel.text = "UP"
+        selectNumber = 0
+    }
+    
+    func whenUserSelectCorrectAnswer() {
+        print(#function)
+        titleLabel.text = "GOOD!"
+        resultButtonConfigure(text: "다시 하기", backgroundColor: .black, action: #selector(gameEnd))
+    }
+    
+    fileprivate func resultButtonConfigure(text: String, backgroundColor: UIColor, action: Selector) {
+        let attributedString = NSAttributedString(string: text, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.white] )
+        resultButton.setAttributedTitle(attributedString, for: .normal)
+        resultButton.backgroundColor = backgroundColor
+        resultButton.addTarget(self, action: action, for: .touchUpInside)
+    }
+    
     @objc func gameEnd() {
         dismiss(animated: true)
     }
     
     @objc func resultButtonTapped() {
+        if selectNumber == 0 { return }
         tryCount += 1
         let result = selectNumberIsCorrect(select: selectNumber)
         switch result {
-        case .up: whenUserSelectDown()
-        case .down: whenUserSelectUp()
+        case .up: whenUserSelectUp()
+        case .down: whenUserSelectDown()
         case .correct: whenUserSelectCorrectAnswer()
         }
-        tryCountLabel.text = "시도횟수\(tryCount) 정답\(correctAnswer) 결과\(result)"
+        tryCountLabel.text = "시도 횟수: \(tryCount)"
     }
     
     func setupDelegateAndDatasource() {
@@ -146,6 +160,7 @@ extension UpDownGameViewController: UICollectionViewDelegate, UICollectionViewDa
         if selectNumber == list[indexPath.item] {
             selectNumber = 0
         } else {
+            resultButtonConfigure(text: "결과 확인하기", backgroundColor: .black, action: #selector(resultButtonTapped))
             selectNumber = list[indexPath.item]
         }
         collectionView.reloadData()

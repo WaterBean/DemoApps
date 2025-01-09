@@ -214,6 +214,7 @@
                     <tabBarItem key="tabBarItem" title="업다운" image="gamecontroller" catalog="system" id="xrf-Kr-3DG"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="mGt-BS-sUb" id="lUr-xG-9iP"/>
+                        <outlet property="keyboardConstraint" destination="k57-Iy-2HF" id="1q3-ko-iFd"/>
                         <outlet property="startButton" destination="cIp-cV-JkS" id="vsx-rp-hrH"/>
                         <outlet property="subTitleLabel" destination="ZIF-KA-82V" id="Okh-Ry-t6C"/>
                         <outlet property="textField" destination="OIJ-Jc-d1y" id="Ins-6w-69l"/>
@@ -265,7 +266,10 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExG-Om-rFt">
-                                <rect key="frame" x="32" y="630" width="338" height="35"/>
+                                <rect key="frame" x="32" y="630" width="338" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="tPy-7i-gdS"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                             </button>

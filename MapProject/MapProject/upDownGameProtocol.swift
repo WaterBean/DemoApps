@@ -49,7 +49,7 @@ enum ResultCase {
 /// ViewController 요구사항
 protocol ViewControllerRequirement: AnyObject {
     // template Method
-    func configureUIWhenViewDidload()
+    func configureUIWhenViewDidLoad()
     
     func configureView()
     func setupDelegateAndDatasource()
@@ -58,7 +58,7 @@ protocol ViewControllerRequirement: AnyObject {
 
 
 extension ViewControllerRequirement {
-    func configureUIWhenViewDidload() {
+    func configureUIWhenViewDidLoad() {
         configureView()
         setupDelegateAndDatasource()
     }

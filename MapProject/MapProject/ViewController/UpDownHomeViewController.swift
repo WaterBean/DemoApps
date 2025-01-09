@@ -14,11 +14,12 @@ final class UpDownHomeViewController: UIViewController, ViewControllerRequiremen
     @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var textField: UITextField!
     @IBOutlet var startButton: UIButton!
+    @IBOutlet var keyboardConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUIWhenViewDidload()
+        configureUIWhenViewDidLoad()
         
     }
     
@@ -68,9 +69,18 @@ final class UpDownHomeViewController: UIViewController, ViewControllerRequiremen
         
     }
     func setupDelegateAndDatasource() {
-        
+        textField.delegate = self
     }
     
+}
+
+extension UpDownHomeViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        keyboardConstraint.constant = -100
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        keyboardConstraint.constant = 16
+    }
 }
 
 extension UITextField {
@@ -84,3 +94,5 @@ extension UITextField {
         self.layer.addSublayer(border)
     }
 }
+
+

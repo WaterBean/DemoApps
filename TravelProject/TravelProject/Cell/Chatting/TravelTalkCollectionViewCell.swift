@@ -7,11 +7,16 @@
 
 import UIKit
 
-class TravelTalkCollectionViewCell: UICollectionViewCell {
+final class TravelTalkCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var recentTalkLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
 }

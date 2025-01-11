@@ -58,6 +58,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="B1R-S5-G4a"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Aiq-9e-vMj" id="Drm-Qk-hac"/>
+                        <outlet property="searchBar" destination="Gd0-PA-zjY" id="9eY-jo-Aqv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

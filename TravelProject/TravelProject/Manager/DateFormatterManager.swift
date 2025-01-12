@@ -33,6 +33,14 @@ enum DateFormatterManager {
         return formatter
     }()
     
+    private static let ChattingFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.locale = Locale(identifier:"ko_KR")
+        
+        return formatter
+    }()
+    
     static func formatMagazineDate(_ dateString: String) -> String? {
         guard let date = magazineInputFormatter.date(from: dateString) else {
             return nil
@@ -40,12 +48,18 @@ enum DateFormatterManager {
         return magazineOutputFormatter.string(from: date)
     }
     
-    static func formatTravleTalkDate(_ dateString: String) -> String? {
+    static func formatTravelTalkDate(_ dateString: String) -> String? {
         guard let date = TravelTalkInputFormatter.date(from: dateString) else {
             return nil
         }
         return TravelTalkOutputFormatter.string(from: date)
     }
     
+    static func formatChatDate(_ dateString: String) -> String? {
+        guard let date = TravelTalkInputFormatter.date(from: dateString) else {
+            return nil
+        }
+        return ChattingFormatter.string(from: date)
+    }
     
 }

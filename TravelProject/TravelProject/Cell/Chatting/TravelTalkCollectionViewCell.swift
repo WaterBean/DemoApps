@@ -42,7 +42,7 @@ final class TravelTalkCollectionViewCell: UICollectionViewCell {
         
         recentTalkLabel.text = item.chatList.last?.message
         
-        let date = DateFormatterManager.formatTravleTalkDate(item.chatList.last?.date ?? "")
+        let date = DateFormatterManager.formatTravelTalkDate(item.chatList.last?.date ?? "")
         dateLabel.text = date
         
     }

@@ -71,8 +71,16 @@ extension TravelTalkViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let item = filteredList[indexPath.item]
+        
         let sb = UIStoryboard(name: "TravelTalk", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: ChattingViewController.identifier) as! ChattingViewController
+        
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        navigationItem.backBarButtonItem = backBarButtonItem
+        vc.navigationItem.title = item.chatroomName
+        vc.list = item.chatList
         
         navigationController?.pushViewController(vc, animated: true)
 

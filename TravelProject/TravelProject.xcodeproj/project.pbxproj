@@ -44,6 +44,7 @@
 		552865A82D3285C50011ECE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552865812D3285C50011ECE5 /* Assets.xcassets */; };
 		552865D52D32B8E30011ECE5 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552865D42D32B8E30011ECE5 /* Presentable.swift */; };
 		552865D72D32B92F0011ECE5 /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552865D62D32B92F0011ECE5 /* ReusableViewProtocol.swift */; };
+		552866012D33C7CD0011ECE5 /* ChatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552866002D33C7CD0011ECE5 /* ChatLabel.swift */; };
 		556007D02D2801A9008B18EA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 556007CF2D2801A9008B18EA /* Kingfisher */; };
 		556007D32D291383008B18EA /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 556007D22D291383008B18EA /* Cosmos */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		552865842D3285C50011ECE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		552865D42D32B8E30011ECE5 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
 		552865D62D32B92F0011ECE5 /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
+		552866002D33C7CD0011ECE5 /* ChatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLabel.swift; sourceTree = "<group>"; };
 		5560077A2D27F119008B18EA /* TravelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -162,7 +164,8 @@
 				5528657F2D3285C50011ECE5 /* ViewController */,
 				552865802D3285C50011ECE5 /* AppDelegate.swift */,
 				552865812D3285C50011ECE5 /* Assets.xcassets */,
-				552865822D3285C50011ECE5 /* DateFormatterManager.swift */,
+				552866032D33C7E80011ECE5 /* Manager */,
+				552866022D33C7DB0011ECE5 /* Custom */,
 				552865832D3285C50011ECE5 /* Info.plist */,
 				552865842D3285C50011ECE5 /* SceneDelegate.swift */,
 			);
@@ -226,6 +229,22 @@
 				552865D62D32B92F0011ECE5 /* ReusableViewProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		552866022D33C7DB0011ECE5 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				552866002D33C7CD0011ECE5 /* ChatLabel.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		552866032D33C7E80011ECE5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				552865822D3285C50011ECE5 /* DateFormatterManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		556007712D27F119008B18EA = {
@@ -357,6 +376,7 @@
 				5528659D2D3285C50011ECE5 /* AppDelegate.swift in Sources */,
 				552865D72D32B92F0011ECE5 /* ReusableViewProtocol.swift in Sources */,
 				5528659E2D3285C50011ECE5 /* DateFormatterManager.swift in Sources */,
+				552866012D33C7CD0011ECE5 /* ChatLabel.swift in Sources */,
 				5528659F2D3285C50011ECE5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

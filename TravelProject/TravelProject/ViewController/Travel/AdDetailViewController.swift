@@ -9,8 +9,6 @@ import UIKit
 
 final class AdDetailViewController: UIViewController {
 
-    static let identifier = "AdDetailViewController"
-
 
     @IBOutlet private var titleLabel: UILabel!
     

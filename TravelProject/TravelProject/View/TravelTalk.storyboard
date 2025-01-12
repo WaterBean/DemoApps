@@ -70,7 +70,7 @@
         <!--Chatting View Controller-->
         <scene sceneID="Nf4-xp-LBz">
             <objects>
-                <viewController id="Nq6-KA-gFw" customClass="ChattingViewController" customModule="TravelProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChattingViewController" id="Nq6-KA-gFw" customClass="ChattingViewController" customModule="TravelProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i9O-5K-tIv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

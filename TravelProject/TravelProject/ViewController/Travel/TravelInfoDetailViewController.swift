@@ -10,8 +10,6 @@ import Kingfisher
 
 final class TravelInfoDetailViewController: UIViewController {
 
-    static let identifier = "TravelInfoDetailViewController"
-
     var travelInfo: Travel?
     
     @IBOutlet private var detailImageView: UIImageView!

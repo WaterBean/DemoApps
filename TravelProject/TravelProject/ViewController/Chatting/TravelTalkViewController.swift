@@ -12,7 +12,12 @@ final class TravelTalkViewController: UIViewController, Presentable {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
     
-    var list: [ChatRoom] = mockChatList
+    let list: [ChatRoom] = mockChatList
+    lazy var filteredList: [ChatRoom] = list {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,16 @@ final class TravelTalkViewController: UIViewController, Presentable {
 
     func configureView() {
         
+        navigationItem.title = "TRAVEL TALK"
+        
+        searchBar.placeholder = "친구 이름을 검색해보세요"
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 90)
+        
+        collectionView.collectionViewLayout = layout
     }
     
     func setupDelegateAndDatasource() {
@@ -42,25 +57,35 @@ final class TravelTalkViewController: UIViewController, Presentable {
 
 extension TravelTalkViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        filteredList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let item = filteredList[indexPath.item]
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TravelTalkCollectionViewCell.identifier, for: indexPath) as? TravelTalkCollectionViewCell else { return TravelTalkCollectionViewCell() }
-        
-        cell.profileImageView.image = UIImage(named: list[indexPath.item].chatroomImage[0])
-        cell.nameLabel.text = list[indexPath.item].chatroomName
-        cell.recentTalkLabel.text = list[indexPath.item].chatList.first?.message
-        cell.dateLabel.text = list[indexPath.item].chatList.first?.date
-        
+        cell.configureCell(item)
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let sb = UIStoryboard(name: "TravelTalk", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: ChattingViewController.identifier) as! ChattingViewController
+        
+        navigationController?.pushViewController(vc, animated: true)
+
+    }
     
 }
 
 
 extension TravelTalkViewController: UISearchBarDelegate {
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        filteredList = list.filter { $0.chatList.contains { $0.user.rawValue.contains( text ) } }
+        if searchText == "" { filteredList = list }
+        
+    }
 }

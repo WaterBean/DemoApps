@@ -27,3 +27,10 @@ extension UITableViewCell: Reusable {
     }
     
 }
+
+extension UIViewController: Reusable {
+    static var identifier: String {
+        return String(describing: self)
+    }
+    
+}

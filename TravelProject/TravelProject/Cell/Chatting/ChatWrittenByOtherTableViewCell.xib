@@ -23,7 +23,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tR-Xk-ghw" customClass="ChatLabel" customModule="TravelProject" customModuleProvider="target">
-                        <rect key="frame" x="76" y="53" width="42" height="21"/>
+                        <rect key="frame" x="76" y="43" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -36,7 +36,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWe-Qo-5il">
-                        <rect key="frame" x="126" y="53" width="42" height="21"/>
+                        <rect key="frame" x="126" y="43" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -46,8 +46,8 @@
                     <constraint firstItem="mle-bK-vQ8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="48l-Zd-7O9"/>
                     <constraint firstItem="vSd-4X-2JI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Aae-nl-HXJ"/>
                     <constraint firstItem="DWe-Qo-5il" firstAttribute="leading" secondItem="0tR-Xk-ghw" secondAttribute="trailing" constant="8" id="G5W-fo-1Y7"/>
-                    <constraint firstItem="0tR-Xk-ghw" firstAttribute="top" secondItem="vSd-4X-2JI" secondAttribute="bottom" constant="16" id="Gls-Ex-5jb"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0tR-Xk-ghw" secondAttribute="bottom" constant="16" id="ItL-TD-NDi"/>
+                    <constraint firstItem="0tR-Xk-ghw" firstAttribute="top" secondItem="vSd-4X-2JI" secondAttribute="bottom" constant="6" id="Gls-Ex-5jb"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0tR-Xk-ghw" secondAttribute="bottom" constant="12" id="ItL-TD-NDi"/>
                     <constraint firstItem="0tR-Xk-ghw" firstAttribute="leading" secondItem="mle-bK-vQ8" secondAttribute="trailing" constant="16" id="YHh-9o-cc1"/>
                     <constraint firstItem="vSd-4X-2JI" firstAttribute="leading" secondItem="mle-bK-vQ8" secondAttribute="trailing" constant="14" id="goZ-jM-l6C"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DWe-Qo-5il" secondAttribute="trailing" constant="20" id="khK-HM-Xkd"/>

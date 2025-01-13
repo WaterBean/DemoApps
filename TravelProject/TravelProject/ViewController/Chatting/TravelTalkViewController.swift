@@ -9,11 +9,11 @@ import UIKit
 
 final class TravelTalkViewController: UIViewController, Presentable {
 
-    @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var searchBar: UISearchBar!
+    @IBOutlet private var collectionView: UICollectionView!
     
-    let list: [ChatRoom] = mockChatList
-    lazy var filteredList: [ChatRoom] = list {
+    private let list: [ChatRoom] = mockChatList
+    private lazy var filteredList: [ChatRoom] = list {
         didSet {
             collectionView.reloadData()
         }
@@ -28,7 +28,6 @@ final class TravelTalkViewController: UIViewController, Presentable {
     }
 
     func configureView() {
-        
         navigationItem.title = "TRAVEL TALK"
         
         searchBar.placeholder = "친구 이름을 검색해보세요"
@@ -47,7 +46,7 @@ final class TravelTalkViewController: UIViewController, Presentable {
         collectionView.dataSource = self
     }
     
-    func registerCollectionViewCell() {
+    private func registerCollectionViewCell() {
         let nib = UINib(nibName: TravelTalkCollectionViewCell.identifier, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: TravelTalkCollectionViewCell.identifier)
     }
@@ -61,7 +60,6 @@ extension TravelTalkViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let item = filteredList[indexPath.item]
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TravelTalkCollectionViewCell.identifier, for: indexPath) as? TravelTalkCollectionViewCell else { return TravelTalkCollectionViewCell() }
         cell.configureCell(item)
@@ -70,7 +68,6 @@ extension TravelTalkViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let item = filteredList[indexPath.item]
         
         let sb = UIStoryboard(name: "TravelTalk", bundle: nil)

@@ -9,40 +9,37 @@ import UIKit
 
 final class ChatWrittenByOtherTableViewCell: UITableViewCell {
 
-    @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var contentLabel: ChatLabel!
-    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet private var profileImageView: UIImageView!
+    @IBOutlet private var nameLabel: UILabel!
+    @IBOutlet private var contentLabel: ChatLabel!
+    @IBOutlet private var dateLabel: UILabel!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        configureCellStyle()
+    }
+
+    private func configureCellStyle() {
         selectionStyle = .none
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func configureCell(row chat: Chat) {
-        profileImageView.image = UIImage(named: chat.user.profileImage)
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        
         DispatchQueue.main.async { [unowned self] in
             profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         }
-        
+        nameLabel.textColor = .gray        
+        dateLabel.textColor = .lightGray
+        dateLabel.font = .systemFont(ofSize: 12, weight: .regular)
+    }
+    
+    
+    
+    func configureCell(row chat: Chat) {
+        profileImageView.image = UIImage(named: chat.user.profileImage)
         nameLabel.text = chat.user.rawValue
-        nameLabel.textColor = .gray
-        
         contentLabel.text = chat.message
-        
         dateLabel.text = DateFormatterManager.formatChatDate(chat.date)
-
     }
 }
 

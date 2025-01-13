@@ -17,13 +17,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ZG-bE-emm" customClass="ChatLabel" customModule="TravelProject" customModuleProvider="target">
-                        <rect key="frame" x="258" y="16" width="42" height="54"/>
+                        <rect key="frame" x="258" y="16" width="42" height="62"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McU-gB-6eN">
-                        <rect key="frame" x="208" y="49" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88:88 오후" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McU-gB-6eN">
+                        <rect key="frame" x="190" y="57" width="60" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="IU6-3b-rb7"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -33,7 +36,7 @@
                     <constraint firstItem="8ZG-bE-emm" firstAttribute="bottom" secondItem="McU-gB-6eN" secondAttribute="bottom" id="D00-H2-LR0"/>
                     <constraint firstItem="McU-gB-6eN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="D3h-1Z-iQc"/>
                     <constraint firstAttribute="trailing" secondItem="8ZG-bE-emm" secondAttribute="trailing" constant="20" id="EFP-vQ-VJB"/>
-                    <constraint firstAttribute="bottom" secondItem="8ZG-bE-emm" secondAttribute="bottom" constant="20" id="NL2-L0-VGb"/>
+                    <constraint firstAttribute="bottom" secondItem="8ZG-bE-emm" secondAttribute="bottom" constant="12" id="NL2-L0-VGb"/>
                     <constraint firstItem="8ZG-bE-emm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="ipx-UA-ozS"/>
                     <constraint firstItem="8ZG-bE-emm" firstAttribute="leading" secondItem="McU-gB-6eN" secondAttribute="trailing" constant="8" id="jrq-ST-9DS"/>
                 </constraints>

@@ -9,21 +9,34 @@ import UIKit
 
 final class ChattingViewController: UIViewController, Presentable {
     
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet var sendButton: UIButton!
+    @IBOutlet var inputTextView: UITextView!
     var list: [Chat]?
-    @IBOutlet var tableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         configureUIWhenViewDidLoad()
         registerTableViewCell()
+        scrollToIndex()
+         
     }
     
     func configureView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        
+        inputTextView.isEditable = true
+        inputTextView.backgroundColor = .systemGray5
+        inputTextView.clipsToBounds = true
+        inputTextView.layer.cornerRadius = 12
+        sendButton.setImage(UIImage(systemName: "paperplane"), for: .normal)
+        sendButton.setTitle("", for: .normal)
+        sendButton.tintColor = .systemGray3
+        sendButton.backgroundColor = .systemGray5
+        sendButton.layer.cornerRadius = 12
+        sendButton.clipsToBounds = true
     }
     
     func setupDelegateAndDatasource() {
@@ -31,7 +44,7 @@ final class ChattingViewController: UIViewController, Presentable {
         tableView.dataSource = self
     }
     
-    func registerTableViewCell() {
+    private func registerTableViewCell() {
         let meCellNib = UINib(nibName: ChatWrittenByMeTableViewCell.identifier, bundle: nil)
         tableView.register(meCellNib, forCellReuseIdentifier: ChatWrittenByMeTableViewCell.identifier)
         
@@ -39,6 +52,10 @@ final class ChattingViewController: UIViewController, Presentable {
         tableView.register(othersCellNib, forCellReuseIdentifier: ChatWrittenByOtherTableViewCell.identifier)
     }
     
+    private func scrollToIndex() {
+        let index = IndexPath(row: (list?.count ?? 1) - 1, section: 0)
+        tableView.scrollToRow(at: index, at: .bottom, animated: true)
+    }
     
 }
 

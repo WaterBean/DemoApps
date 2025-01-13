@@ -9,27 +9,29 @@ import UIKit
 
 final class ChatWrittenByMeTableViewCell: UITableViewCell {
 
-    @IBOutlet var contentLabel: ChatLabel!
-    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet private var contentLabel: ChatLabel!
+    @IBOutlet private var dateLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        configureCellStyle()
+    }
+
+    private func configureCellStyle() {
         selectionStyle = .none
         contentLabel.layer.backgroundColor = UIColor.systemGray5.cgColor
+        contentLabel.textAlignment = .right
+        dateLabel.textColor = .lightGray
+        dateLabel.font = .systemFont(ofSize: 12, weight: .regular)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    
+    
     
     func configureCell(row chat: Chat) {
-        
         contentLabel.text = chat.message
-        contentLabel.textAlignment = .right
-
         dateLabel.text = DateFormatterManager.formatChatDate(chat.date)
     }
     

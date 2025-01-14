@@ -10,7 +10,18 @@ import SnapKit
 
 final class LotteryViewController: UIViewController {
     
-    var selectDrawNo = Array(1...1154)
+    let recentDay = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let startDate = formatter.date(from: "2002-12-07")!
+        let currentDate = Date()
+        let components = Calendar.current.dateComponents([.day], from: startDate, to: currentDate)
+        let totalDays = components.day!
+        let roundNumber = Int(ceil(Double(totalDays) / 7.0))
+        return roundNumber
+    }()
+
+    lazy var selectDrawNo = Array(1...recentDay)
     var list = [String]()
     
     let textField = {
@@ -66,7 +77,7 @@ final class LotteryViewController: UIViewController {
         for _ in 0...7 {
             let label = UILabel()
             label.textAlignment = .center
-            label.backgroundColor = .red
+            label.backgroundColor = .gray
             label.textColor = .white
             label.numberOfLines = 1
             label.clipsToBounds = true

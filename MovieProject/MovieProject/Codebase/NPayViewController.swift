@@ -98,9 +98,9 @@ final class NPayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSubView(target: self, views: [segmentedControl, backgroundView])
+        configureHierarchy(target: self, views: [segmentedControl, backgroundView])
         
-        addSubView(target: backgroundView, views: [nPayImageView, domesticOrForeignButton, xMarkImageView, lockImageView, descriptionLabel, useDirectPayButton, confirmButton])
+        configureHierarchy(target: backgroundView, views: [nPayImageView, domesticOrForeignButton, xMarkImageView, lockImageView, descriptionLabel, useDirectPayButton, confirmButton])
         
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)

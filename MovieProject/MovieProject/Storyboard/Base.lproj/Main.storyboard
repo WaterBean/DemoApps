@@ -64,7 +64,7 @@
             <objects>
                 <viewController id="As9-VM-0wI" customClass="NPayViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cTm-Vz-sV9">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="2Wc-Yl-CAD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -79,7 +79,7 @@
             <objects>
                 <viewController id="5rb-Bj-Rg3" customClass="SignUpCodeBaseViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4h-Mo-7xv">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="nZB-KO-r5B"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -607,12 +607,12 @@
             </objects>
             <point key="canvasLocation" x="1700" y="694.73684210526312"/>
         </scene>
-        <!--Movie List View Controller-->
+        <!--Daily Box Office View Controller-->
         <scene sceneID="hSc-nd-RO9">
             <objects>
-                <viewController id="CjD-uZ-9kD" customClass="MovieListViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CjD-uZ-9kD" customClass="DailyBoxOfficeViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DX1-HA-rBZ">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="MLV-OH-id8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1120,7 +1120,7 @@
             <objects>
                 <viewController id="WaW-ZJ-jEM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c3b-B5-g4I">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="저장 가능한 콘텐츠 살펴보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZA-tu-5dn">

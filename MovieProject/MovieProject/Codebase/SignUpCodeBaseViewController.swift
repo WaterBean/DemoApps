@@ -70,7 +70,7 @@ final class SignUpCodeBaseViewController: UIViewController {
     
     let switchControl = {
         let control = UISwitch()
-        control.tintColor = .systemPink
+        control.onTintColor = .systemPink
         control.isOn = true
         return control
     }()

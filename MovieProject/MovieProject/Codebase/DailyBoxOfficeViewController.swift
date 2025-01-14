@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Alamofire
 
 final class DailyBoxOfficeViewController: UIViewController {
     
@@ -53,8 +52,8 @@ final class DailyBoxOfficeViewController: UIViewController {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width-32, height: 44)
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width-32, height: 34)
         return layout
     }())
         

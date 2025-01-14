@@ -37,4 +37,18 @@ final class NetworkManager {
             }
     }
     
+    func fetchLotteryRequest(drawNumber: Int, completion: @escaping (LotteryModel) -> Void) {
+        let endpoint = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(drawNumber)"
+
+        AF.request(endpoint)
+            .responseDecodable(of: LotteryModel.self) { response in
+                switch response.result {
+                case .success(let result):
+                    completion(result)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+    }
+    
 }

@@ -7,9 +7,16 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 final class DailyBoxOfficeViewController: UIViewController {
-
+    
+    var list: [DailyBoxOfficeList] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     private let backgroundView = {
         let view = UIView()
         view.backgroundColor = .black.withAlphaComponent(0.8)
@@ -23,10 +30,15 @@ final class DailyBoxOfficeViewController: UIViewController {
         return imageView
     }()
     
+    // TODO: - textfield validate
     private let searchTextField = {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.backgroundColor = .clear
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        let yesterDay = Calendar.current.date(byAdding: .day,value: -1, to: Date())!
+        textField.text = formatter.string(from: yesterDay)
         return textField
     }()
     
@@ -35,7 +47,6 @@ final class DailyBoxOfficeViewController: UIViewController {
         button.setTitle("검색", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .white
-        
         return button
     }()
     
@@ -46,18 +57,18 @@ final class DailyBoxOfficeViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width-32, height: 44)
         return layout
     }())
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
         configureHierarchy(target: self, views: [backgroundImage, backgroundView, searchTextField, searchButton, collectionView])
-        
-        collectionView.register(DailyBoxOfficeCollectionViewCell.self, forCellWithReuseIdentifier: "MovieListCollectionViewCell")
-        collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        configureView()
         configureLayout()
-
+        
+        NetworkManager.shared.fetchBoxOfficeRanking(date: searchTextField.text!) {
+            self.list = $0
+        }
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,7 +76,15 @@ final class DailyBoxOfficeViewController: UIViewController {
         
         searchTextField.underlined(viewSize: searchTextField.frame.width, color: .white, underlineWidth: 3)
     }
-    
+    private func configureView() {
+        view.backgroundColor = .clear
+        collectionView.register(DailyBoxOfficeCollectionViewCell.self, forCellWithReuseIdentifier: "MovieListCollectionViewCell")
+        collectionView.backgroundColor = .clear
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
+
     private func configureLayout() {
         searchTextField.snp.makeConstraints{
             $0.top.equalTo(100)
@@ -95,23 +114,39 @@ final class DailyBoxOfficeViewController: UIViewController {
         }
     }
     
+    @objc func searchButtonTapped() {
+        guard let date = searchTextField.text else {
+            print("텍스트 필드 값이 유효하지 않음")
+            return
+        }
+        NetworkManager.shared.fetchBoxOfficeRanking(date: date) {
+            self.list = $0
+        }
+    }
     
 }
 
 // MARK: - CollectionView Delegate, DataSource
 extension DailyBoxOfficeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item = list[indexPath.item]
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as? DailyBoxOfficeCollectionViewCell else { return DailyBoxOfficeCollectionViewCell() }
+        cell.rankLabel.text = item.rank
+        cell.titleLabel.text = item.movieNm
+        cell.dateLabel.text = item.openDt
         
         return cell
     }
     
     
 }
+
+
+
 
 #Preview {
     DailyBoxOfficeViewController()

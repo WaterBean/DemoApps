@@ -9,12 +9,8 @@ import UIKit
 import SnapKit
 
 final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
-    
-    private let backView = {
-        return UIView()
-    }()
-    
-    private let rankLabel = {
+        
+    let rankLabel = {
         let label = UILabel()
         label.text = "1"
         label.textColor = .black
@@ -24,7 +20,7 @@ final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let titleLabel = {
+    let titleLabel = {
         let label = UILabel()
         label.text = "엽문4: 더 파이널"
         label.textColor = .white
@@ -32,7 +28,7 @@ final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let dateLabel = {
+    let dateLabel = {
         let label = UILabel()
         label.text = "2020-02-12"
         label.textColor = .white
@@ -40,7 +36,12 @@ final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private func cconfigureHierarchy() {
+    private let backView = {
+        return UIView()
+    }()
+
+    
+    private func configureHierarchy() {
         backView.snp.makeConstraints{
             $0.horizontalEdges.equalTo(16)
             $0.verticalEdges.equalTo(0)
@@ -54,13 +55,14 @@ final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalTo(rankLabel.snp.trailing).offset(20)
+            $0.trailing.equalTo(dateLabel.snp.leading).offset(-10)
             $0.verticalEdges.equalTo(20)
         }
         
         dateLabel.snp.makeConstraints {
-            $0.leading.equalTo(titleLabel.snp.trailing)
             $0.trailing.equalToSuperview().offset(-20)
             $0.verticalEdges.equalTo(20)
+            $0.width.equalTo(70)
         }
     }
     
@@ -72,7 +74,7 @@ final class DailyBoxOfficeCollectionViewCell: UICollectionViewCell {
         backView.addSubview(titleLabel)
         backView.addSubview(rankLabel)
         
-        cconfigureHierarchy()
+        configureHierarchy()
     }
     
     required init?(coder: NSCoder) {

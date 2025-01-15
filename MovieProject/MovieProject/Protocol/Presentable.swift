@@ -8,18 +8,18 @@
 import UIKit
 
 protocol Presentable: UIViewController {
-    func addSubView(target: UIViewController, views: [UIView] ) -> Void
-    func addSubView(target: UIView, views: [UIView] ) -> Void
+    func configureHierarchy(target: UIViewController, views: [UIView] ) -> Void
+    func configureHierarchy(target: UIView, views: [UIView] ) -> Void
     
 }
 
 extension UIViewController: Presentable {
-    func addSubView(target: UIViewController, views: [UIView] ) -> Void {
+    func configureHierarchy(target: UIViewController, views: [UIView] ) -> Void {
         views.forEach {
             target.view.addSubview($0)
         }
     }
-    func addSubView(target: UIView, views: [UIView] ) -> Void {
+    func configureHierarchy(target: UIView, views: [UIView] ) -> Void {
         views.forEach {
             target.addSubview($0)
         }

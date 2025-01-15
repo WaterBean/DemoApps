@@ -70,14 +70,14 @@ final class SignUpCodeBaseViewController: UIViewController {
     
     let switchControl = {
         let control = UISwitch()
-        control.tintColor = .systemPink
+        control.onTintColor = .systemPink
         control.isOn = true
         return control
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSubView(target: self, views: [titleLabel, emailTextField, passWordTextField, nickNameTextField, locationTextfield, referralCodeTextField, signUpButton, additionalInfoLabel, switchControl])
+        configureHierarchy(target: self, views: [titleLabel, emailTextField, passWordTextField, nickNameTextField, locationTextfield, referralCodeTextField, signUpButton, additionalInfoLabel, switchControl])
         
         
         titleLabel.snp.makeConstraints {

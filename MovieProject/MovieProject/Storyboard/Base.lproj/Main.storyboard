@@ -607,10 +607,10 @@
             </objects>
             <point key="canvasLocation" x="1700" y="694.73684210526312"/>
         </scene>
-        <!--Movie List View Controller-->
+        <!--Daily Box Office View Controller-->
         <scene sceneID="hSc-nd-RO9">
             <objects>
-                <viewController id="CjD-uZ-9kD" customClass="MovieListViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CjD-uZ-9kD" customClass="DailyBoxOfficeViewController" customModule="MovieProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DX1-HA-rBZ">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import SnapKit
 
 final class ShoppingMainViewController: UIViewController {
@@ -50,9 +49,9 @@ final class ShoppingMainViewController: UIViewController {
             guard let response else { self.label.text = "다른 검색어를 입력해보세요."; return }
             
             let vc = ShoppingListViewController()
-            vc.list = response
+            vc.item = response
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-            backBarButtonItem.tintColor = .black
+            backBarButtonItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backBarButtonItem
             vc.navigationItem.title = text
             self.navigationController?.pushViewController(vc, animated: true)
@@ -100,45 +99,6 @@ extension ShoppingMainViewController: Presentable {
     }
     
     
-}
-
-
-final class NetworkManager {
-    static let shared = NetworkManager()
-    private init() {}
     
-    func fetchNaverShopping(query: String, completion: @escaping (ItemResponse?) -> Void) {
-        let endpoint = "https://openapi.naver.com/v1/search/shop.json"
-        let parameter: Parameters = ["query": query]
-        let (id, secret) = (APIKeyManager.naverClientId, APIKeyManager.naverClientSecret)
-        let header: HTTPHeaders = ["X-Naver-Client-Id": id, "X-Naver-Client-Secret": secret]
-    
-        AF.request(endpoint, method: .get, parameters: parameter, headers: header)
-            .validate()
-            .responseDecodable(of: ItemResponse.self) { response in
-                switch response.result {
-                case .success(let value):
-                    completion(value)
-                case .failure(let error):
-                    completion(nil)
-                    print(error)
-                    
-                }
-            }
-    }
 }
 
-
-struct ItemResponse: Decodable {
-    let total: Int
-    let start: Int
-    var items: [Item]
-}
-
-
-struct Item: Decodable {
-    let title: String
-    let image: String
-    let mallName: String
-    let lprice: String
-}

@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol Presentable: UIViewController {
+protocol Presentable: AnyObject {
 
     /// view.addSubview()를 통해 계층 구조를 정의하는 함수
     func configureHierarchy()-> Void

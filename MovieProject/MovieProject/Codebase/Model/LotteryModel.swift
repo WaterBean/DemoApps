@@ -8,10 +8,8 @@
 import Foundation
 
 struct LotteryModel: Codable {
-    let totSellamnt: Int
-    let returnValue, drwNoDate: String
-    let firstWinamnt, drwtNo6, drwtNo4, firstPrzwnerCo: Int
-    let drwtNo5, bnusNo, firstAccumamnt, drwNo: Int
-    let drwtNo2, drwtNo3, drwtNo1: Int
+    let drwNoDate: String
+    let drwtNo1, drwtNo2, drwtNo3, drwtNo4, drwtNo5, drwtNo6: Int
+    let bnusNo, drwNo: Int
 }
 

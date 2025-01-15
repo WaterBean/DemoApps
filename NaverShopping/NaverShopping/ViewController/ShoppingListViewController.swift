@@ -9,9 +9,10 @@ import UIKit
 
 final class ShoppingListViewController: UIViewController {
 
+    var list: ItemResponse?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        dump(list)
     }
     
     

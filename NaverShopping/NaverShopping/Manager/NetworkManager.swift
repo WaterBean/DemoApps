@@ -9,8 +9,9 @@ import Network
 
 final class NetworkManager {
     static let shared = NetworkManager()
-    let monitor = NWPathMonitor()
+    private let monitor = NWPathMonitor()
     private(set)var status: NWPath.Status?
+//    private(set)var isFetching: Bool = false
     private init() {}
     
     func startMonitoring() {
@@ -31,6 +32,7 @@ final class NetworkManager {
     }
     
     func fetchNaverShopping(query: String, sort: String = "sim", start: Int = 1, completion: @escaping (ItemResponse?) -> Void) {
+//        isFetching = true
         let endpoint = "https://openapi.naver.com/v1/search/shop.json"
         let parameter: Parameters = ["query": query, "display": 30, "sort": sort, "start": start]
         let (id, secret) = (APIKeyManager.naverClientId, APIKeyManager.naverClientSecret)
@@ -39,6 +41,7 @@ final class NetworkManager {
         AF.request(endpoint, method: .get, parameters: parameter, headers: header)
             .validate()
             .responseDecodable(of: ItemResponse.self) { response in
+//                self.isFetching = false
                 switch response.result {
                 case .success(let value):
                     completion(value)

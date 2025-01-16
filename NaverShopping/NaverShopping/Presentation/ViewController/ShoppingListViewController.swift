@@ -21,7 +21,7 @@ final class ShoppingListViewController: UIViewController {
         }
     }
     lazy var buttons = [mainView.simButton, mainView.dateButton, mainView.ascButton, mainView.dscButton]
-
+    
     // MARK: - ViewController LifeCycle
     
     
@@ -34,19 +34,19 @@ final class ShoppingListViewController: UIViewController {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.collectionView.prefetchDataSource = self
-
+        
         buttons.forEach {
             $0.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
         }
         
         guard let total = item?.total.formatted(.number) else { return }
         mainView.totalNumberLabel.text = "\(total) 개의 검색 결과"
-
+        
     }
     
     // MARK: - Action
     
-
+    
     @objc func filterButtonTapped(_ sender: SortButton) {
         buttons.forEach {
             $0.isSelected = false
@@ -57,8 +57,12 @@ final class ShoppingListViewController: UIViewController {
         if self.item?.total == 0 { print("0임"); return }
         
         mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-        NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: selectedOption.fetchString, start: 1) {
-            self.item = $0
+        if NetworkManager.shared.status == .satisfied {
+            NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: selectedOption.fetchString, start: 1) {
+                self.item = $0
+            }
+        } else {
+            present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
         }
         
     }
@@ -92,7 +96,7 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
 
 extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        print(#function, indexPaths, self.item?.items.count, self.item?.start)
+        //        print(#function, indexPaths, self.item?.items.count, self.item?.start)
         guard let item,
               let text = navigationItem.title else { return }
         guard enableStartRange ~= item.start else {
@@ -100,13 +104,17 @@ extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
             return
         }
         print(indexPaths[0].item, item.items.count - 8)
-        if indexPaths[0].item >= item.items.count - 8 {
-            self.item?.start += 30
-            NetworkManager.shared.fetchNaverShopping(query: text, sort: selectedOption.fetchString, start: item.start + 30) {
-                guard let fetchedItems = $0 else { print("응답이 정상적으로 오지 않았음"); return }
-                self.item?.items.append(contentsOf: fetchedItems.items)
-                self.item?.start = fetchedItems.start
+        if NetworkManager.shared.status == .satisfied {
+            if indexPaths[0].item >= item.items.count - 8 {
+                self.item?.start += 30
+                NetworkManager.shared.fetchNaverShopping(query: text, sort: selectedOption.fetchString, start: item.start + 30) {
+                    guard let fetchedItems = $0 else { print("응답이 정상적으로 오지 않았음"); return }
+                    self.item?.items.append(contentsOf: fetchedItems.items)
+                    self.item?.start = fetchedItems.start
+                }
             }
+        } else {
+            present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
         }
     }
     

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55072B272D37964600CB8107 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 55072B262D37964600CB8107 /* Secret.xcconfig */; };
 		55072BC32D379EC400CB8107 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 55072BC22D379EC400CB8107 /* SnapKit */; };
 		55072BC62D37A5E400CB8107 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 55072BC52D37A5E400CB8107 /* Alamofire */; };
 		55072BF42D37B7CB00CB8107 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 55072BF32D37B7CB00CB8107 /* Kingfisher */; };
@@ -15,14 +14,13 @@
 
 /* Begin PBXFileReference section */
 		55072B052D378F0700CB8107 /* NaverShopping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NaverShopping.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		55072B262D37964600CB8107 /* Secret.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		55072B172D378F0900CB8107 /* Exceptions for "NaverShopping" folder in "NaverShopping" target */ = {
+		55072D672D38F33400CB8107 /* Exceptions for "NaverShopping" folder in "NaverShopping" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = 55072B042D378F0700CB8107 /* NaverShopping */;
 		};
@@ -32,7 +30,7 @@
 		55072B072D378F0700CB8107 /* NaverShopping */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				55072B172D378F0900CB8107 /* Exceptions for "NaverShopping" folder in "NaverShopping" target */,
+				55072D672D38F33400CB8107 /* Exceptions for "NaverShopping" folder in "NaverShopping" target */,
 			);
 			path = NaverShopping;
 			sourceTree = "<group>";
@@ -56,7 +54,6 @@
 		55072AFC2D378F0700CB8107 = {
 			isa = PBXGroup;
 			children = (
-				55072B262D37964600CB8107 /* Secret.xcconfig */,
 				55072B072D378F0700CB8107 /* NaverShopping */,
 				55072B062D378F0700CB8107 /* Products */,
 			);
@@ -142,7 +139,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55072B272D37964600CB8107 /* Secret.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,14 +157,15 @@
 /* Begin XCBuildConfiguration section */
 		55072B192D378F0900CB8107 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55072B262D37964600CB8107 /* Secret.xcconfig */;
+			baseConfigurationReferenceAnchor = 55072B072D378F0700CB8107 /* NaverShopping */;
+			baseConfigurationReferenceRelativePath = Config/Secret.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NaverShopping/Info.plist;
+				INFOPLIST_FILE = NaverShopping/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -194,14 +191,15 @@
 		};
 		55072B1A2D378F0900CB8107 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55072B262D37964600CB8107 /* Secret.xcconfig */;
+			baseConfigurationReferenceAnchor = 55072B072D378F0700CB8107 /* NaverShopping */;
+			baseConfigurationReferenceRelativePath = Config/Secret.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NaverShopping/Info.plist;
+				INFOPLIST_FILE = NaverShopping/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

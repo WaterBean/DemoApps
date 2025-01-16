@@ -12,7 +12,7 @@ final class NetworkManager {
     
     func fetchNaverShopping(query: String, sort: String = "sim", completion: @escaping (ItemResponse?) -> Void) {
         let endpoint = "https://openapi.naver.com/v1/search/shop.json"
-        let parameter: Parameters = ["query": query, "display": 100, "sort": sort]
+        let parameter: Parameters = ["query": query, "display": 30, "sort": sort]
         let (id, secret) = (APIKeyManager.naverClientId, APIKeyManager.naverClientSecret)
         let header: HTTPHeaders = ["X-Naver-Client-Id": id, "X-Naver-Client-Secret": secret]
     

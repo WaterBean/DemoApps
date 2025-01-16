@@ -41,23 +41,21 @@ final class ShoppingListViewController: UIViewController {
     // MARK: - Action
     
 
-    @objc func filterButtonTapped(_ sender: FilterButton) {
+    @objc func filterButtonTapped(_ sender: SortButton) {
         buttons.forEach {
             $0.isSelected = false
         }
         sender.isSelected = true
         
-        
-        switch sender.titleLabel?.text {
-        case "정확도": NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: "sim") { self.item = $0 }
-        case "날짜순": NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: "date") { self.item = $0 }
-        case "가격높은순": NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: "dsc") { self.item = $0 }
-        case "가격낮은순": NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: "asc") { self.item = $0 }
-        default: NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: "sim") { self.item = $0 }
+        NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: sender.option.fetchString) {
+            self.item = $0
         }
+        
     }
     
 }
+
+
 
 
 // MARK: - CollectionView Delegate, DataSource
@@ -82,3 +80,15 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
     
 }
 
+
+// MARK: - Prefetching(Pagination)
+
+extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        
+    }
+}

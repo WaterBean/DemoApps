@@ -26,35 +26,23 @@ final class ShoppingListView: BaseView {
     }()
     
     lazy var simButton = {
-        let button = FilterButton()
-        var config = button.configuration
-        config?.title = "정확도"
-        button.configuration = config
+        let button = SortButton(option: .sim)
         button.isSelected = true
         return button
     }()
     
     lazy var dateButton = {
-        let button = FilterButton()
-        var config = button.configuration
-        config?.title = "날짜순"
-        button.configuration = config
+        let button = SortButton(option: .date)
         return button
     }()
     
     lazy var ascButton = {
-        let button = FilterButton()
-        var config = button.configuration
-        config?.title = "가격높은순"
-        button.configuration = config
+        let button = SortButton(option: .asc)
         return button
     }()
     
     lazy var dscButton = {
-        let button = FilterButton()
-        var config = button.configuration
-        config?.title = "가격낮은순"
-        button.configuration = config
+        let button = SortButton(option: .dsc)
         return button
     }()
     

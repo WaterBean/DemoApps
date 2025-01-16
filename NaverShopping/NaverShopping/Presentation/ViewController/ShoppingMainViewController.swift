@@ -9,7 +9,7 @@ import UIKit
 
 final class ShoppingMainViewController: UIViewController {
     let mainView = ShoppingMainView()
-    
+    let monitor = NetworkManager.shared.monitor
     // MARK: - ViewController LifeCycle
     override func loadView() {
         view = mainView
@@ -17,7 +17,7 @@ final class ShoppingMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NetworkManager.shared.startMonitoring()
         navigationItem.title = "도봉러의 쇼핑쇼핑"
         mainView.searchBar.delegate = self
 
@@ -46,11 +46,16 @@ final class ShoppingMainViewController: UIViewController {
 
 extension ShoppingMainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), text.count >= 2 else {
-            present(AlertManager.moreThanSecondWordPleaseAlert(), animated: true)
-            return
+        if NetworkManager.shared.status == .satisfied {
+            guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), text.count >= 2 else {
+                present(AlertManager.simpleAlert(title: "2자 이상 입력", message: "두글자 이상 입력해주세요."), animated: true)
+                searchBar.text = ""
+                return
+            }
+            searchItem(text: text)
+        } else {
+            present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
         }
-        searchItem(text: text)
     }
 }
 

@@ -25,6 +25,8 @@ final class ShoppingMainViewController: UIViewController {
 
     
     // MARK: - Action
+    
+    
     func searchItem(text: String) {
         NetworkManager.shared.fetchNaverShopping(query: text) { response in
             guard let response else { self.mainView.label.text = "다른 검색어를 입력해보세요."; return }
@@ -46,7 +48,10 @@ final class ShoppingMainViewController: UIViewController {
 
 extension ShoppingMainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, text.count >= 2 else { return }
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), text.count >= 2 else {
+            present(AlertManager.moreThanSecondWordPleaseAlert(), animated: true)
+            return
+        }
         searchItem(text: text)
     }
 }

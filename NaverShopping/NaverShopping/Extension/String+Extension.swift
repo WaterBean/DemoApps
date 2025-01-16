@@ -8,7 +8,11 @@
 
 extension String {
     var htmlEscaped: String {
-        return self.replacingOccurrences(of: "<[^>]+>&quot;", with: "", options: .regularExpression)
+        return self
+            .replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
+            .replacingOccurrences(of: "&quot;", with: "\"")
+            .replacingOccurrences(of: "&nbsp;", with: "", options: .regularExpression)
+
     }
     
 }

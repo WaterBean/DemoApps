@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import SnapKit
 
 
 final class ShoppingMainView: BaseView {
-    
     let searchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
@@ -33,14 +33,14 @@ final class ShoppingMainView: BaseView {
         return label
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
     override func configureHierarchy() {
         addSubview(searchBar)
         addSubview(backgroundImageView)
         addSubview(label)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
     }
     
     

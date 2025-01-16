@@ -7,7 +7,6 @@
 import UIKit
 
 final class FilterButton: UIButton {
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -19,7 +18,13 @@ final class FilterButton: UIButton {
         layer.borderColor = UIColor.white.cgColor
     }
     
-    func configHandler(_ button: UIButton)-> Void {
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configHandler(_ button: UIButton) -> Void {
         switch button.state {
         case .selected:
             button.configuration?.background.backgroundColor = .white
@@ -29,12 +34,7 @@ final class FilterButton: UIButton {
             button.configuration?.baseForegroundColor = .white
         default : break
         }
-
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
     }
     
 }

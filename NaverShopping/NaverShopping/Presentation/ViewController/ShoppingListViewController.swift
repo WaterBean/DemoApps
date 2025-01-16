@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import SnapKit
 
 final class ShoppingListViewController: UIViewController {
-    
     let mainView = ShoppingListView()
     
     var item: ItemResponse? {
@@ -39,6 +37,9 @@ final class ShoppingListViewController: UIViewController {
         mainView.totalNumberLabel.text = "\(total) 개의 검색 결과"
 
     }
+    
+    // MARK: - Action
+    
 
     @objc func filterButtonTapped(_ sender: FilterButton) {
         buttons.forEach {
@@ -57,6 +58,10 @@ final class ShoppingListViewController: UIViewController {
     }
     
 }
+
+
+// MARK: - CollectionView Delegate, DataSource
+
 
 extension ShoppingListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

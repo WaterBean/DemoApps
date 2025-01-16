@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ShoppingListViewController: UIViewController {
     let mainView = ShoppingListView()
+    var selectedOption: SortButton.SortOption = .sim
+    lazy var enableStartRange = 1...(item?.total ?? 0)
+    lazy var query = navigationItem.title!
+    
     
     var item: ItemResponse? {
         didSet {
@@ -28,6 +33,7 @@ final class ShoppingListViewController: UIViewController {
         super.viewDidLoad()
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        mainView.collectionView.prefetchDataSource = self
 
         buttons.forEach {
             $0.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
@@ -46,16 +52,18 @@ final class ShoppingListViewController: UIViewController {
             $0.isSelected = false
         }
         sender.isSelected = true
+        selectedOption = sender.option
         
-        NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: sender.option.fetchString) {
+        if self.item?.total == 0 { print("0임"); return }
+        
+        mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: selectedOption.fetchString, start: 1) {
             self.item = $0
         }
         
     }
     
 }
-
-
 
 
 // MARK: - CollectionView Delegate, DataSource
@@ -72,7 +80,6 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
               let price = Int(item.lprice)
         else { return ItemCollectionViewCell() }
         
-        
         cell.configureCell(title: item.title, imageURL: URL(string: item.image), mallName: item.mallName, price: price)
         return cell
     }
@@ -85,10 +92,29 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
 
 extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
+//        print(#function, indexPaths, self.item?.items.count, self.item?.start)
+        guard let item,
+              let text = navigationItem.title else { return }
+        guard enableStartRange ~= item.start else {
+            print("현재가 마지막 페이지임")
+            return
+        }
+        print(indexPaths[0].item, item.items.count - 8)
+        if indexPaths[0].item >= item.items.count - 8 {
+            self.item?.start += 30
+            NetworkManager.shared.fetchNaverShopping(query: text, sort: selectedOption.fetchString, start: item.start + 30) {
+                guard let fetchedItems = $0 else { print("응답이 정상적으로 오지 않았음"); return }
+                self.item?.items.append(contentsOf: fetchedItems.items)
+                self.item?.start = fetchedItems.start
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        
+        indexPaths.forEach { indexPath in
+            guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
+            cell.itemImage.kf.cancelDownloadTask() // 이게 되는지 어떻게 확인?
+        }
+        print(#function)
     }
 }

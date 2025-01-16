@@ -28,9 +28,7 @@ final class ShoppingMainViewController: UIViewController {
     
     
     func searchItem(text: String) {
-        NetworkManager.shared.fetchNaverShopping(query: text) { response in
-            guard let response else { self.mainView.label.text = "다른 검색어를 입력해보세요."; return }
-            
+        NetworkManager.shared.fetchNaverShopping(query: text, start: 1) { response in
             let vc = ShoppingListViewController()
             vc.item = response
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)

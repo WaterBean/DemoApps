@@ -28,9 +28,8 @@ final class OnboardingViewController: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        UserStatusManager.userStatus = .login
-        print(#function)
-        UserStatusManager.userStatus.replaceScene()
+        UserStatusManager.status = .login
+        UserStatusManager.status.replaceScene()
     }
  
 }

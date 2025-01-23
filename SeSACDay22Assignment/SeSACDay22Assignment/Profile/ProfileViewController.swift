@@ -27,8 +27,8 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc func okButtonTapped() {
-        UserStatusManager.userStatus = .logout
-        UserStatusManager.userStatus.replaceScene()
+        UserStatusManager.status = .logout
+        UserStatusManager.status.replaceScene()
     }
     
     @objc func nicknameButtonTapped() {

@@ -12,13 +12,17 @@ final class BirthdayViewController: UIViewController {
 
     let datePicker = UIDatePicker()
     
+    weak var delegate: PassDataProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
     }
     
     @objc func okButtonTapped() {
-        print(#function)
+        let birthday = datePicker.date.formatted(Date.FormatStyle(date: .numeric))
+        delegate?.passBirthday(birthday: birthday)
+        navigationController?.popViewController(animated: true)
     }
     
     func configureView() {
@@ -32,4 +36,8 @@ final class BirthdayViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
     }
+}
+
+protocol PassDataProtocol: AnyObject {
+    func passBirthday(birthday: String) -> Void
 }

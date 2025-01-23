@@ -61,7 +61,7 @@ final class UserStatusManager {
     
     static var nickname: String {
         get {
-            let nickname = UserDefaults.standard.string(forKey: Key.nickname.rawValue) ?? ""
+            let nickname = UserDefaults.standard.string(forKey: Key.nickname.rawValue) ?? "기본 닉네임"
             return nickname
         }
         set {
@@ -71,7 +71,7 @@ final class UserStatusManager {
     
     static var birthday: String {
         get {
-            let birthday = UserDefaults.standard.string(forKey: Key.birthday.rawValue) ?? ""
+            let birthday = UserDefaults.standard.string(forKey: Key.birthday.rawValue) ?? "12/28/1999"
             return birthday
         }
         set {

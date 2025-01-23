@@ -18,7 +18,9 @@ final class NicknameViewController: UIViewController {
     }
     
     @objc func okButtonTapped() {
-        print(#function)
+        guard let text = textField.text else { return }
+        NotificationCenter.default.post(name: NSNotification.Name("nickname"), object: nil, userInfo: ["nickname": text])
+        navigationController?.popViewController(animated: true)
     }
     
     func configureView() {

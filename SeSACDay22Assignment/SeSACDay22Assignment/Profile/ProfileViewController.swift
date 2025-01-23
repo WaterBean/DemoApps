@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class ProfileViewController: UIViewController {
-
+    
     let nicknameButton = UIButton()
     let birthdayButton = UIButton()
     let levelButton = UIButton()
@@ -24,8 +24,14 @@ final class ProfileViewController: UIViewController {
         nicknameButton.addTarget(self, action: #selector(nicknameButtonTapped), for: .touchUpInside)
         birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
         levelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        NotificationCenter.default.addObserver(self, selector: #selector(nicknameChanged), name: NSNotification.Name("nickname") , object: nil)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateView()
+    }
+    
     @objc func okButtonTapped() {
         UserStatusManager.status = .logout
         UserStatusManager.status.replaceScene()
@@ -38,12 +44,30 @@ final class ProfileViewController: UIViewController {
     
     @objc func birthdayButtonTapped() {
         let vc = BirthdayViewController()
+        vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func levelButtonTapped() {
         let vc = LevelViewController()
+        vc.closure = { levelString in
+            let level: UserStatusManager.Level = switch levelString {
+            case UserStatusManager.Level.high.rawValue : .high
+            case UserStatusManager.Level.medium.rawValue : .medium
+            case UserStatusManager.Level.low.rawValue : .low
+            default: .high
+            }
+            UserStatusManager.level = level
+        }
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func nicknameChanged(value: NSNotification) {
+        if let nickname = value.userInfo?["nickname"] as? String {
+            UserStatusManager.nickname = nickname
+        } else {
+            print(#function)
+        }
     }
     
     func configureView() {
@@ -71,7 +95,7 @@ final class ProfileViewController: UIViewController {
             make.height.equalTo(50)
             make.width.equalTo(100)
         }
-
+        
         levelButton.snp.makeConstraints { make in
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(24)
             make.top.equalTo(birthdayButton.snp.bottom).offset(24)
@@ -92,14 +116,14 @@ final class ProfileViewController: UIViewController {
             make.leading.equalTo(birthdayButton.snp.trailing).offset(24)
             make.height.equalTo(50)
         }
-
+        
         levelLabel.snp.makeConstraints { make in
             make.top.equalTo(birthdayLabel.snp.bottom).offset(24)
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
             make.leading.equalTo(levelButton.snp.trailing).offset(24)
             make.height.equalTo(50)
         }
-
+        
         
         
         nicknameButton.setTitleColor(.black, for: .normal)
@@ -109,7 +133,7 @@ final class ProfileViewController: UIViewController {
         nicknameButton.setTitle("닉네임", for: .normal)
         birthdayButton.setTitle("생일", for: .normal)
         levelButton.setTitle("레벨", for: .normal)
-
+        
         nicknameLabel.text = "NO NAME"
         nicknameLabel.textColor = .lightGray
         nicknameLabel.textAlignment = .right
@@ -123,5 +147,17 @@ final class ProfileViewController: UIViewController {
         levelLabel.textAlignment = .right
     }
     
- 
+    func updateView() {
+        nicknameLabel.text = UserStatusManager.nickname
+        birthdayLabel.text = UserStatusManager.birthday
+        levelLabel.text = UserStatusManager.level.rawValue
+    }
+}
+
+
+extension ProfileViewController: PassDataProtocol {
+    func passBirthday(birthday: String) {
+        UserStatusManager.birthday = birthday
+    }
+    
 }

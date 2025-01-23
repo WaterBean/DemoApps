@@ -11,6 +11,7 @@ import SnapKit
 final class LevelViewController: UIViewController {
 
     let segmentedControl = UISegmentedControl(items: ["상", "중", "하"])
+    var closure: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +19,9 @@ final class LevelViewController: UIViewController {
     }
     
     @objc func okButtonTapped() {
-        print(#function)
+        guard let level = self.segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) else { print("저장 실패"); return }
+        closure?(level)
+        navigationController?.popViewController(animated: true)
     }
     
     func configureView() {

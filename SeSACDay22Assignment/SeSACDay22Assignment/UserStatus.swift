@@ -46,10 +46,10 @@ final class UserStatusManager {
         }
     }
     
-    static var level: Level {
+    static var level: Level? {
         get {
             guard let levelData = UserDefaults.standard.data(forKey: Key.level.rawValue),
-                  let level = try? JSONDecoder().decode(Level.self, from: levelData) else { return .high }
+                  let level = try? JSONDecoder().decode(Level.self, from: levelData) else { return nil }
             return level
         }
         set {
@@ -59,9 +59,9 @@ final class UserStatusManager {
         }
     }
     
-    static var nickname: String {
+    static var nickname: String? {
         get {
-            let nickname = UserDefaults.standard.string(forKey: Key.nickname.rawValue) ?? "기본 닉네임"
+            let nickname = UserDefaults.standard.string(forKey: Key.nickname.rawValue)
             return nickname
         }
         set {
@@ -69,9 +69,9 @@ final class UserStatusManager {
         }
     }
     
-    static var birthday: String {
+    static var birthday: String? {
         get {
-            let birthday = UserDefaults.standard.string(forKey: Key.birthday.rawValue) ?? "12/28/1999"
+            let birthday = UserDefaults.standard.string(forKey: Key.birthday.rawValue)
             return birthday
         }
         set {

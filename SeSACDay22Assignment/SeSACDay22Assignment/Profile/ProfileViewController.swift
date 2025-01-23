@@ -148,9 +148,9 @@ final class ProfileViewController: UIViewController {
     }
     
     func updateView() {
-        nicknameLabel.text = UserStatusManager.nickname
-        birthdayLabel.text = UserStatusManager.birthday
-        levelLabel.text = UserStatusManager.level.rawValue
+        nicknameLabel.text = UserStatusManager.nickname ?? "NO NAME"
+        birthdayLabel.text = UserStatusManager.birthday ?? "NO DATE"
+        levelLabel.text = UserStatusManager.level?.rawValue ?? "NO LEVEL"
     }
 }
 

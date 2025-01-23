@@ -24,7 +24,13 @@ final class OnboardingViewController: UIViewController {
         button.backgroundColor = .white
         button.setTitleColor(.darkGray, for: .normal)
         button.setTitle("시작하기", for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
+    @objc private func buttonTapped() {
+        UserStatusManager.userStatus = .login
+        print(#function)
+        UserStatusManager.userStatus.replaceScene()
+    }
  
 }

@@ -21,10 +21,29 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        nicknameButton.addTarget(self, action: #selector(nicknameButtonTapped), for: .touchUpInside)
+        birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
+        levelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
     }
 
     @objc func okButtonTapped() {
-        print(#function)
+        UserStatusManager.userStatus = .logout
+        UserStatusManager.userStatus.replaceScene()
+    }
+    
+    @objc func nicknameButtonTapped() {
+        let vc = NicknameViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func birthdayButtonTapped() {
+        let vc = BirthdayViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func levelButtonTapped() {
+        let vc = LevelViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureView() {

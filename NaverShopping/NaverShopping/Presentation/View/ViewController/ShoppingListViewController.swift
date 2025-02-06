@@ -12,28 +12,34 @@ final class ShoppingListViewController: UIViewController {
     let mainView = ShoppingListView()
     var selectedOption: SortButton.SortOption = .sim
     lazy var enableStartRange = 1...(item?.total ?? 0)
-    lazy var query = navigationItem.title!
-    
-    
+    var query: String = ""
     var item: ItemResponse? {
         didSet {
             mainView.collectionView.reloadData()
         }
     }
+    
     lazy var buttons = [mainView.simButton, mainView.dateButton, mainView.ascButton, mainView.dscButton]
     
     // MARK: - ViewController LifeCycle
-    
-    
     override func loadView() {
         view = mainView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = query
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.collectionView.prefetchDataSource = self
+        NetworkManager.shared.fetchNaverShopping(query: query, start: 1) { response in
+            switch response {
+            case .success(let success):
+                self.item = success
+            case .failure(let failure):
+                print(failure)
+            }
+        }
         
         buttons.forEach {
             $0.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
@@ -45,8 +51,6 @@ final class ShoppingListViewController: UIViewController {
     }
     
     // MARK: - Action
-    
-    
     @objc func filterButtonTapped(_ sender: SortButton) {
         buttons.forEach {
             $0.isSelected = false
@@ -58,8 +62,13 @@ final class ShoppingListViewController: UIViewController {
         
         mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         if NetworkManager.shared.status == .satisfied {
-            NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: selectedOption.fetchString, start: 1) {
-                self.item = $0
+            NetworkManager.shared.fetchNaverShopping(query: navigationItem.title ?? "", sort: selectedOption.fetchString, start: 1) { result in
+                switch result {
+                case .success(let success):
+                    self.item = success
+                case .failure(let failure):
+                    print(failure)
+                }
             }
         } else {
             present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
@@ -69,10 +78,7 @@ final class ShoppingListViewController: UIViewController {
     
 }
 
-
 // MARK: - CollectionView Delegate, DataSource
-
-
 extension ShoppingListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         item?.items.count ?? 0
@@ -93,8 +99,8 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
 
 
 // MARK: - Prefetching(Pagination)
-
 extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
+    
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         //        print(#function, indexPaths, self.item?.items.count, self.item?.start)
         guard let item,
@@ -107,10 +113,14 @@ extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
         if NetworkManager.shared.status == .satisfied {
             if indexPaths[0].item >= item.items.count - 8 {
                 self.item?.start += 30
-                NetworkManager.shared.fetchNaverShopping(query: text, sort: selectedOption.fetchString, start: item.start + 30) {
-                    guard let fetchedItems = $0 else { print("응답이 정상적으로 오지 않았음"); return }
-                    self.item?.items.append(contentsOf: fetchedItems.items)
-                    self.item?.start = fetchedItems.start
+                NetworkManager.shared.fetchNaverShopping(query: text, sort: selectedOption.fetchString, start: item.start + 30) { result in
+                    switch result {
+                    case .success(let success):
+                        self.item?.items.append(contentsOf: success.items)
+                        self.item?.start = success.start
+                    case .failure(let failure):
+                        print(#function)
+                    }
                 }
             }
         } else {
@@ -125,4 +135,6 @@ extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
         }
         print(#function)
     }
+    
+    
 }

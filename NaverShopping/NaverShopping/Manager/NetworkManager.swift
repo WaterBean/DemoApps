@@ -31,7 +31,7 @@ final class NetworkManager {
         }
     }
     
-    func fetchNaverShopping(query: String, sort: String = "sim", start: Int = 1, completion: @escaping (ItemResponse?) -> Void) {
+    func fetchNaverShopping(query: String, sort: String = "sim", start: Int = 1, completion: @escaping (Result<ItemResponse, AFError>) -> Void) {
 //        isFetching = true
         let endpoint = "https://openapi.naver.com/v1/search/shop.json"
         let parameter: Parameters = ["query": query, "display": 30, "sort": sort, "start": start]
@@ -41,15 +41,7 @@ final class NetworkManager {
         AF.request(endpoint, method: .get, parameters: parameter, headers: header)
             .validate()
             .responseDecodable(of: ItemResponse.self) { response in
-//                self.isFetching = false
-                switch response.result {
-                case .success(let value):
-                    completion(value)
-                case .failure(let error):
-                    completion(nil)
-                    print(error)
-                    
-                }
+                completion(response.result)
             }
     }
 }

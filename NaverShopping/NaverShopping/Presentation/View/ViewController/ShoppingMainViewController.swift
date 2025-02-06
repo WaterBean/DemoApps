@@ -20,9 +20,7 @@ final class ShoppingMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NetworkManager.shared.startMonitoring()
-        navigationItem.title = "도봉러의 쇼핑쇼핑"
-        mainView.searchBar.delegate = self
-
+        configureUI()
     }
 
     
@@ -30,15 +28,12 @@ final class ShoppingMainViewController: UIViewController {
     
     
     func searchItem(text: String) {
-        NetworkManager.shared.fetchNaverShopping(query: text, start: 1) { response in
-            let vc = ShoppingListViewController()
-            vc.item = response
-            let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-            backBarButtonItem.tintColor = .white
-            self.navigationItem.backBarButtonItem = backBarButtonItem
-            vc.navigationItem.title = text
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = ShoppingListViewController()
+        vc.query = text
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .white
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
@@ -73,3 +68,12 @@ extension ShoppingMainViewController: UISearchBarDelegate {
 
 
 
+// MARK: - Configure UI
+extension ShoppingMainViewController {
+    
+    private func configureUI() {
+        navigationItem.title = "도봉러의 쇼핑쇼핑"
+        mainView.searchBar.delegate = self
+    }
+
+}

@@ -21,7 +21,7 @@ final class ShoppingMainViewController: UIViewController {
         super.viewDidLoad()
         NetworkManager.shared.startMonitoring()
         configureUI()
-        viewModel.outputSearch.bind { [weak self] data in
+        viewModel.outputSearch.lazyBind { [weak self] data in
             guard data.isNetworkConnected else {
                 self?.present(AlertManager.networkNotConnectionAlert(handler: { _ in
                     URLSchemeManager.shared.openSystemSetting()
@@ -36,7 +36,7 @@ final class ShoppingMainViewController: UIViewController {
             }
             
             let vc = ShoppingListViewController()
-            vc.query = query
+            vc.viewModel.query = query
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
             backBarButtonItem.tintColor = .white
             self?.navigationItem.backBarButtonItem = backBarButtonItem

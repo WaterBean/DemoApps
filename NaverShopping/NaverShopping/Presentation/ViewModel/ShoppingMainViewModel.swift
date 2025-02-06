@@ -13,7 +13,7 @@ final class ShoppingMainViewModel {
     let outputSearch: Observable<(query: String?, isNetworkConnected: Bool)> = Observable((nil, false))
     
     init() {
-        inputSearchButtonTapped.bind { [weak self] text in
+        inputSearchButtonTapped.lazyBind { [weak self] text in
             self?.search(text)
         }
     }

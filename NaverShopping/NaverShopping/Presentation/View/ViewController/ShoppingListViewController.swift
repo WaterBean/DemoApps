@@ -9,8 +9,7 @@ import UIKit
 import Kingfisher
 
 final class ShoppingListViewController: UIViewController {
-    let mainView = ShoppingListView()
-    var selectedOption: SortButton.SortOption = .sim
+    
     lazy var enableStartRange = 1...(item?.total ?? 0)
     var query: String = ""
     var item: ItemResponse? {
@@ -18,8 +17,8 @@ final class ShoppingListViewController: UIViewController {
             mainView.collectionView.reloadData()
         }
     }
-    
-    lazy var buttons = [mainView.simButton, mainView.dateButton, mainView.ascButton, mainView.dscButton]
+
+    let mainView = ShoppingListView()
     
     // MARK: - ViewController LifeCycle
     override func loadView() {
@@ -32,6 +31,7 @@ final class ShoppingListViewController: UIViewController {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         mainView.collectionView.prefetchDataSource = self
+        
         NetworkManager.shared.fetchNaverShopping(query: query, start: 1) { response in
             switch response {
             case .success(let success):
@@ -76,6 +76,10 @@ final class ShoppingListViewController: UIViewController {
         
     }
     
+    // MARK: - View Property
+    lazy var buttons = [mainView.simButton, mainView.dateButton, mainView.ascButton, mainView.dscButton]
+    var selectedOption: SortButton.SortOption = .sim
+
 }
 
 // MARK: - CollectionView Delegate, DataSource

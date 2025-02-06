@@ -11,7 +11,6 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private let monitor = NWPathMonitor()
     private(set)var status: NWPath.Status?
-//    private(set)var isFetching: Bool = false
     private init() {}
     
     func startMonitoring() {
@@ -32,7 +31,6 @@ final class NetworkManager {
     }
     
     func fetchNaverShopping(query: String, sort: String = "sim", start: Int = 1, completion: @escaping (Result<ItemResponse, AFError>) -> Void) {
-//        isFetching = true
         let endpoint = "https://openapi.naver.com/v1/search/shop.json"
         let parameter: Parameters = ["query": query, "display": 30, "sort": sort, "start": start]
         let (id, secret) = (APIKeyManager.naverClientId, APIKeyManager.naverClientSecret)
@@ -44,4 +42,6 @@ final class NetworkManager {
                 completion(response.result)
             }
     }
+    
+    
 }

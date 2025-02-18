@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-        let nav = UINavigationController(rootViewController: SimpleTableViewExampleViewController())
+        let nav = UINavigationController(rootViewController: NumbersViewController())
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }

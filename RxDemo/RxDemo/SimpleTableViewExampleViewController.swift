@@ -11,21 +11,9 @@ import RxSwift
 import SnapKit
 
 final class SimpleTableViewExampleViewController: UIViewController {
-
-    private lazy var tableView = {
-        let view = UITableView()
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.view.addSubview(view)
-        
-        view.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        return view
-    }()
     
-    let disposeBag = DisposeBag()
-    
-    let items = Observable.just(
+    private let disposeBag = DisposeBag()
+    private let items = Observable.just(
         (0..<20).map { "\($0)" }
     )
     
@@ -35,14 +23,13 @@ final class SimpleTableViewExampleViewController: UIViewController {
         bind()
     }
 
-    func bind() {
+    private func bind() {
         items
             .bind(to: tableView.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { row, element, cell in
                 cell.accessoryType = .detailButton
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
             .disposed(by: disposeBag)
-        
 
         tableView.rx.modelSelected(String.self)
             .bind { value in
@@ -58,6 +45,17 @@ final class SimpleTableViewExampleViewController: UIViewController {
     
     }
     
+    private lazy var tableView = {
+        let view = UITableView()
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.view.addSubview(view)
+        
+        view.snp.makeConstraints {
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        return view
+    }()
+
 }
 
 final class Alert {

@@ -20,7 +20,6 @@ final class NumbersViewController: UIViewController {
     }
     
     func bind() {
-        
         let number1 = firstTextField.rx.text.orEmpty
         let number2 = secondTextField.rx.text.orEmpty
         let number3 = thirdTextField.rx.text.orEmpty

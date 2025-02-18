@@ -26,14 +26,16 @@ final class SimpleValidationViewController: UIViewController {
         let usernameValid = usernameTextField.rx.text.orEmpty
             .map { [weak self] in
                 guard let self else { return false }
-                return $0.count >= minimalUsernameLength
+                let trimmed = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmed.count >= minimalUsernameLength
             }
             .share(replay: 1)
             
         let passwordValid = passwordTextField.rx.text.orEmpty
             .map { [weak self] in
                 guard let self else { return false }
-                return $0.count >= minimalPasswordLength
+                let trimmed = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmed.count >= minimalUsernameLength
             }
             .share(replay: 1)
         
@@ -55,7 +57,14 @@ final class SimpleValidationViewController: UIViewController {
         button.rx.tap
             .subscribe(with: self) { owner, _  in Alert.simpleAlert(owner: owner, "가입 완료") }
             .disposed(by: disposeBag)
-            
+        
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .bind(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configure() {
@@ -101,7 +110,8 @@ final class SimpleValidationViewController: UIViewController {
         [usernameTextField, passwordTextField].forEach {
             $0.borderStyle = .roundedRect
         }
-        
+        usernameTextField.becomeFirstResponder()
+
     }
     
     private let stackView = UIStackView()

@@ -30,6 +30,15 @@ final class NumbersViewController: UIViewController {
         .map { $0.description }
         .bind(to: resultLabel.rx.text)
         .disposed(by: disposeBag)
+        
+        
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .bind(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     let firstTextField = UITextField()
@@ -49,9 +58,11 @@ final class NumbersViewController: UIViewController {
         
         stackView.axis = .vertical
         stackView.alignment = .fill
+        stackView.spacing = 12
         
         [firstTextField, secondTextField, thirdTextField].forEach {
             $0.borderStyle = .roundedRect
+            $0.keyboardType = .numberPad
             $0.snp.makeConstraints { make in
                 make.height.equalTo(50)
             }

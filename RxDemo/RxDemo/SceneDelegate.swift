@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-        let nav = UINavigationController(rootViewController: BirthdayViewController())
-        window?.rootViewController = nav
+        window?.rootViewController = TabBarViewController()
         window?.makeKeyAndVisible()
     }
 

@@ -51,7 +51,7 @@ final class HomeworkViewController: UIViewController {
                 cell.usernameLabel.text = element.name
                 cell.detailButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        owner.navigationController?.pushViewController(NumbersViewController(), animated: true)
+                        owner.navigationController?.pushViewController(DetailViewController(person: element), animated: true)
                     }
                     .disposed(by: cell.disposeBag)
             }

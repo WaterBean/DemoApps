@@ -23,7 +23,7 @@ final class HomeworkViewModel {
     
     private var selectedUsers = [Person]()
     private lazy var filteredUsers = sampleUsers
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         let personList = BehaviorRelay(value: sampleUsers)

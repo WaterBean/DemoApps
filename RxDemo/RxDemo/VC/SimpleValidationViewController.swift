@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 
 final class SimpleValidationViewController: UIViewController {
-
+    
     private let disposeBag = DisposeBag()
     private let minimalUsernameLength = 5
     private let minimalPasswordLength = 5
@@ -24,28 +24,33 @@ final class SimpleValidationViewController: UIViewController {
     
     private func bind() {
         let usernameValid = usernameTextField.rx.text.orEmpty
-            .map { [weak self] in
-                guard let self else { return false }
-                let trimmed = $0.trimmingCharacters(in: .whitespacesAndNewlines)
-                return trimmed.count >= minimalUsernameLength
-            }
-            .share(replay: 1)
-            
-        let passwordValid = passwordTextField.rx.text.orEmpty
-            .map { [weak self] in
-                guard let self else { return false }
-                let trimmed = $0.trimmingCharacters(in: .whitespacesAndNewlines)
-                return trimmed.count >= minimalUsernameLength
+            .withUnretained(self)
+            .map { owner, value in
+                print("uservalid map")
+                let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmed.count >= owner.minimalUsernameLength
             }
             .share(replay: 1)
         
-        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
+        let passwordValid = passwordTextField.rx.text.orEmpty
+            .withUnretained(self)
+            .map { owner, value in
+                print("passwordvalid map")
+                let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmed.count >= owner.minimalUsernameLength
+            }
+            .share(replay: 1)
+        
+        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) {
+            print("everythingmap")
+            return $0 && $1
+        }
             .share(replay: 1)
         
         usernameValid
             .bind(to: usernameValidLabel.rx.isHidden, passwordTextField.rx.isEnabled)
             .disposed(by: disposeBag)
-      
+        
         passwordValid
             .bind(to: passwordValidLabel.rx.isHidden)
             .disposed(by: disposeBag)
@@ -81,7 +86,7 @@ final class SimpleValidationViewController: UIViewController {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.top.equalTo(usernameLabel.snp.bottom).offset(16)
         }
-
+        
         usernameValidLabel.snp.makeConstraints {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.top.equalTo(usernameTextField.snp.bottom).offset(16)
@@ -96,7 +101,7 @@ final class SimpleValidationViewController: UIViewController {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.top.equalTo(passwordLabel.snp.bottom).offset(16)
         }
-
+        
         passwordValidLabel.snp.makeConstraints {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.top.equalTo(passwordTextField.snp.bottom).offset(16)
@@ -111,7 +116,7 @@ final class SimpleValidationViewController: UIViewController {
             $0.borderStyle = .roundedRect
         }
         usernameTextField.becomeFirstResponder()
-
+        
     }
     
     private let stackView = UIStackView()

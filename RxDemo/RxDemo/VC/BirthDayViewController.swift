@@ -32,15 +32,15 @@ final class BirthdayViewController: UIViewController {
             .disposed(by: disposeBag)
         
         pickedDate
-            .map { [weak self] (date: Date) -> (Bool, String, String, String) in
-                guard let self else { return (false,"","","") }
+            .withUnretained(self)
+            .map { owner, date -> (Bool, String, String, String) in
                 let ageValid = date <= Calendar.current.date(byAdding: .year, value: -17, to: .now)! ? true : false
-                self.formatter.dateFormat = "yyyy년"
-                let year: String = self.formatter.string(from: date)
-                self.formatter.dateFormat = "M월"
-                let month = self.formatter.string(from: date)
-                self.formatter.dateFormat = "d일"
-                let day = self.formatter.string(from: date)
+                owner.formatter.dateFormat = "yyyy년"
+                let year: String = owner.formatter.string(from: date)
+                owner.formatter.dateFormat = "M월"
+                let month = owner.formatter.string(from: date)
+                owner.formatter.dateFormat = "d일"
+                let day = owner.formatter.string(from: date)
                 return (ageValid, year, month, day)
             }
             .bind(with: self) { owner, value in

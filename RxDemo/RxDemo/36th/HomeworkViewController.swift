@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Kingfisher
+import RxCocoa
+import RxSwift
 import SnapKit
 
 struct Person: Identifiable {
@@ -15,9 +18,105 @@ struct Person: Identifiable {
     let profileImage: String
 }
 
-class HomeworkViewController: UIViewController {
+final class HomeworkViewController: UIViewController {
+        
+    private let tableView = UITableView()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    private let searchBar = UISearchBar()
     
-    let sampleUsers: [Person] = [
+    private lazy var personList = BehaviorSubject(value: sampleUsers)
+    private let selectedUserList = PublishSubject<[Person]>()
+    private var selectedUsers = [Person]()
+    private let disposeBag = DisposeBag()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configure()
+        bind()
+    }
+     
+    private func bind() {
+        
+        personList
+            .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier,
+                                         cellType: PersonTableViewCell.self)) { row, element, cell in
+                cell.profileImageView.kf.setImage(with: URL(string: element.profileImage))
+                cell.usernameLabel.text = element.name
+                cell.detailButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        owner.navigationController?.pushViewController(NumbersViewController(), animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        selectedUserList
+            .bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier,
+                                              cellType: UserCollectionViewCell.self)) { item, element, cell in
+                cell.label.text = element.name
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .withUnretained(self)
+            .map { owner, indexPath in
+                return owner.sampleUsers[indexPath.row]
+            }
+            .bind(with: self) { owner, item in
+                owner.selectedUsers.insert(item, at: 0)
+                owner.selectedUserList.onNext(owner.selectedUsers)
+            }
+            .disposed(by: disposeBag)
+            
+        
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .bind(with: self) { owner, text in
+                let result = text.isEmpty ? owner.sampleUsers : owner.sampleUsers.filter {
+                    $0.name.contains(text)
+                }
+                owner.personList.onNext(result)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        
+    }
+    
+    private func configure() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        view.addSubview(collectionView)
+        view.addSubview(searchBar)
+        
+        navigationItem.titleView = searchBar
+         
+        collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: UserCollectionViewCell.identifier)
+        collectionView.backgroundColor = .lightGray
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        tableView.register(PersonTableViewCell.self, forCellReuseIdentifier: PersonTableViewCell.identifier)
+        tableView.backgroundColor = .systemGreen
+        tableView.rowHeight = 100
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 80, height: 40)
+        layout.scrollDirection = .horizontal
+        return layout
+    }
+    
+    private let sampleUsers: [Person] = [
         Person(name: "Steven", email: "steven.brown@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/1.jpg"),
         Person(name: "Mike", email: "mike.wilson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/2.jpg"),
         Person(name: "Emma", email: "emma.taylor@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/1.jpg"),
@@ -70,53 +169,6 @@ class HomeworkViewController: UIViewController {
         Person(name: "Ralph", email: "ralph.cox@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/26.jpg"),
         Person(name: "Ann", email: "ann.howard@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/25.jpg")
     ]
-    
-    let tableView = UITableView()
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    let searchBar = UISearchBar()
-     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configure()
-        bind()
-    }
-     
-    private func bind() {
-          
-    }
-    
-    private func configure() {
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        view.addSubview(collectionView)
-        view.addSubview(searchBar)
-        
-        navigationItem.titleView = searchBar
-         
-        collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: UserCollectionViewCell.identifier)
-        collectionView.backgroundColor = .lightGray
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(50)
-        }
-        
-        tableView.register(PersonTableViewCell.self, forCellReuseIdentifier: PersonTableViewCell.identifier)
-        tableView.backgroundColor = .systemGreen
-        tableView.rowHeight = 100
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
-            make.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-    }
-    
-    private func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 80, height: 40)
-        layout.scrollDirection = .horizontal
-        return layout
-    }
 
 }
  

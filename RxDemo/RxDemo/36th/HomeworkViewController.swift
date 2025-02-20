@@ -37,11 +37,13 @@ final class HomeworkViewController: UIViewController {
         let itemSelected = tableView.rx.itemSelected
         let searchTapped = searchBar.rx.searchButtonClicked
             .withLatestFrom(searchBar.rx.text.orEmpty)
+        let searchText = searchBar.rx.text.orEmpty
         let output = viewModel
             .transform(input:
                         HomeworkViewModel.Input(
                             itemSelected: itemSelected,
-                            searchTapped: searchTapped
+                            searchTapped: searchTapped,
+                            searchText: searchText
         ))
         
         output.personList

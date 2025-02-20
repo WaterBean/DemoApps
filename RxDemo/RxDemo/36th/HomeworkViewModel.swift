@@ -14,6 +14,7 @@ final class HomeworkViewModel {
     struct Input {
         let itemSelected: ControlEvent<IndexPath>
         let searchTapped: Observable<ControlProperty<String>.Element>
+        let searchText: ControlProperty<String>
     }
     
     struct Output {
@@ -29,6 +30,15 @@ final class HomeworkViewModel {
         let personList = BehaviorRelay(value: sampleUsers)
         let selectedUserList = PublishRelay<[Person]>()
         
+        input.searchText
+            .bind(with: self, onNext: { owner, value in
+                if value.isEmpty {
+                    owner.filteredUsers = owner.sampleUsers
+                    personList.accept(owner.filteredUsers)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         input.itemSelected
             .withUnretained(self)
             .map { owner, indexPath in
@@ -41,14 +51,15 @@ final class HomeworkViewModel {
             .disposed(by: disposeBag)
         
         input.searchTapped
-            .bind(with: self) { owner, text in
+            .bind(with: self) { owner, value in
+                let text = value.trimmingCharacters(in: .whitespacesAndNewlines)
                 owner.filteredUsers = text.isEmpty ? owner.sampleUsers : owner.sampleUsers.filter {
                     $0.name.contains(text)
                 }
                 personList.accept(owner.filteredUsers)
             }
             .disposed(by: disposeBag)
-
+        
         return Output(
             personList: personList,
             selectedUserList: selectedUserList

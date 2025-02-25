@@ -6,30 +6,81 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
-final class ShoppingMainViewModel {
+final class ShoppingMainViewModel: BaseViewModel {
     
-    let inputSearchButtonTapped: Observable<String?> = Observable(nil)
-    let outputSearch: Observable<(query: String?, isNetworkConnected: Bool)> = Observable((nil, false))
-    
-    init() {
-        inputSearchButtonTapped.lazyBind { [weak self] text in
-            self?.search(text)
-        }
+    struct Input {
+        let searchButtonClicked: ControlEvent<Void>
+        let searchText: ControlProperty<String>
     }
     
-    private func search(_ text: String?) {
-        switch NetworkManager.shared.status {
-        case .satisfied:
-            guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                    text.count >= 2 else {
-                outputSearch.value = (nil, true)
-                return
+    struct Output {
+        let searchResult: PublishRelay<Result<String, SearchError>>
+    }
+    
+    var disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
+        
+        let searchResult = PublishRelay<Result<String, SearchError>>()
+        
+        input.searchButtonClicked
+            .withLatestFrom(input.searchText)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .map { text in
+                return text.count >= 2 ? text : ""
             }
-            outputSearch.value = (text, true)
-        default:
-            outputSearch.value = (nil, false)
+            .bind(with: self) { owner, text in
+                if !(owner.checkNetworkStatus()) {
+                    searchResult.accept(.failure(.networkDisconnected))
+                } else if text.isEmpty {
+                    searchResult.accept(.failure(.minimumQueryLengthLimited))
+                } else {
+                    searchResult.accept(.success(text))
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            searchResult: searchResult
+        )
+    }
+    
+    private func checkNetworkStatus() -> Bool {
+        switch NetworkManager.shared.status {
+        case .satisfied: true
+        default: false
         }
     }
+    
+}
+
+enum SearchError: Error {
+    case networkDisconnected
+    case minimumQueryLengthLimited
+}
+
+extension SearchError: LocalizedError {
+    
+    var errorDescription: String? {
+        switch self {
+        case .networkDisconnected:
+            "네트워크 연결 불가"
+        case .minimumQueryLengthLimited:
+            "2자 이상 입력"
+        }
+    }
+    
+    var failureReason: String? {
+        switch self {
+        case .networkDisconnected:
+            "와이파이나 데이터 연결을 확인해보세요."
+        case .minimumQueryLengthLimited:
+            "두글자 이상 입력해주세요"
+        }
+    }
+    
     
 }

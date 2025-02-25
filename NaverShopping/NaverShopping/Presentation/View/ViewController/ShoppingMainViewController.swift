@@ -6,53 +6,59 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class ShoppingMainViewController: UIViewController {
     
-    let mainView = ShoppingMainView()
-    let viewModel = ShoppingMainViewModel()
+    private let mainView = ShoppingMainView()
+    private let viewModel = ShoppingMainViewModel()
+    private let disposeBag = DisposeBag()
 
-    // MARK: - ViewController LifeCycle
+    private func bind() {
+        let searchButtonClicked = mainView.searchBar.rx.searchButtonClicked
+        let searchText = mainView.searchBar.rx.text.orEmpty
+        
+        let input = ShoppingMainViewModel.Input(
+            searchButtonClicked: searchButtonClicked,
+            searchText: searchText
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.searchResult
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let query):
+                    let vc = ShoppingListViewController()
+                    vc.viewModel.query = query
+                    let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+                    backBarButtonItem.tintColor = .white
+                    owner.navigationItem.backBarButtonItem = backBarButtonItem
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                case .failure(let error):
+                    switch error {
+                    case .networkDisconnected:
+                        owner.present(AlertManager.networkNotConnectionAlert(handler: { _ in
+                            URLSchemeManager.shared.openSystemSetting()
+                        }), animated: true)
+                    case .minimumQueryLengthLimited:
+                        owner.present(AlertManager.simpleAlert(title: error.localizedDescription, message: error.errorDescription!), animated: true)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func loadView() {
         view = mainView
+        bind()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NetworkManager.shared.startMonitoring()
         configureUI()
-        viewModel.outputSearch.lazyBind { [weak self] data in
-            guard data.isNetworkConnected else {
-                self?.present(AlertManager.networkNotConnectionAlert(handler: { _ in
-                    URLSchemeManager.shared.openSystemSetting()
-                }), animated: true)
-                return
-            }
-            
-            guard let query = data.query else {
-                self?.present(AlertManager.simpleAlert(title: "2자 이상 입력", message: "두글자 이상 입력해주세요."), animated: true)
-                self?.mainView.searchBar.text = ""
-                return
-            }
-            
-            let vc = ShoppingListViewController()
-            vc.viewModel.query = query
-            let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-            backBarButtonItem.tintColor = .white
-            self?.navigationItem.backBarButtonItem = backBarButtonItem
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-    
-}
-
-
-// MARK: - SearchBar Delegate
-extension ShoppingMainViewController: UISearchBarDelegate {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.inputSearchButtonTapped.value = searchBar.text
+        
     }
     
     
@@ -64,7 +70,6 @@ extension ShoppingMainViewController {
     
     private func configureUI() {
         navigationItem.title = "도봉러의 쇼핑쇼핑"
-        mainView.searchBar.delegate = self
     }
     
     

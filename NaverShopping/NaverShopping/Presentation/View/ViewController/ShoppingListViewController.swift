@@ -18,9 +18,8 @@ final class ShoppingListViewController: UIViewController {
         view = mainView
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
+    private func bind() {
+        
         
         viewModel.outputTotalCount.lazyBind { [weak self] text in
             self?.mainView.totalNumberLabel.text = text
@@ -28,7 +27,7 @@ final class ShoppingListViewController: UIViewController {
         
         viewModel.item.bind { [weak self] _ in
             self?.mainView.collectionView.reloadData()
-//            self?.mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            //            self?.mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         }
         
         viewModel.outputFilterButtonTapped.bind { [weak self] option in
@@ -47,9 +46,16 @@ final class ShoppingListViewController: UIViewController {
             } else {
                 self?.present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
             }
-
+            
         }
         viewModel.inputViewDidLoad.value = ()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        
+        bind()
         
     }
     

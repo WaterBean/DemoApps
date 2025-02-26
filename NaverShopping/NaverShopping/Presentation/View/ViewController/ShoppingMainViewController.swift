@@ -29,8 +29,9 @@ final class ShoppingMainViewController: UIViewController {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let query):
-                    let vc = ShoppingListViewController()
-                    vc.viewModel.query = query
+                    let vc = ShoppingListViewController(
+                        viewModel: ShoppingListViewModel(query: query)
+                    )
                     let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
                     backBarButtonItem.tintColor = .white
                     owner.navigationItem.backBarButtonItem = backBarButtonItem

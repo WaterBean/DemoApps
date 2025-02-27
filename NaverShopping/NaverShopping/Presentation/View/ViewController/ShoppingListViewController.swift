@@ -46,11 +46,14 @@ final class ShoppingListViewController: UIViewController {
             .withUnretained(self)
             .map { owner, _ in owner.mainView.ascButton.option }
         
+        let itemTapped = mainView.collectionView.rx.itemSelected
+        
         let input = ShoppingListViewModel.Input(
             simButtonTapped: simButtonTapped,
             dateButtonTapped: dateButtonTapped,
             dscButtonTapped: dscButtonTapped,
-            ascButtonTapped: ascButtonTapped
+            ascButtonTapped: ascButtonTapped,
+            itemTapped: itemTapped
         )
         
         let output = viewModel.transform(input: input)
@@ -107,6 +110,12 @@ final class ShoppingListViewController: UIViewController {
                             message: error.failureReason ?? ""),
                         animated: true)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.toItemDetail
+            .bind(with: self) { owner, value in
+                owner.navigationController?.pushViewController(DetailItemViewController(url: value), animated: true)
             }
             .disposed(by: disposeBag)
     }

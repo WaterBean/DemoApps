@@ -17,6 +17,7 @@ final class ShoppingListViewModel: BaseViewModel {
         let dateButtonTapped: Observable<SortButton.SortOption>
         let dscButtonTapped: Observable<SortButton.SortOption>
         let ascButtonTapped: Observable<SortButton.SortOption>
+        let itemTapped: ControlEvent<IndexPath>
     }
     
     struct Output {
@@ -25,6 +26,7 @@ final class ShoppingListViewModel: BaseViewModel {
         let searchListTotal: BehaviorRelay<String>
         let buttonStatus: BehaviorRelay<SortButton.SortOption>
         let someError: PublishRelay<NetworkError>
+        let toItemDetail: PublishRelay<String>
     }
     
     var disposeBag = DisposeBag()
@@ -41,6 +43,7 @@ final class ShoppingListViewModel: BaseViewModel {
         let searchListTotal = BehaviorRelay(value: "0 개의 검색 결과")
         let buttonStatus = BehaviorRelay(value: SortButton.SortOption.sim)
         let someError = PublishRelay<NetworkError>()
+        let toItemDetail = PublishRelay<String>()
         
         Observable.merge(
             input.simButtonTapped,
@@ -69,12 +72,18 @@ final class ShoppingListViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        input.itemTapped
+            .map { searchList.value[$0.item].link }
+            .bind { toItemDetail.accept($0) }
+            .disposed(by: disposeBag)
+        
         return Output(
             query: query,
             searchList: searchList,
             searchListTotal: searchListTotal,
             buttonStatus: buttonStatus,
-            someError: someError
+            someError: someError,
+            toItemDetail: toItemDetail
         )
     }
     

@@ -15,6 +15,7 @@ struct ItemResponse: Decodable {
 
 struct Item: Decodable {
     let title: String
+    let link: String
     let image: String
     let mallName: String
     let lprice: String

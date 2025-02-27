@@ -11,6 +11,7 @@ import RxSwift
 
 final class ShoppingMainViewController: UIViewController {
     
+    let barButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
     private let mainView = ShoppingMainView()
     private let viewModel = ShoppingMainViewModel()
     private let disposeBag = DisposeBag()
@@ -18,8 +19,10 @@ final class ShoppingMainViewController: UIViewController {
     private func bind() {
         let searchButtonClicked = mainView.searchBar.rx.searchButtonClicked
         let searchText = mainView.searchBar.rx.text.orEmpty
+        let barButtonTap = barButton.rx.tap
         
         let input = ShoppingMainViewModel.Input(
+            barButtonTap: barButtonTap,
             searchButtonClicked: searchButtonClicked,
             searchText: searchText
         )
@@ -48,6 +51,13 @@ final class ShoppingMainViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        output.wishlist
+            .drive(with: self){ owner, _ in
+                owner.navigationController?.pushViewController(WishListViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+            
     }
     
     override func loadView() {
@@ -71,6 +81,7 @@ extension ShoppingMainViewController {
     
     private func configureUI() {
         navigationItem.title = "도봉러의 쇼핑쇼핑"
+        navigationItem.setRightBarButton(barButton, animated: true)
     }
     
     

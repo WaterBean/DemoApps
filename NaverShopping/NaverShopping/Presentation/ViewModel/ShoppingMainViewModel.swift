@@ -12,12 +12,14 @@ import RxSwift
 final class ShoppingMainViewModel: BaseViewModel {
     
     struct Input {
+        let barButtonTap: ControlEvent<Void>
         let searchButtonClicked: ControlEvent<Void>
         let searchText: ControlProperty<String>
     }
     
     struct Output {
         let searchResult: PublishRelay<Result<String, SearchError>>
+        let wishlist: Driver<Void>
     }
     
     var disposeBag = DisposeBag()
@@ -32,6 +34,7 @@ final class ShoppingMainViewModel: BaseViewModel {
             .map { text in
                 return text.count >= 2 ? text : ""
             }
+            .debug()
             .bind(with: self) { owner, text in
                 if !(owner.checkNetworkStatus()) {
                     searchResult.accept(.failure(.networkDisconnected))
@@ -43,8 +46,12 @@ final class ShoppingMainViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        let barButtonTap = input.barButtonTap
+            .asDriver()
+        
         return Output(
-            searchResult: searchResult
+            searchResult: searchResult,
+            wishlist: barButtonTap
         )
     }
     

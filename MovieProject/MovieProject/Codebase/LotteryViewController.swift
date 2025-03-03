@@ -24,11 +24,19 @@ final class LotteryViewController: UIViewController {
     private lazy var selectDrawNo = Array(1...recentDay)
     private var list = [String]()
     
-    private let textField = {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        configureHierarchy()
+        configureLayout()
+        configureView()
+    }
+    
+    private lazy var textField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
-        
+        textField.inputView = pickerView
         return textField
     }()
     
@@ -106,42 +114,10 @@ final class LotteryViewController: UIViewController {
         return label
     }()
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        configureHierarchy()
-        configureLayout()
-        
-        lotteryNumberLabels[6].text = "+"
-        lotteryNumberLabels[6].backgroundColor = .white
-        lotteryNumberLabels[6].textColor = .black
-        
-        textField.inputView = pickerView
-        pickerView.delegate = self
-        pickerView.selectRow(recentDay-1, inComponent: 0, animated: true)
-        textField.text = "\(recentDay)"
-        
-        NetworkManager.shared.fetchLotteryRequest(drawNumber:  recentDay) { [self] in
-            self.resultLabel.attributedText = "\($0.drwNo)회 당첨결과".toAttribute("\($0.drwNo)회")
+}
 
-            self.dateLabel.text = "\($0.drwNoDate) 추첨"
-            self.lotteryNumberLabels[0].text = "\($0.drwtNo1)"
-            self.lotteryNumberLabels[1].text = String($0.drwtNo2)
-            self.lotteryNumberLabels[2].text = String($0.drwtNo3)
-            self.lotteryNumberLabels[3].text = String($0.drwtNo4)
-            self.lotteryNumberLabels[4].text = String($0.drwtNo5)
-            self.lotteryNumberLabels[5].text = String($0.drwtNo6)
-            self.lotteryNumberLabels[7].text = String($0.bnusNo)
-            
-            self.lotteryNumberLabels.forEach {
-                guard let num = Int($0.text ?? "") else { return }
-                $0.backgroundColor = lotteryColor(number: num)
-            }
-        }
-
-    }
+// MARK: - configure ui
+extension LotteryViewController {
     
     private func configureHierarchy() {
         [textField, descriptionLabel, lineView, dateLabel, resultLabel, stackView, bonusLabel].forEach {
@@ -182,7 +158,7 @@ final class LotteryViewController: UIViewController {
         
         stackView.snp.makeConstraints {
             $0.top.equalTo(resultLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(2)
+            $0.horizontalEdges.equalToSuperview().inset(6)
             $0.height.equalTo(44)
         }
         
@@ -192,8 +168,36 @@ final class LotteryViewController: UIViewController {
         }
     }
     
+    private func configureView() {
+        lotteryNumberLabels[6].text = "+"
+        lotteryNumberLabels[6].backgroundColor = .white
+        lotteryNumberLabels[6].textColor = .black
+        
+        //        pickerView.delegate = self
+        //        pickerView.selectRow(recentDay-1, inComponent: 0, animated: true)
+        
+        
+        textField.text = "\(recentDay)"
+        NetworkManager.shared.fetchLotteryRequest(drawNumber:  recentDay) { [unowned self] in
+            self.resultLabel.attributedText = "\($0.drwNo)회 당첨결과".toAttribute("\($0.drwNo)회")
+            
+            self.dateLabel.text = "\($0.drwNoDate) 추첨"
+            self.lotteryNumberLabels[0].text = "\($0.drwtNo1)"
+            self.lotteryNumberLabels[1].text = String($0.drwtNo2)
+            self.lotteryNumberLabels[2].text = String($0.drwtNo3)
+            self.lotteryNumberLabels[3].text = String($0.drwtNo4)
+            self.lotteryNumberLabels[4].text = String($0.drwtNo5)
+            self.lotteryNumberLabels[5].text = String($0.drwtNo6)
+            self.lotteryNumberLabels[7].text = String($0.bnusNo)
+            
+            self.lotteryNumberLabels.forEach {
+                guard let num = Int($0.text ?? "") else { return }
+                $0.backgroundColor = lotteryColor(number: num)
+            }
+        }
+    }
     
-    private func lotteryColor(number: Int) -> UIColor{
+    private func lotteryColor(number: Int) -> UIColor {
         switch number {
         case 1...10: .systemYellow
         case 11...20: .systemBlue
@@ -203,8 +207,11 @@ final class LotteryViewController: UIViewController {
         default: .white
         }
     }
+
     
 }
+
+
 
 extension LotteryViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -242,10 +249,5 @@ extension LotteryViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
 }
-
-#Preview {
-    LotteryViewController()
-}
-
 
 

@@ -7,81 +7,128 @@
 
 import UIKit
 import Kingfisher
+import RxCocoa
+import RxSwift
 
 final class ShoppingListViewController: UIViewController {
     
-    let mainView = ShoppingListView()
-    let viewModel = ShoppingListViewModel()
+    private let mainView = ShoppingListView()
+    private let viewModel: ShoppingListViewModel
+    private let disposeBag = DisposeBag()
+
+    init(viewModel: ShoppingListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    // MARK: - ViewController LifeCycle
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = mainView
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
+    private func bind() {
+        let simButtonTapped = mainView.simButton.rx.tap
+            .withUnretained(self)
+            .map { owner, _ in owner.mainView.simButton.option }
         
-        viewModel.outputTotalCount.lazyBind { [weak self] text in
-            self?.mainView.totalNumberLabel.text = text
-        }
+        let dateButtonTapped = mainView.dateButton.rx.tap
+            .withUnretained(self)
+            .map { owner, _ in owner.mainView.dateButton.option }
         
-        viewModel.item.bind { [weak self] _ in
-            self?.mainView.collectionView.reloadData()
-//            self?.mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-        }
+        let dscButtonTapped = mainView.dscButton.rx.tap
+            .withUnretained(self)
+            .map { owner, _ in owner.mainView.dscButton.option }
         
-        viewModel.outputFilterButtonTapped.bind { [weak self] option in
-            let (option, isNetworkConnected) = option
-            self?.buttons.forEach {
-                if $0.option == option {
-                    $0.isSelected = true
-                    print(($0.titleLabel?.text), "선택됨")
-                } else {
-                    print($0.titleLabel)
-                    $0.isSelected = false
+        let ascButtonTapped = mainView.ascButton.rx.tap
+            .withUnretained(self)
+            .map { owner, _ in owner.mainView.ascButton.option }
+        
+        let itemTapped = mainView.collectionView.rx.itemSelected
+        
+        let input = ShoppingListViewModel.Input(
+            simButtonTapped: simButtonTapped,
+            dateButtonTapped: dateButtonTapped,
+            dscButtonTapped: dscButtonTapped,
+            ascButtonTapped: ascButtonTapped,
+            itemTapped: itemTapped
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.query
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
+        
+        output.searchList
+            .bind(to: mainView.collectionView.rx.items(
+                cellIdentifier: "ItemCollectionViewCell",
+                cellType: ItemCollectionViewCell.self)) { item, element, cell in
+                    cell.configureCell(title: element.title,
+                                       imageURL: URL(string: element.image),
+                                       mallName: element.mallName,
+                                       price: Int(element.lprice) ?? 0)
+                }
+                .disposed(by: disposeBag)
+        
+        
+        output.searchListTotal
+            .bind(to: mainView.totalNumberLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.buttonStatus
+            .bind(with: self) { owner, option in
+                owner.buttons.forEach { button in
+                    button.isSelected = false
+                }
+                switch option {
+                case .sim:
+                    owner.mainView.simButton.rx.isSelected.onNext(true)
+                case .date:
+                    owner.mainView.dateButton.rx.isSelected.onNext(true)
+                case .dsc:
+                    owner.mainView.dscButton.rx.isSelected.onNext(true)
+                case .asc:
+                    owner.mainView.ascButton.rx.isSelected.onNext(true)
                 }
             }
-            if isNetworkConnected {
-                
-            } else {
-                self?.present(AlertManager.simpleAlert(title: "네트워크 연결 불가", message: "와이파이나 데이터 연결을 확인해주세요."), animated: true)
-            }
-
-        }
-        viewModel.inputViewDidLoad.value = ()
+            .disposed(by: disposeBag)
         
+        output.someError
+            .bind(with: self) { owner, error in
+                switch error {
+                case .networkDisconnected:
+                    owner.present( AlertManager.networkNotConnectionAlert { _ in
+                        URLSchemeManager.shared.openSystemSetting()
+                    }, animated: true)
+                default:
+                    owner.present(
+                        AlertManager.simpleAlert(
+                            title: error.localizedDescription,
+                            message: error.failureReason ?? ""),
+                        animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.toItemDetail
+            .bind(with: self) { owner, value in
+                owner.navigationController?.pushViewController(DetailItemViewController(url: value), animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
-    // MARK: - Action
-    @objc func filterButtonTapped(_ sender: SortButton) {
-        print(#function)
-        viewModel.inputFilterButtonTapped.value = sender.option
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bind()
     }
     
-    // MARK: - View Property
     lazy var buttons = [mainView.simButton, mainView.dateButton, mainView.ascButton, mainView.dscButton]
     
-}
-
-// MARK: - CollectionView Delegate, DataSource
-extension ShoppingListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.item.value.items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = viewModel.item.value.items[indexPath.item]
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as? ItemCollectionViewCell,
-              let price = Int(data.lprice)
-        else { return ItemCollectionViewCell() }
-        cell.configureCell(title: data.title, imageURL: URL(string: data.image), mallName: data.mallName, price: price)
-        return cell
-    }
-    
     
 }
-
 
 // MARK: - Prefetching(Pagination)
 //extension ShoppingListViewController: UICollectionViewDataSourcePrefetching {
@@ -124,20 +171,3 @@ extension ShoppingListViewController: UICollectionViewDelegate, UICollectionView
 //
 //}
 
-
-extension ShoppingListViewController {
-    
-    private func setupUI() {
-        navigationItem.title = viewModel.query
-        mainView.collectionView.delegate = self
-        mainView.collectionView.dataSource = self
-        //        mainView.collectionView.prefetchDataSource = self
-        
-        buttons.forEach {
-            $0.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
-        }
-        
-    }
-    
-    
-}

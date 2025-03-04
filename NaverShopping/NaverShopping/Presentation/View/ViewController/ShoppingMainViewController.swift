@@ -11,7 +11,7 @@ import RxSwift
 
 final class ShoppingMainViewController: UIViewController {
     
-    let barButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
+    private let barButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
     private let mainView = ShoppingMainView()
     private let viewModel = ShoppingMainViewModel()
     private let disposeBag = DisposeBag()

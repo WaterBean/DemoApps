@@ -66,10 +66,9 @@ final class ShoppingListViewController: UIViewController {
             .bind(to: mainView.collectionView.rx.items(
                 cellIdentifier: "ItemCollectionViewCell",
                 cellType: ItemCollectionViewCell.self)) { item, element, cell in
-                    cell.configureCell(title: element.title,
-                                       imageURL: URL(string: element.image),
-                                       mallName: element.mallName,
-                                       price: Int(element.lprice) ?? 0)
+                    cell.configureCell(item: element, buttonTapped: {
+                        
+                    })
                 }
                 .disposed(by: disposeBag)
         

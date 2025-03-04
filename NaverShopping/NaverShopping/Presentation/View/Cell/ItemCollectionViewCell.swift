@@ -10,6 +10,7 @@ import Kingfisher
 import RealmSwift
 import RxSwift
 import SnapKit
+import Toast
 
 final class ItemCollectionViewCell: UICollectionViewCell {
     
@@ -77,10 +78,10 @@ final class ItemCollectionViewCell: UICollectionViewCell {
                     do {
                         try realm.write {
                             realm.add(data)
-                            print("데이터 저장완료")
+                            owner.superview?.makeToast("저장 완료")
                         }
                     } catch {
-                        print("저장 실패")
+                        owner.superview?.makeToast("저장 실패")
                     }
                 } else {
                     do {
@@ -88,10 +89,10 @@ final class ItemCollectionViewCell: UICollectionViewCell {
                             .filter { $0.id == item.productId }
                         try realm.write {
                             realm.delete(deleteItem)
-                            print("데이터 삭제완료")
+                            owner.superview?.makeToast("취소 완료")
                         }
                     } catch {
-                        print("삭제 실패")
+                        owner.superview?.makeToast("삭제 실패")
                     }
                 }
             }

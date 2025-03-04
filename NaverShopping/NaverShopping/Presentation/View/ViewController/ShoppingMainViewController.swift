@@ -54,7 +54,7 @@ final class ShoppingMainViewController: UIViewController {
         
         output.wishlist
             .drive(with: self){ owner, _ in
-                owner.navigationController?.pushViewController(WishListViewController(), animated: true)
+                owner.navigationController?.pushViewController(LikeListViewController(), animated: true)
             }
             .disposed(by: disposeBag)
             

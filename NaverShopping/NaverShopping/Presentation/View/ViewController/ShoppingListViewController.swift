@@ -66,9 +66,7 @@ final class ShoppingListViewController: UIViewController {
             .bind(to: mainView.collectionView.rx.items(
                 cellIdentifier: "ItemCollectionViewCell",
                 cellType: ItemCollectionViewCell.self)) { item, element, cell in
-                    cell.configureCell(item: element, buttonTapped: {
-                        
-                    })
+                    cell.configureCell(item: element)
                 }
                 .disposed(by: disposeBag)
         

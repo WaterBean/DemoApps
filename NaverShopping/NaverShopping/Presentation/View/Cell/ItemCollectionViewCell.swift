@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 import RxSwift
 import SnapKit
 
@@ -41,7 +42,7 @@ final class ItemCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let likeButton = LikeButton()
+    private let likeButton = LikeButton(id: "")
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
@@ -55,18 +56,38 @@ final class ItemCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(item: Item, buttonTapped: @escaping () -> Void) {
+    func configureCell(item: Item) {
         titleLabel.text = item.title.htmlEscaped
         itemImage.kf.setImage(with: URL(string: item.image))
         itemImage.layer.cornerRadius = 12
         mallNameLabel.text = item.mallName
         priceLabel.text = (Int(item.lprice) ?? 0).formatted(.number)
+        likeButton.id = item.productId
         likeButton.rx.tap
             .bind(with: self) { owner, _ in
-                if owner.isSelected {
+                let realm = try! Realm()
+                let data = ItemData(item: item)
 
+                if owner.likeButton.isSelected {
+                    do {
+                        try realm.write {
+                            realm.add(data)
+                            print("데이터 저장완료")
+                        }
+                    } catch {
+                        print("저장 실패")
+                    }
                 } else {
-                    
+                    do {
+                        let deleteItem = realm.objects(ItemData.self)
+                            .filter { $0.id == item.productId }
+                        try realm.write {
+                            realm.delete(deleteItem)
+                            print("데이터 삭제완료")
+                        }
+                    } catch {
+                        print("삭제 실패")
+                    }
                 }
             }
             .disposed(by: disposeBag)

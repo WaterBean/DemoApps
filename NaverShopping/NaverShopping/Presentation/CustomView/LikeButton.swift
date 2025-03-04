@@ -6,17 +6,22 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import RealmSwift
 
 final class LikeButton: UIButton {
     
-    convenience init() {
-        self.init(frame: .zero)
+    var id: String {
+        didSet {
+            let data = try! Realm().objects(ItemData.self).filter { $0.id == self.id }
+            isSelected = !(data.isEmpty)
+        }
+    }
+    
+    init(id: String) {
+        self.id = id
+        super.init(frame: .zero)
         changesSelectionAsPrimaryAction = true
-        var config = UIButton.Configuration.plain()
-        configuration = config
-        
+        configuration = UIButton.Configuration.plain()
         configurationUpdateHandler = { button in
             var config = button.configuration
             config?.background.backgroundColor = .white
@@ -38,6 +43,10 @@ final class LikeButton: UIButton {
             )
             button.configuration = config
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     

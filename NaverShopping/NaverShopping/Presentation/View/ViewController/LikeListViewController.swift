@@ -52,6 +52,7 @@ final class LikeListViewController: UIViewController {
     }()
     
     private func configureUI() {
+        navigationItem.title = "좋아요 리스트"
         view.addSubview(searchBar)
         view.addSubview(collectionView)
         searchBar.snp.makeConstraints {

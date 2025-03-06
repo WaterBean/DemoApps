@@ -12,25 +12,34 @@ import RxSwift
 
 final class WishListViewController: UIViewController {
     
-    private var list = [
-        Wish(name: "M5 Max"),
-        Wish(name: "금 100k"),
-        Wish(name: "ctype 트랙패드"),
-        Wish(name: "누피 Kick 75"),
-        Wish(name: "누피 Air 96"),
-        Wish(name: "누피 Halo 96 레몬축")
-    ]
-    
-    let disposeBag = DisposeBag()
+    private var wishList: [Wish] = []
+    private let repository: WishRepository
+    private let folderId: UUID
     
     private var diffableDatasource: UICollectionViewDiffableDataSource<Section, Wish>!
+    private let disposeBag = DisposeBag()
+    
+    init(repository: WishRepository, folderId: UUID) {
+        self.repository = repository
+        self.folderId = folderId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureDatasource()
-        updateSnapShot()
+        loadWishes()
         bind()
+    }
+    
+    func loadWishes() {
+        wishList = repository.getWishes(folderId: folderId)
+        updateSnapShot()
     }
     
     func bind() {
@@ -38,8 +47,9 @@ final class WishListViewController: UIViewController {
             .withLatestFrom(textField.rx.text.orEmpty)
             .debug()
             .bind(with: self) { owner, value in
-                let product = Wish(name: "\(value)")
-                owner.list.insert(product, at: 0)
+                let wish = Wish(id: UUID(), name: value, price: Int.random(in: 100...10000), date: .now)
+                owner.repository.addWish(name: wish.name, price: wish.price, date: wish.date, folderId: owner.folderId)
+                owner.wishList.insert(wish, at: 0)
                 owner.updateSnapShot()
             }
             .disposed(by:
@@ -70,21 +80,14 @@ final class WishListViewController: UIViewController {
     private func updateSnapShot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Wish>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(list, toSection: .wish)
+        snapshot.appendItems(wishList, toSection: .wish)
         diffableDatasource.apply(snapshot, animatingDifferences: true)
     }
     
     enum Section: CaseIterable {
         case wish
     }
-    
-    struct Wish: Hashable, Identifiable {
-        let id = UUID()
-        let name: String
-        let price = 4000
-        let date = Date()
-    }
-    
+
     private let textField = {
         let textField = UITextField()
         textField.backgroundColor = .systemFill
@@ -119,6 +122,7 @@ final class WishListViewController: UIViewController {
             $0.top.equalTo(textField.snp.bottom)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
+        navigationItem.title = "\(repository.getFolder(id: folderId).name) 카테고리"
     }
 
     
@@ -129,7 +133,7 @@ final class WishListViewController: UIViewController {
 extension WishListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        list.remove(at: indexPath.item)
+        wishList.remove(at: indexPath.item)
         updateSnapShot()
     }
     

@@ -11,18 +11,21 @@ import RxSwift
 
 final class ShoppingMainViewController: UIViewController {
     
-    let barButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
     private let mainView = ShoppingMainView()
+    private let likeListButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
+    private let wishListButton = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: nil, action: nil)
     private let viewModel = ShoppingMainViewModel()
     private let disposeBag = DisposeBag()
 
     private func bind() {
         let searchButtonClicked = mainView.searchBar.rx.searchButtonClicked
         let searchText = mainView.searchBar.rx.text.orEmpty
-        let barButtonTap = barButton.rx.tap
+        let likeListButtonTap = likeListButton.rx.tap
+        let wishListButtonTap = wishListButton.rx.tap
         
         let input = ShoppingMainViewModel.Input(
-            barButtonTap: barButtonTap,
+            likeListButtonTap: likeListButtonTap,
+            wishListButtonTap: wishListButtonTap,
             searchButtonClicked: searchButtonClicked,
             searchText: searchText
         )
@@ -52,12 +55,24 @@ final class ShoppingMainViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        output.wishlist
+        output.wishList
             .drive(with: self){ owner, _ in
-                owner.navigationController?.pushViewController(WishListViewController(), animated: true)
+                let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: owner, action: nil)
+                backBarButtonItem.tintColor = .white
+                owner.navigationItem.backBarButtonItem = backBarButtonItem
+                owner.navigationController?.pushViewController(FolderListViewController(), animated: true)
             }
             .disposed(by: disposeBag)
             
+        output.likeList
+            .drive(with: self) { owner, _ in
+                let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: owner, action: nil)
+                backBarButtonItem.tintColor = .white
+                owner.navigationItem.backBarButtonItem = backBarButtonItem
+
+                owner.navigationController?.pushViewController(LikeListViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func loadView() {
@@ -81,7 +96,7 @@ extension ShoppingMainViewController {
     
     private func configureUI() {
         navigationItem.title = "도봉러의 쇼핑쇼핑"
-        navigationItem.setRightBarButton(barButton, animated: true)
+        navigationItem.setRightBarButtonItems([wishListButton, likeListButton], animated: true)
     }
     
     

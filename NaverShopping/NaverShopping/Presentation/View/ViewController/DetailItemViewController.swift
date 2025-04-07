@@ -11,8 +11,8 @@ import WebKit
 
 final class DetailItemViewController: UIViewController {
 
-    let webView = WKWebView()
-    let url: String
+    private let webView = WKWebView()
+    private let url: String
     
     init(url: String) {
         self.url = url

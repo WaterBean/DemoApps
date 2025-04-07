@@ -12,14 +12,16 @@ import RxSwift
 final class ShoppingMainViewModel: BaseViewModel {
     
     struct Input {
-        let barButtonTap: ControlEvent<Void>
+        let likeListButtonTap: ControlEvent<Void>
+        let wishListButtonTap: ControlEvent<Void>
         let searchButtonClicked: ControlEvent<Void>
         let searchText: ControlProperty<String>
     }
     
     struct Output {
         let searchResult: PublishRelay<Result<String, SearchError>>
-        let wishlist: Driver<Void>
+        let wishList: Driver<Void>
+        let likeList: Driver<Void>
     }
     
     var disposeBag = DisposeBag()
@@ -46,12 +48,12 @@ final class ShoppingMainViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        let barButtonTap = input.barButtonTap
-            .asDriver()
-        
+                
         return Output(
             searchResult: searchResult,
-            wishlist: barButtonTap
+            wishList: input.wishListButtonTap.asDriver(),
+            likeList: input.likeListButtonTap.asDriver()
+
         )
     }
     

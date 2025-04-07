@@ -25,7 +25,7 @@ final class ShoppingMainView: BaseView {
         return imageView
     }()
     
-    let label = {
+    private let label = {
         let label = UILabel()
         label.text = "쇼핑 하구팡"
         label.textAlignment = .center

@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class ShoppingListView: BaseView {
+    
     let totalNumberLabel = {
         let label = UILabel()
         label.textColor = .green
@@ -25,23 +26,23 @@ final class ShoppingListView: BaseView {
         return stack
     }()
     
-    lazy var simButton = {
+    let simButton = {
         let button = SortButton(option: .sim)
         button.isSelected = true
         return button
     }()
     
-    lazy var dateButton = {
+    let dateButton = {
         let button = SortButton(option: .date)
         return button
     }()
     
-    lazy var ascButton = {
+    let ascButton = {
         let button = SortButton(option: .asc)
         return button
     }()
     
-    lazy var dscButton = {
+    let dscButton = {
         let button = SortButton(option: .dsc)
         return button
     }()
